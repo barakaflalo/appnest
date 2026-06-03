@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AppNest — Beta Testers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#080808;--bg2:#0f0f0f;--bg3:#141414;--bg4:#1c1c1c;
+  --gold:#c9973a;--gold2:#e8b84b;--gold3:#f5d080;
+  --gold-dim:rgba(201,151,58,0.10);--gold-border:rgba(201,151,58,0.22);
+  --text:#efefef;--text2:#aaa;--text3:#555;
+  --green:#3ecf6c;--teal:#22d0d8;--r:10px;--r2:16px;--r3:24px;
+}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Heebo',sans-serif;min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(201,151,58,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(201,151,58,0.025) 1px,transparent 1px);background-size:48px 48px;}
+
+/* NAV */
+.nav{display:flex;justify-content:space-between;align-items:center;padding:0 40px;height:62px;position:sticky;top:0;z-index:200;background:rgba(8,8,8,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--gold-border);}
+.logo-row{display:flex;align-items:center;gap:13px;text-decoration:none;}
+.logo-hex{width:36px;height:36px;flex-shrink:0;}
+.logo-name{font-family:'Syne',sans-serif;font-size:18px;font-weight:900;color:var(--gold2);line-height:1;}
+.logo-sub{font-size:8px;color:var(--text3);letter-spacing:2.5px;text-transform:uppercase;margin-top:2px;}
+.nav-back{display:flex;align-items:center;gap:8px;color:var(--text2);font-size:13px;text-decoration:none;transition:color 0.15s;}
+.nav-back:hover{color:var(--gold2);}
+.lang-wrap{position:relative;}
+.lang-btn{background:transparent;border:1px solid var(--gold-border);color:var(--gold);border-radius:20px;padding:6px 14px;font-size:12px;cursor:pointer;font-family:'Heebo',sans-serif;font-weight:600;display:flex;align-items:center;gap:6px;transition:background 0.15s;}
+.lang-btn:hover{background:var(--gold-dim);}
+.lang-dropdown{position:absolute;top:calc(100% + 8px);left:0;background:var(--bg3);border:1px solid var(--gold-border);border-radius:var(--r2);overflow:hidden;min-width:150px;box-shadow:0 8px 30px rgba(0,0,0,0.5);display:none;z-index:300;}
+.lang-wrap.open .lang-dropdown{display:block;}
+.lang-option{display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;font-size:13px;transition:background 0.1s;}
+.lang-option:hover{background:var(--bg4);}
+.lang-option.active{color:var(--gold2);}
+
+/* PAGE TABS */
+.page-tabs{display:none;}
+.page-join{display:block;}
+.page-guide{display:none;}
+.show-guide .page-join{display:none;}
+.show-guide .page-guide{display:block;}
+
+/* SECTIONS */
+.sec{position:relative;z-index:1;padding:40px 40px;}
+@media(max-width:600px){.nav{padding:0 16px;}.sec{padding:28px 16px;}}
+
+/* HERO */
+.hero{text-align:center;padding:60px 24px 40px;position:relative;z-index:1;}
+.hero::after{content:'';position:absolute;top:-40px;left:50%;transform:translateX(-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(201,151,58,0.07) 0%,transparent 70%);pointer-events:none;z-index:0;}
+.hero-content{position:relative;z-index:1;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--gold-border);color:var(--gold2);border-radius:20px;padding:6px 18px;font-size:11px;margin-bottom:20px;letter-spacing:1px;font-weight:600;background:var(--gold-dim);}
+.hero-badge.teal{border-color:rgba(34,208,216,0.3);color:var(--teal);background:rgba(34,208,216,0.07);}
+.h1{font-family:'Syne',sans-serif;font-size:44px;font-weight:900;line-height:1.05;margin-bottom:12px;letter-spacing:-1.5px;}
+.h1 .grad{background:linear-gradient(135deg,var(--gold),var(--gold3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.h1-sub{font-size:15px;color:var(--text2);line-height:1.8;max-width:480px;margin:0 auto;}
+
+/* PROGRESS */
+.progress-wrap{position:relative;z-index:1;display:flex;align-items:flex-start;justify-content:center;padding:32px 40px;gap:0;max-width:640px;margin:0 auto;}
+@media(max-width:600px){.progress-wrap{padding:24px 16px;}}
+.prog-item{display:flex;flex-direction:column;align-items:center;gap:8px;flex:1;}
+.prog-connector{flex:1;height:1px;background:rgba(255,255,255,0.08);margin-top:14px;}
+.prog-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;}
+.prog-dot.done{background:rgba(60,207,108,0.12);border:1.5px solid rgba(60,207,108,0.35);color:var(--green);}
+.prog-dot.active{background:var(--gold-dim);border:1.5px solid var(--gold-border);color:var(--gold2);}
+.prog-dot.idle{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);color:var(--text3);}
+.prog-lbl{font-size:10px;color:var(--text3);text-align:center;line-height:1.4;max-width:72px;}
+.prog-lbl.active{color:var(--gold2);}
+
+/* FORM */
+.form-card{background:var(--bg3);border:1px solid rgba(255,255,255,0.07);border-radius:var(--r3);overflow:hidden;max-width:640px;margin:0 auto;}
+.form-section{padding:20px 24px;border-bottom:1px solid rgba(255,255,255,0.05);}
+.form-section:last-of-type{border-bottom:none;}
+.form-sec-title{font-size:10px;color:var(--gold);letter-spacing:2.5px;text-transform:uppercase;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.fields-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:500px){.fields-row{grid-template-columns:1fr;}}
+.field{display:flex;flex-direction:column;gap:6px;}
+.field label{font-size:11px;color:var(--text3);letter-spacing:0.5px;}
+.field input,.field select{background:var(--bg4);border:1px solid rgba(255,255,255,0.08);border-radius:var(--r);padding:10px 14px;font-size:13px;color:var(--text);font-family:'Heebo',sans-serif;outline:none;transition:border-color 0.15s;width:100%;}
+.field input:focus,.field select:focus{border-color:var(--gold-border);}
+.field input::placeholder{color:var(--text3);}
+.field select option{background:var(--bg4);}
+
+/* PLATFORM */
+.platform-row{display:flex;gap:10px;}
+.plat-btn{flex:1;border:1px solid rgba(255,255,255,0.08);border-radius:var(--r2);padding:14px 10px;text-align:center;cursor:pointer;transition:all 0.15s;background:var(--bg4);}
+.plat-btn.sel{border-color:rgba(60,207,108,0.4);background:rgba(60,207,108,0.07);}
+.plat-btn.disabled{opacity:0.4;cursor:default;}
+.plat-icon{font-size:26px;margin-bottom:6px;}
+.plat-name{font-size:13px;font-weight:600;color:var(--text2);}
+.plat-btn.sel .plat-name{color:var(--green);}
+.plat-soon{font-size:10px;color:var(--text3);margin-top:3px;}
+
+/* CATEGORIES */
+.cats-wrap{display:flex;flex-wrap:wrap;gap:8px;}
+.cat-chip{border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:7px 14px;font-size:12px;color:var(--text3);cursor:pointer;transition:all 0.15s;background:var(--bg4);user-select:none;}
+.cat-chip:hover{border-color:var(--gold-border);color:var(--text2);}
+.cat-chip.sel{border-color:var(--gold-border);background:var(--gold-dim);color:var(--gold2);}
+
+/* CONTACT PREF */
+.contact-row{display:flex;gap:10px;}
+.contact-btn{flex:1;border:1px solid rgba(255,255,255,0.08);border-radius:var(--r2);padding:12px 8px;text-align:center;cursor:pointer;transition:all 0.15s;background:var(--bg4);}
+.contact-btn.sel{border-color:rgba(201,151,58,0.4);background:var(--gold-dim);}
+.contact-icon{font-size:20px;margin-bottom:5px;}
+.contact-lbl{font-size:12px;color:var(--text2);}
+.contact-btn.sel .contact-lbl{color:var(--gold2);}
+
+/* SUBMIT BTN */
+.submit-wrap{padding:20px 24px;}
+.submit-btn{width:100%;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#080808;border:none;border-radius:var(--r2);padding:15px;font-size:15px;font-weight:800;cursor:pointer;font-family:'Heebo',sans-serif;transition:opacity 0.15s,transform 0.1s;}
+.submit-btn:hover{opacity:0.88;transform:translateY(-1px);}
+.submit-note{font-size:11px;color:var(--text3);text-align:center;margin-top:10px;line-height:1.7;}
+
+/* GUIDE LINK BOX */
+.guide-link-box{display:flex;align-items:center;gap:12px;padding:14px 18px;background:rgba(34,208,216,0.06);border:1px solid rgba(34,208,216,0.18);border-radius:var(--r2);cursor:pointer;transition:background 0.15s;margin-top:12px;}
+.guide-link-box:hover{background:rgba(34,208,216,0.1);}
+.guide-link-icon{width:36px;height:36px;background:rgba(34,208,216,0.12);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.guide-link-text{flex:1;}
+.guide-link-title{font-size:13px;font-weight:700;color:var(--teal);}
+.guide-link-sub{font-size:11px;color:var(--text3);margin-top:2px;}
+.guide-link-arrow{color:var(--teal);font-size:18px;}
+
+/* STEP CARD */
+.step-card{background:var(--bg3);border:1px solid rgba(255,255,255,0.07);border-radius:var(--r2);overflow:hidden;margin-bottom:12px;max-width:640px;margin-left:auto;margin-right:auto;}
+.step-card.active-card{border-color:var(--gold-border);}
+.step-card-header{display:flex;align-items:center;gap:12px;padding:16px 18px;}
+.step-num-badge{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;}
+.snb-gold{background:var(--gold-dim);border:1px solid var(--gold-border);color:var(--gold2);}
+.snb-green{background:rgba(60,207,108,0.1);border:1px solid rgba(60,207,108,0.25);color:var(--green);}
+.snb-gray{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);color:var(--text3);}
+.step-card-title{font-size:14px;font-weight:700;flex:1;}
+.step-card-title.gray{color:var(--text3);}
+.step-status-pill{font-size:10px;padding:3px 10px;border-radius:20px;font-weight:600;white-space:nowrap;}
+.pill-active{background:var(--gold-dim);border:1px solid var(--gold-border);color:var(--gold2);}
+.pill-soon{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);color:var(--text3);}
+
+/* SCREEN PLACEHOLDERS */
+.screens-wrap{padding:0 18px 16px;}
+.screens-row{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px;}
+.screens-row::-webkit-scrollbar{display:none;}
+.screen-ph{flex-shrink:0;width:88px;height:156px;background:var(--bg4);border:1px solid rgba(255,255,255,0.06);border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;}
+.screen-icon{font-size:24px;}
+.screen-lbl{font-size:9px;color:var(--text3);text-align:center;padding:0 6px;line-height:1.4;}
+.screen-caption{font-size:12px;color:var(--text2);line-height:1.7;padding:10px 12px;background:rgba(255,255,255,0.025);border-radius:8px;border-right:2px solid var(--gold-border);}
+body[dir="ltr"] .screen-caption{border-right:none;border-left:2px solid var(--gold-border);}
+
+/* GUIDE PAGE */
+.guide-header-bar{background:rgba(34,208,216,0.06);border-bottom:1px solid rgba(34,208,216,0.15);padding:16px 40px;position:relative;z-index:1;}
+@media(max-width:600px){.guide-header-bar{padding:14px 16px;}}
+.guide-header-inner{max-width:640px;margin:0 auto;}
+.guide-header-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:900;color:var(--teal);margin-bottom:4px;}
+.guide-header-sub{font-size:12px;color:var(--text3);}
+
+.guide-steps-wrap{max-width:640px;margin:0 auto;padding:32px 40px;}
+@media(max-width:600px){.guide-steps-wrap{padding:24px 16px;}}
+.guide-step-row{display:flex;gap:16px;align-items:flex-start;margin-bottom:24px;position:relative;}
+.guide-step-row:not(:last-child)::after{content:'';position:absolute;top:36px;right:14px;width:1px;height:calc(100% - 10px);background:rgba(255,255,255,0.05);}
+body[dir="ltr"] .guide-step-row:not(:last-child)::after{right:auto;left:14px;}
+.guide-step-num{width:30px;height:30px;border-radius:50%;background:rgba(34,208,216,0.1);border:1px solid rgba(34,208,216,0.2);color:var(--teal);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.guide-step-content{flex:1;}
+.guide-step-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:10px;}
+.guide-img-ph{width:100%;height:90px;background:var(--bg3);border:1px solid rgba(255,255,255,0.06);border-radius:var(--r2);display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:8px;}
+.guide-img-icon{font-size:28px;}
+.guide-img-txt{font-size:11px;color:var(--text3);}
+.guide-step-note{font-size:12px;color:var(--text3);line-height:1.7;padding:8px 12px;background:rgba(255,255,255,0.025);border-radius:8px;}
+
+/* CONTACT BOX */
+.contact-box{background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:var(--r2);padding:18px;text-align:center;max-width:640px;margin:0 auto 32px;}
+.contact-box p{font-size:13px;color:var(--text2);line-height:1.8;}
+.contact-box a{color:var(--gold2);font-weight:700;text-decoration:none;}
+
+/* TOAST */
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--bg4);border:1px solid var(--gold-border);color:var(--gold2);padding:11px 24px;border-radius:20px;font-size:13px;font-weight:600;opacity:0;transition:all 0.3s;z-index:999;pointer-events:none;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* BANNER (for embedding in main site) */
+.beta-banner{background:linear-gradient(135deg,rgba(201,151,58,0.08),rgba(201,151,58,0.03));border:1px solid var(--gold-border);border-radius:var(--r2);padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:14px;cursor:pointer;transition:background 0.15s;text-decoration:none;}
+.beta-banner:hover{background:rgba(201,151,58,0.12);}
+.beta-banner-left{display:flex;align-items:center;gap:14px;}
+.beta-banner-icon{font-size:28px;flex-shrink:0;}
+.beta-banner-title{font-size:14px;font-weight:700;color:var(--gold2);margin-bottom:3px;}
+.beta-banner-desc{font-size:12px;color:var(--text3);}
+.beta-banner-btn{background:var(--gold-dim);border:1px solid var(--gold-border);color:var(--gold2);font-size:12px;font-weight:700;padding:9px 18px;border-radius:20px;white-space:nowrap;flex-shrink:0;}
+</style>
+</head>
+<body dir="rtl">
+
+<div class="toast" id="toast"></div>
+
+<!-- NAV -->
+<nav class="nav">
+  <a class="logo-row" href="index.html">
+    <svg class="logo-hex" viewBox="0 0 58 58" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="29,2 54,16 54,42 29,56 4,42 4,16" fill="#c9973a"/>
+      <polygon points="29,5 51,17.5 51,40.5 29,53 7,40.5 7,17.5" fill="#080808"/>
+      <ellipse cx="29" cy="19" rx="6.5" ry="6.5" fill="#e8e8e0"/>
+      <path d="M22 26 Q12 20 8 24 Q10 30 18 29Z" fill="#1a1a1a"/>
+      <path d="M36 26 Q46 20 50 24 Q48 30 40 29Z" fill="#1a1a1a"/>
+      <path d="M20 32 Q29 38 38 32 Q33 44 29 46 Q25 44 20 32Z" fill="#c9973a" opacity="0.6"/>
+      <ellipse cx="22" cy="29" rx="2" ry="2.5" fill="#111"/>
+      <ellipse cx="36" cy="29" rx="2" ry="2.5" fill="#111"/>
+    </svg>
+    <div>
+      <div class="logo-name">AppNest</div>
+      <div class="logo-sub" id="logoSub">קן האפליקציות</div>
+    </div>
+  </a>
+  <a class="nav-back" href="index.html" id="navBack">← חזור לחנות</a>
+  <div class="lang-wrap" id="langWrap">
+    <button class="lang-btn" onclick="toggleLangMenu()">
+      <span id="curFlag">🇮🇱</span>
+      <span id="curLangName">עברית</span>
+      <span>▾</span>
+    </button>
+    <div class="lang-dropdown" id="langDropdown">
+      <div class="lang-option active" onclick="setLang('he')"><span style="font-size:18px;">🇮🇱</span><span>עברית</span></div>
+      <div class="lang-option" onclick="setLang('en')"><span style="font-size:18px;">🇬🇧</span><span>English</span></div>
+      <div class="lang-option" onclick="setLang('ru')"><span style="font-size:18px;">🇷🇺</span><span>Русский</span></div>
+      <div class="lang-option" onclick="setLang('es')"><span style="font-size:18px;">🇪🇸</span><span>Español</span></div>
+      <div class="lang-option" onclick="setLang('ar')"><span style="font-size:18px;">🇸🇦</span><span>العربية</span></div>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE WRAPPER -->
+<div id="pageWrap">
+
+<!-- ══════ JOIN PAGE ══════ -->
+<div class="page-join" id="pageJoin">
+
+  <div class="hero">
+    <div class="hero-content">
+      <div class="hero-badge" id="heroBadge">🧪 BETA TESTERS</div>
+      <h1 class="h1" id="heroTitle">הצטרף לצוות<br><span class="grad">הבודקים</span></h1>
+      <p class="h1-sub" id="heroSub">קבל גישה מוקדמת לכל אפליקציה חדשה לפני כולם — ותעזור לנו לבנות משהו מדהים</p>
+    </div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-wrap">
+    <div class="prog-item">
+      <div class="prog-dot active">1</div>
+      <div class="prog-lbl active" id="prog1">מלא טופס</div>
+    </div>
+    <div class="prog-connector"></div>
+    <div class="prog-item">
+      <div class="prog-dot idle">2</div>
+      <div class="prog-lbl" id="prog2">נוסף לרשימה</div>
+    </div>
+    <div class="prog-connector"></div>
+    <div class="prog-item">
+      <div class="prog-dot idle">3</div>
+      <div class="prog-lbl" id="prog3">קיבלת קישור</div>
+    </div>
+    <div class="prog-connector"></div>
+    <div class="prog-item">
+      <div class="prog-dot idle">4</div>
+      <div class="prog-lbl" id="prog4">בודק ונותן פידבק</div>
+    </div>
+  </div>
+
+  <!-- FORM -->
+  <div class="sec" style="padding-top:0;">
+    <div class="form-card">
+
+      <!-- PERSONAL -->
+      <div class="form-section">
+        <div class="form-sec-title" id="secPersonal">👤 פרטים אישיים</div>
+        <div class="fields-row">
+          <div class="field"><label id="lblName">שם מלא</label><input type="text" id="fName" placeholder="ישראל ישראלי"></div>
+          <div class="field"><label id="lblAge">גיל</label><input type="number" id="fAge" placeholder="25" min="10" max="99"></div>
+        </div>
+        <div class="fields-row" style="margin-top:12px;">
+          <div class="field"><label id="lblEmail">מייל *</label><input type="email" id="fEmail" placeholder="mail@gmail.com"></div>
+          <div class="field"><label id="lblWhatsapp">וואטסאפ <span id="lblOptional" style="color:var(--text3);">(אופציונלי)</span></label><input type="tel" id="fWhatsapp" placeholder="050-0000000"></div>
+        </div>
+      </div>
+
+      <!-- PLATFORM -->
+      <div class="form-section">
+        <div class="form-sec-title" id="secPlatform">📱 פלטפורמה</div>
+        <div class="platform-row">
+          <div class="plat-btn sel" id="platAndroid" onclick="selectPlat('android')">
+            <div class="plat-icon">🤖</div>
+            <div class="plat-name">Android</div>
+          </div>
+          <div class="plat-btn disabled" id="platIphone">
+            <div class="plat-icon">🍎</div>
+            <div class="plat-name">iPhone</div>
+            <div class="plat-soon" id="iphoneSoon">בקרוב</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CATEGORIES -->
+      <div class="form-section">
+        <div class="form-sec-title" id="secCats">🏷️ קטגוריות עניין</div>
+        <div class="cats-wrap" id="catsWrap"></div>
+      </div>
+
+      <!-- CONTACT PREF -->
+      <div class="form-section">
+        <div class="form-sec-title" id="secContact">🔔 איך לשלוח עדכונים?</div>
+        <div class="contact-row">
+          <div class="contact-btn sel" id="ctEmail" onclick="selectContact('email')">
+            <div class="contact-icon">📧</div>
+            <div class="contact-lbl" id="ctEmailLbl">מייל</div>
+          </div>
+          <div class="contact-btn" id="ctWhatsapp" onclick="selectContact('whatsapp')">
+            <div class="contact-icon">💬</div>
+            <div class="contact-lbl" id="ctWhatsappLbl">וואטסאפ</div>
+          </div>
+          <div class="contact-btn" id="ctBoth" onclick="selectContact('both')">
+            <div class="contact-icon">📱</div>
+            <div class="contact-lbl" id="ctBothLbl">שניהם</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUBMIT -->
+      <div class="submit-wrap">
+        <button class="submit-btn" id="submitBtn" onclick="submitForm()">📧 שלח בקשת הצטרפות</button>
+        <p class="submit-note" id="submitNote">בלחיצה ייפתח מייל מוכן לשליחה · הנתונים לא נשמרים בשרת</p>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- end page-join -->
+
+<!-- ══════ GUIDE PAGE ══════ -->
+<div class="page-guide" id="pageGuide">
+
+  <div class="hero">
+    <div class="hero-content">
+      <div class="hero-badge teal" id="guideBadge">📖 INSTALLATION GUIDE</div>
+      <h1 class="h1" id="guideTitle">מדריך <span class="grad">התקנה</span></h1>
+      <p class="h1-sub" id="guideSub">איך מתקינים אפליקציה בבדיקה? 4 שלבים פשוטים עם תמונות</p>
+    </div>
+  </div>
+
+  <div class="guide-steps-wrap">
+
+    <div class="guide-step-row">
+      <div class="guide-step-num">1</div>
+      <div class="guide-step-content">
+        <div class="guide-step-title" id="gs1Title">פתח את הקישור מהטלפון שלך</div>
+        <div class="guide-img-ph"><div class="guide-img-icon">📱</div><div class="guide-img-txt" id="gs1ImgTxt">תמונת מסך תוסף כאן</div></div>
+        <div class="guide-step-note" id="gs1Note">חשוב: הקישור חייב להיפתח מהטלפון שלך, לא מהמחשב. אם קיבלת את הקישור במייל — פתח אותו ישירות מתוך הטלפון.</div>
+      </div>
+    </div>
+
+    <div class="guide-step-row">
+      <div class="guide-step-num">2</div>
+      <div class="guide-step-content">
+        <div class="guide-step-title" id="gs2Title">Google Play נפתח — לחץ "הורד"</div>
+        <div class="guide-img-ph"><div class="guide-img-icon">▶️</div><div class="guide-img-txt" id="gs2ImgTxt">תמונת מסך תוסף כאן</div></div>
+        <div class="guide-step-note" id="gs2Note">אם מופיעה הודעה "בדיקה פנימית" או "Internal testing" — זה תקין לחלוטין! המשך ולחץ על כפתור ההורדה.</div>
+      </div>
+    </div>
+
+    <div class="guide-step-row">
+      <div class="guide-step-num">3</div>
+      <div class="guide-step-content">
+        <div class="guide-step-title" id="gs3Title">ממתין להורדה — זה לוקח כמה שניות</div>
+        <div class="guide-img-ph"><div class="guide-img-icon">⏳</div><div class="guide-img-txt" id="gs3ImgTxt">תמונת מסך תוסף כאן</div></div>
+        <div class="guide-step-note" id="gs3Note">ההורדה תלויה במהירות האינטרנט שלך. בדרך כלל לוקח פחות מדקה.</div>
+      </div>
+    </div>
+
+    <div class="guide-step-row">
+      <div class="guide-step-num">4</div>
+      <div class="guide-step-content">
+        <div class="guide-step-title" id="gs4Title">ההורדה הושלמה — לחץ "פתח" ובדוק!</div>
+        <div class="guide-img-ph"><div class="guide-img-icon">✅</div><div class="guide-img-txt" id="gs4ImgTxt">תמונת מסך תוסף כאן</div></div>
+        <div class="guide-step-note" id="gs4Note">האפליקציה תופיע גם על מסך הבית שלך. השתמש בה וכשתסיים — שלח לנו פידבק! הדעה שלך חשובה מאוד.</div>
+      </div>
+    </div>
+
+    <div class="contact-box">
+      <p id="contactBoxTxt">יש בעיה בהתקנה? אנחנו כאן לעזור 😊<br>
+      שלח לנו מייל: <a href="mailto:appnest55@gmail.com">appnest55@gmail.com</a></p>
+    </div>
+
+    <div style="text-align:center;padding-bottom:20px;">
+      <button onclick="showJoin()" style="background:transparent;border:1px solid var(--gold-border);color:var(--gold2);padding:12px 28px;border-radius:20px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Heebo',sans-serif;" id="backToFormBtn">← חזור לטופס</button>
+    </div>
+
+  </div>
+</div><!-- end page-guide -->
+
+</div><!-- end pageWrap -->
+
+<script>
+/* ════════ TRANSLATIONS ════════ */
+var LANGS = {
+  he:{
+    dir:'rtl',flag:'🇮🇱',name:'עברית',
+    logoSub:'קן האפליקציות',navBack:'← חזור לחנות',
+    heroBadge:'🧪 BETA TESTERS',
+    heroTitle:'הצטרף לצוות<br><span class="grad">הבודקים</span>',
+    heroSub:'קבל גישה מוקדמת לכל אפליקציה חדשה לפני כולם — ותעזור לנו לבנות משהו מדהים',
+    prog1:'מלא טופס',prog2:'נוסף לרשימה',prog3:'קיבלת קישור',prog4:'בודק ונותן פידבק',
+    secPersonal:'👤 פרטים אישיים',secPlatform:'📱 פלטפורמה',secCats:'🏷️ קטגוריות עניין',secContact:'🔔 איך לשלוח עדכונים?',
+    lblName:'שם מלא',lblAge:'גיל',lblEmail:'מייל *',lblWhatsapp:'וואטסאפ',lblOptional:'(אופציונלי)',
+    namePh:'ישראל ישראלי',agePh:'25',emailPh:'mail@gmail.com',whatsappPh:'050-0000000',
+    iphoneSoon:'בקרוב',
+    cats:['📱 אפליקציות','🔧 כלים','🎮 משחקים','💼 עסקים','🎓 חינוך','📊 פיננסי','⚖️ משפטי'],
+    ctEmailLbl:'מייל',ctWhatsappLbl:'וואטסאפ',ctBothLbl:'שניהם',
+    submitBtn:'📧 שלח בקשת הצטרפות',
+    submitNote:'בלחיצה ייפתח מייל מוכן לשליחה · הנתונים לא נשמרים בשרת',
+    guideLink:'📖 מדריך מלא עם תמונות מסך ›',
+    guideLinkSub:'הסבר צעד אחר צעד איך להתקין ולבדוק',
+    guideBadge:'📖 INSTALLATION GUIDE',
+    guideTitle:'מדריך <span class="grad">התקנה</span>',
+    guideSub:'איך מתקינים אפליקציה בבדיקה? 4 שלבים פשוטים עם תמונות',
+    gs1Title:'פתח את הקישור מהטלפון שלך',gs1ImgTxt:'תמונת מסך תוסף כאן',
+    gs1Note:'חשוב: הקישור חייב להיפתח מהטלפון שלך, לא מהמחשב.',
+    gs2Title:'Google Play נפתח — לחץ "הורד"',gs2ImgTxt:'תמונת מסך תוסף כאן',
+    gs2Note:'אם מופיעה הודעה "בדיקה פנימית" — זה תקין לחלוטין! המשך ולחץ הורדה.',
+    gs3Title:'ממתין להורדה — זה לוקח כמה שניות',gs3ImgTxt:'תמונת מסך תוסף כאן',
+    gs3Note:'ההורדה תלויה במהירות האינטרנט שלך. בדרך כלל פחות מדקה.',
+    gs4Title:'ההורדה הושלמה — לחץ "פתח" ובדוק!',gs4ImgTxt:'תמונת מסך תוסף כאן',
+    gs4Note:'האפליקציה תופיע על מסך הבית שלך. השתמש בה ושלח לנו פידבק!',
+    contactBoxTxt:'יש בעיה בהתקנה? אנחנו כאן לעזור 😊<br>שלח לנו מייל: <a href="mailto:appnest55@gmail.com">appnest55@gmail.com</a>',
+    backToFormBtn:'← חזור לטופס',
+    toastOk:'✅ מייל נפתח! שלח אותו ונוסיף אותך לרשימה 🎉',
+    toastEmail:'אנא הכנס כתובת מייל תקינה',
+    toastCat:'בחר לפחות קטגוריה אחת',
+    emailSubject:'בקשת הצטרפות לצוות בודקי AppNest',
+  },
+  en:{
+    dir:'ltr',flag:'🇬🇧',name:'English',
+    logoSub:'The App Nest',navBack:'← Back to Store',
+    heroBadge:'🧪 BETA TESTERS',
+    heroTitle:'Join the<br><span class="grad">Beta Team</span>',
+    heroSub:'Get early access to every new app before anyone else — and help us build something amazing',
+    prog1:'Fill Form',prog2:'Added to List',prog3:'Got Link',prog4:'Test & Feedback',
+    secPersonal:'👤 Personal Details',secPlatform:'📱 Platform',secCats:'🏷️ Interests',secContact:'🔔 How to Notify You?',
+    lblName:'Full Name',lblAge:'Age',lblEmail:'Email *',lblWhatsapp:'WhatsApp',lblOptional:'(optional)',
+    namePh:'John Smith',agePh:'25',emailPh:'mail@gmail.com',whatsappPh:'+1-000-0000000',
+    iphoneSoon:'Coming soon',
+    cats:['📱 Apps','🔧 Tools','🎮 Games','💼 Business','🎓 Education','📊 Finance','⚖️ Legal'],
+    ctEmailLbl:'Email',ctWhatsappLbl:'WhatsApp',ctBothLbl:'Both',
+    submitBtn:'📧 Send Join Request',
+    submitNote:'Clicking will open a ready-to-send email · No data is stored on a server',
+    guideLink:'📖 Full guide with screenshots ›',
+    guideLinkSub:'Step-by-step: how to install and test',
+    guideBadge:'📖 INSTALLATION GUIDE',
+    guideTitle:'Installation <span class="grad">Guide</span>',
+    guideSub:'How to install a beta app? 4 simple steps with screenshots',
+    gs1Title:'Open the link on your phone',gs1ImgTxt:'Screenshot will be added here',
+    gs1Note:'Important: The link must be opened on your phone, not a computer.',
+    gs2Title:'Google Play opens — tap "Install"',gs2ImgTxt:'Screenshot will be added here',
+    gs2Note:'If you see "Internal testing" — that\'s completely normal! Continue and tap Install.',
+    gs3Title:'Waiting for download — takes a few seconds',gs3ImgTxt:'Screenshot will be added here',
+    gs3Note:'Download speed depends on your connection. Usually less than a minute.',
+    gs4Title:'Download complete — tap "Open" and test!',gs4ImgTxt:'Screenshot will be added here',
+    gs4Note:'The app will appear on your home screen. Use it and send us feedback!',
+    contactBoxTxt:'Having trouble installing? We\'re here to help 😊<br>Email us: <a href="mailto:appnest55@gmail.com">appnest55@gmail.com</a>',
+    backToFormBtn:'← Back to Form',
+    toastOk:'✅ Email opened! Send it and we\'ll add you 🎉',
+    toastEmail:'Please enter a valid email address',
+    toastCat:'Please select at least one category',
+    emailSubject:'Join AppNest Beta Testers',
+  },
+  ru:{
+    dir:'ltr',flag:'🇷🇺',name:'Русский',
+    logoSub:'Гнездо приложений',navBack:'← Назад в магазин',
+    heroBadge:'🧪 БЕТА-ТЕСТЕРЫ',
+    heroTitle:'Присоединись к<br><span class="grad">команде тестеров</span>',
+    heroSub:'Получай ранний доступ к каждому новому приложению раньше всех',
+    prog1:'Заполни форму',prog2:'Добавлен в список',prog3:'Получил ссылку',prog4:'Тестируй',
+    secPersonal:'👤 Личные данные',secPlatform:'📱 Платформа',secCats:'🏷️ Интересы',secContact:'🔔 Как уведомлять?',
+    lblName:'Полное имя',lblAge:'Возраст',lblEmail:'Email *',lblWhatsapp:'WhatsApp',lblOptional:'(необязательно)',
+    namePh:'Иван Иванов',agePh:'25',emailPh:'mail@gmail.com',whatsappPh:'+7-000-0000000',
+    iphoneSoon:'Скоро',
+    cats:['📱 Приложения','🔧 Инструменты','🎮 Игры','💼 Бизнес','🎓 Образование','📊 Финансы','⚖️ Юридические'],
+    ctEmailLbl:'Email',ctWhatsappLbl:'WhatsApp',ctBothLbl:'Оба',
+    submitBtn:'📧 Отправить заявку',
+    submitNote:'Нажатие откроет готовое письмо · Данные не сохраняются на сервере',
+    guideLink:'📖 Полное руководство с скриншотами ›',
+    guideLinkSub:'Пошаговая инструкция по установке',
+    guideBadge:'📖 РУКОВОДСТВО ПО УСТАНОВКЕ',
+    guideTitle:'Руководство по<span class="grad"> установке</span>',
+    guideSub:'Как установить бета-приложение? 4 простых шага',
+    gs1Title:'Открой ссылку на телефоне',gs1ImgTxt:'Скриншот будет добавлен',
+    gs1Note:'Важно: ссылку нужно открывать на телефоне, не на компьютере.',
+    gs2Title:'Открылся Google Play — нажми "Установить"',gs2ImgTxt:'Скриншот будет добавлен',
+    gs2Note:'Если видишь "Внутреннее тестирование" — это нормально! Нажми установить.',
+    gs3Title:'Ожидание загрузки — займёт несколько секунд',gs3ImgTxt:'Скриншот будет добавлен',
+    gs3Note:'Скорость зависит от интернета. Обычно меньше минуты.',
+    gs4Title:'Загрузка завершена — нажми "Открыть"!',gs4ImgTxt:'Скриншот будет добавлен',
+    gs4Note:'Приложение появится на главном экране. Используй и отправь отзыв!',
+    contactBoxTxt:'Проблемы с установкой? Мы поможем 😊<br>Напиши нам: <a href="mailto:appnest55@gmail.com">appnest55@gmail.com</a>',
+    backToFormBtn:'← Назад к форме',
+    toastOk:'✅ Письмо открыто! Отправь его и мы добавим тебя 🎉',
+    toastEmail:'Введите корректный адрес email',
+    toastCat:'Выберите хотя бы одну категорию',
+    emailSubject:'Заявка на участие в бета-тестировании AppNest',
+  },
+  es:{
+    dir:'ltr',flag:'🇪🇸',name:'Español',
+    logoSub:'El Nido de Apps',navBack:'← Volver a la tienda',
+    heroBadge:'🧪 BETA TESTERS',
+    heroTitle:'Únete al<br><span class="grad">equipo beta</span>',
+    heroSub:'Obtén acceso anticipado a cada nueva app antes que nadie — y ayúdanos a crear algo increíble',
+    prog1:'Rellena el formulario',prog2:'Añadido a la lista',prog3:'Recibiste el enlace',prog4:'Prueba y feedback',
+    secPersonal:'👤 Datos personales',secPlatform:'📱 Plataforma',secCats:'🏷️ Intereses',secContact:'🔔 ¿Cómo notificarte?',
+    lblName:'Nombre completo',lblAge:'Edad',lblEmail:'Email *',lblWhatsapp:'WhatsApp',lblOptional:'(opcional)',
+    namePh:'Juan García',agePh:'25',emailPh:'mail@gmail.com',whatsappPh:'+34-000-000000',
+    iphoneSoon:'Próximamente',
+    cats:['📱 Apps','🔧 Herramientas','🎮 Juegos','💼 Negocios','🎓 Educación','📊 Finanzas','⚖️ Legal'],
+    ctEmailLbl:'Email',ctWhatsappLbl:'WhatsApp',ctBothLbl:'Ambos',
+    submitBtn:'📧 Enviar solicitud',
+    submitNote:'Al hacer clic se abrirá un correo listo · Los datos no se guardan en servidor',
+    guideLink:'📖 Guía completa con capturas ›',
+    guideLinkSub:'Paso a paso: cómo instalar y probar',
+    guideBadge:'📖 GUÍA DE INSTALACIÓN',
+    guideTitle:'Guía de <span class="grad">instalación</span>',
+    guideSub:'¿Cómo instalar una app beta? 4 pasos simples con capturas',
+    gs1Title:'Abre el enlace en tu teléfono',gs1ImgTxt:'Captura de pantalla se añadirá aquí',
+    gs1Note:'Importante: El enlace debe abrirse en el teléfono, no en el ordenador.',
+    gs2Title:'Se abre Google Play — toca "Instalar"',gs2ImgTxt:'Captura de pantalla se añadirá aquí',
+    gs2Note:'Si ves "Prueba interna" — ¡es completamente normal! Continúa e instala.',
+    gs3Title:'Esperando descarga — tarda unos segundos',gs3ImgTxt:'Captura de pantalla se añadirá aquí',
+    gs3Note:'La velocidad depende de tu conexión. Normalmente menos de un minuto.',
+    gs4Title:'¡Descarga completa — toca "Abrir" y prueba!',gs4ImgTxt:'Captura de pantalla se añadirá aquí',
+    gs4Note:'La app aparecerá en tu pantalla de inicio. ¡Úsala y mándanos tu opinión!',
+    contactBoxTxt:'¿Problemas con la instalación? Estamos aquí 😊<br>Escríbenos: <a href="mailto:appnest55@gmail.com">appnest55@gmail.com</a>',
+    backToFormBtn:'← Volver al formulario',
+    toastOk:'✅ ¡Email abierto! Envíalo y te añadiremos 🎉',
+    toastEmail:'Por favor introduce un email válido',
+    toastCat:'Por favor selecciona al menos una categoría',
+    emailSubject:'Solicitud para unirse a Beta Testers de AppNest',
+  },
+  ar:{
+    dir:'rtl',flag:'🇸🇦',name:'العربية',
+    logoSub:'عش التطبيقات',navBack:'→ العودة للمتجر',
+    heroBadge:'🧪 بيتا تيسترز',
+    heroTitle:'انضم إلى<br><span class="grad">فريق الاختبار</span>',
+    heroSub:'احصل على وصول مبكر لكل تطبيق جديد قبل الجميع — وساعدنا في بناء شيء رائع',
+    prog1:'املأ النموذج',prog2:'أُضفت للقائمة',prog3:'استلمت الرابط',prog4:'اختبر وأعطِ رأيك',
+    secPersonal:'👤 البيانات الشخصية',secPlatform:'📱 المنصة',secCats:'🏷️ الاهتمامات',secContact:'🔔 كيف نُخطرك؟',
+    lblName:'الاسم الكامل',lblAge:'العمر',lblEmail:'البريد الإلكتروني *',lblWhatsapp:'واتساب',lblOptional:'(اختياري)',
+    namePh:'محمد محمد',agePh:'25',emailPh:'mail@gmail.com',whatsappPh:'+966-000-000000',
+    iphoneSoon:'قريباً',
+    cats:['📱 تطبيقات','🔧 أدوات','🎮 ألعاب','💼 أعمال','🎓 تعليم','📊 مالية','⚖️ قانونية'],
+    ctEmailLbl:'بريد إلكتروني',ctWhatsappLbl:'واتساب',ctBothLbl:'كلاهما',
+    submitBtn:'📧 إرسال طلب الانضمام',
+    submitNote:'بالنقر سيفتح بريد جاهز للإرسال · البيانات لا تُحفظ على الخادم',
+    guideLink:'📖 دليل كامل مع لقطات الشاشة ›',
+    guideLinkSub:'خطوة بخطوة: كيفية التثبيت والاختبار',
+    guideBadge:'📖 دليل التثبيت',
+    guideTitle:'دليل <span class="grad">التثبيت</span>',
+    guideSub:'كيف تثبّت تطبيق بيتا؟ 4 خطوات بسيطة مع صور',
+    gs1Title:'افتح الرابط من هاتفك',gs1ImgTxt:'ستُضاف لقطة شاشة هنا',
+    gs1Note:'مهم: يجب فتح الرابط من الهاتف وليس من الكمبيوتر.',
+    gs2Title:'فتح Google Play — اضغط "تثبيت"',gs2ImgTxt:'ستُضاف لقطة شاشة هنا',
+    gs2Note:'إذا ظهرت رسالة "اختبار داخلي" — هذا طبيعي تماماً! تابع واضغط تثبيت.',
+    gs3Title:'انتظر التحميل — يستغرق بضع ثوانٍ',gs3ImgTxt:'ستُضاف لقطة شاشة هنا',
+    gs3Note:'السرعة تعتمد على الإنترنت. عادةً أقل من دقيقة.',
+    gs4Title:'اكتمل التحميل — اضغط "فتح" واختبر!',gs4ImgTxt:'ستُضاف لقطة شاشة هنا',
+    gs4Note:'سيظهر التطبيق على شاشتك الرئيسية. استخدمه وأرسل لنا رأيك!',
+    contactBoxTxt:'مشكلة في التثبيت؟ نحن هنا للمساعدة 😊<br>راسلنا: <a href="mailto:appnest55@gmail.com">appnest55@gmail.com</a>',
+    backToFormBtn:'→ العودة للنموذج',
+    toastOk:'✅ فُتح البريد! أرسله وسنضيفك 🎉',
+    toastEmail:'يرجى إدخال بريد إلكتروني صحيح',
+    toastCat:'يرجى اختيار فئة واحدة على الأقل',
+    emailSubject:'طلب الانضمام لفريق اختبار AppNest',
+  }
+};
+
+var curLang = 'he';
+var selPlat = 'android';
+var selContact = 'email';
+var selCats = [];
+
+function T(k){ return LANGS[curLang][k] || LANGS['en'][k] || k; }
+
+function setLang(lang){
+  curLang = lang;
+  var L = LANGS[lang];
+  document.documentElement.lang = lang;
+  document.documentElement.dir = L.dir;
+  document.body.dir = L.dir;
+  document.getElementById('curFlag').textContent = L.flag;
+  document.getElementById('curLangName').textContent = L.name;
+  document.querySelectorAll('.lang-option').forEach(function(el){ el.classList.remove('active'); });
+  document.querySelectorAll('.lang-option').forEach(function(el){
+    if(el.querySelector('span:last-child').textContent === L.name) el.classList.add('active');
+  });
+  document.getElementById('langWrap').classList.remove('open');
+  applyLang();
+  renderCats();
+}
+
+function applyLang(){
+  var ids = ['logoSub','navBack','prog1','prog2','prog3','prog4',
+    'secPersonal','secPlatform','secCats','secContact',
+    'lblName','lblAge','lblEmail','lblWhatsapp','lblOptional',
+    'iphoneSoon','ctEmailLbl','ctWhatsappLbl','ctBothLbl',
+    'submitBtn','submitNote',
+    'guideBadge','guideSub',
+    'gs1Title','gs1ImgTxt','gs1Note',
+    'gs2Title','gs2ImgTxt','gs2Note',
+    'gs3Title','gs3ImgTxt','gs3Note',
+    'gs4Title','gs4ImgTxt','gs4Note',
+    'backToFormBtn'];
+  ids.forEach(function(id){
+    var el = document.getElementById(id);
+    if(el && T(id) !== id) el.textContent = T(id);
+  });
+  // innerHTML for html content
+  ['heroBadge','heroTitle','heroSub','guideTitle','contactBoxTxt'].forEach(function(id){
+    var el = document.getElementById(id);
+    if(el) el.innerHTML = T(id);
+  });
+  // placeholders
+  var phs = {fName:'namePh',fAge:'agePh',fEmail:'emailPh',fWhatsapp:'whatsappPh'};
+  Object.keys(phs).forEach(function(fid){
+    var el = document.getElementById(fid);
+    if(el) el.placeholder = T(phs[fid]);
+  });
+  // guide link
+  var glEl = document.getElementById('guideLinkTitle');
+  if(glEl) glEl.textContent = T('guideLink');
+  var glsEl = document.getElementById('guideLinkSub');
+  if(glsEl) glsEl.textContent = T('guideLinkSub');
+}
+
+function renderCats(){
+  var wrap = document.getElementById('catsWrap');
+  wrap.innerHTML = '';
+  T('cats').forEach(function(cat, i){
+    var chip = document.createElement('div');
+    chip.className = 'cat-chip' + (selCats.indexOf(i) > -1 ? ' sel' : '');
+    chip.textContent = cat;
+    chip.onclick = function(){ toggleCat(i, chip); };
+    wrap.appendChild(chip);
+  });
+}
+
+function toggleCat(i, el){
+  var idx = selCats.indexOf(i);
+  if(idx > -1){ selCats.splice(idx,1); el.classList.remove('sel'); }
+  else { selCats.push(i); el.classList.add('sel'); }
+}
+
+function selectPlat(p){
+  selPlat = p;
+  document.getElementById('platAndroid').classList.toggle('sel', p==='android');
+}
+
+function selectContact(c){
+  selContact = c;
+  ['email','whatsapp','both'].forEach(function(k){
+    document.getElementById('ct'+k.charAt(0).toUpperCase()+k.slice(1)).classList.toggle('sel', k===c);
+  });
+}
+
+function submitForm(){
+  var email = document.getElementById('fEmail').value.trim();
+  if(!email || !email.includes('@')){ showToast(T('toastEmail')); return; }
+  if(selCats.length === 0){ showToast(T('toastCat')); return; }
+  var name = document.getElementById('fName').value.trim() || '—';
+  var age = document.getElementById('fAge').value.trim() || '—';
+  var wa = document.getElementById('fWhatsapp').value.trim() || '—';
+  var cats = selCats.map(function(i){ return T('cats')[i]; }).join(', ');
+  var contactPref = selContact;
+  var body = 'שם: '+name+'\nגיל: '+age+'\nמייל: '+email+'\nוואטסאפ: '+wa+'\nפלטפורמה: Android\nקטגוריות: '+cats+'\nהעדפת קשר: '+contactPref;
+  var mailto = 'mailto:appnest55@gmail.com?subject='+encodeURIComponent(T('emailSubject'))+'&body='+encodeURIComponent(body);
+  window.location.href = mailto;
+  showToast(T('toastOk'));
+}
+
+function showGuide(){
+  document.getElementById('pageJoin').style.display = 'none';
+  document.getElementById('pageGuide').style.display = 'block';
+  window.scrollTo(0,0);
+}
+function showJoin(){
+  document.getElementById('pageGuide').style.display = 'none';
+  document.getElementById('pageJoin').style.display = 'block';
+  window.scrollTo(0,0);
+}
+
+function toggleLangMenu(){
+  document.getElementById('langWrap').classList.toggle('open');
+}
+document.addEventListener('click',function(e){
+  if(!document.getElementById('langWrap').contains(e.target))
+    document.getElementById('langWrap').classList.remove('open');
+});
+
+function showToast(msg){
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 3000);
+}
+
+/* build guide link inside step 3 card area */
+function buildGuideLink(){
+  var area = document.getElementById('prog3').closest('.prog-item');
+  var box = document.createElement('div');
+  box.className = 'guide-link-box';
+  box.onclick = showGuide;
+  box.innerHTML = '<div class="guide-link-icon">📖</div>'+
+    '<div class="guide-link-text">'+
+      '<div class="guide-link-title" id="guideLinkTitle">'+T('guideLink')+'</div>'+
+      '<div class="guide-link-sub" id="guideLinkSub">'+T('guideLinkSub')+'</div>'+
+    '</div>'+
+    '<div class="guide-link-arrow">›</div>';
+  // insert after progress, before form
+  var formCard = document.querySelector('.form-card');
+  formCard.parentNode.insertBefore(box, formCard);
+}
+
+renderCats();
+applyLang();
+buildGuideLink();
+</script>
+</body>
+</html>
