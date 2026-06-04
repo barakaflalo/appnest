@@ -3,558 +3,1353 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AppNest — חנות האפליקציות שלנו</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;800&family=Heebo:wght@300;400;600;700&display=swap" rel="stylesheet">
+<meta name="description" content="AppNest — קן האפליקציות. אפליקציות, משחקים וכלים בחינם לכולם.">
+<title>AppNest — קן האפליקציות</title>
+<link rel="icon" href="logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
+*{box-sizing:border-box;margin:0;padding:0;}
 :root{
-  --gold:#C9A84C;--gold-light:#F0C060;--gold-dim:#6A4E1A;
-  --bg:#0A0A0A;--dark:#111;--dark2:#1A1A1A;--dark3:#222;
-  --text:#E8E0D0;--text-dim:#777;
-  --green:#4CAF7A;--red:#E05050;--blue:#4A8FD4;
+  --bg:#080808;--bg2:#0f0f0f;--bg3:#141414;--bg4:#1c1c1c;
+  --gold:#c9973a;--gold2:#e8b84b;--gold3:#f5d080;
+  --gold-dim:rgba(201,151,58,0.10);--gold-border:rgba(201,151,58,0.22);
+  --text:#efefef;--text2:#aaa;--text3:#555;
+  --green:#3ecf6c;--teal:#22d0d8;--red:#f06060;--yellow:#f5c842;--purple:#a06cf5;
+  --r:10px;--r2:16px;--r3:24px;
 }
-*{margin:0;padding:0;box-sizing:border-box;}
-body{background:var(--bg);color:var(--text);font-family:'Heebo',sans-serif;min-height:100vh;direction:rtl;}
-body.ltr{direction:ltr;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Heebo',sans-serif;min-height:100vh;overflow-x:hidden;}
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(rgba(201,151,58,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(201,151,58,0.025) 1px,transparent 1px);
+  background-size:48px 48px;
+}
 
-/* HEADER */
-.header{background:linear-gradient(180deg,#0A0A0A,#111);border-bottom:1px solid var(--gold-dim);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
-.logo{display:flex;align-items:center;gap:10px;}
-.logo-text{font-family:'Cinzel',serif;font-size:1.3rem;color:var(--gold);letter-spacing:1px;}
-.logo-sub{font-size:0.6rem;color:var(--gold-dim);letter-spacing:3px;display:block;margin-top:-2px;}
-.header-right{display:flex;align-items:center;gap:8px;}
+/* NAV */
+.nav{display:flex;justify-content:space-between;align-items:center;padding:0 40px;height:62px;position:sticky;top:0;z-index:200;background:rgba(8,8,8,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--gold-border);}
+.logo-row{display:flex;align-items:center;gap:13px;text-decoration:none;}
+.logo-hex{width:38px;height:38px;flex-shrink:0;}
+.logo-name{font-family:'Syne',sans-serif;font-size:19px;font-weight:900;color:var(--gold2);letter-spacing:0.5px;line-height:1;}
+.logo-sub{font-size:8px;color:var(--text3);letter-spacing:2.5px;text-transform:uppercase;margin-top:2px;}
+.nav-center{display:flex;gap:4px;}
+.nav-link{font-size:12px;font-weight:500;color:var(--text2);padding:7px 14px;border-radius:20px;cursor:pointer;text-decoration:none;transition:color 0.15s,background 0.15s;}
+.nav-link:hover{color:var(--gold2);background:var(--gold-dim);}
+.nav-right{display:flex;gap:8px;align-items:center;}
 
-/* LANG */
-.lang-btn{background:var(--dark3);border:1px solid var(--gold-dim);color:var(--gold);padding:6px 10px;border-radius:20px;cursor:pointer;font-size:0.78rem;font-family:'Heebo',sans-serif;display:flex;align-items:center;gap:5px;}
-.lang-dropdown{position:absolute;top:110%;left:0;background:var(--dark2);border:1px solid var(--gold-dim);border-radius:10px;overflow:hidden;display:none;min-width:140px;z-index:200;}
-.lang-dropdown.open{display:block;}
-.lang-option{padding:10px 14px;cursor:pointer;font-size:0.85rem;display:flex;align-items:center;gap:8px;color:var(--text);}
-.lang-option:hover{background:var(--dark3);color:var(--gold);}
+/* LANG DROPDOWN */
+.lang-wrap{position:relative;}
+.lang-btn{background:transparent;border:1px solid var(--gold-border);color:var(--gold);border-radius:20px;padding:6px 14px;font-size:12px;cursor:pointer;font-family:'Heebo',sans-serif;font-weight:600;display:flex;align-items:center;gap:6px;transition:background 0.15s;}
+.lang-btn:hover{background:var(--gold-dim);}
+.lang-flag{font-size:15px;}
+.lang-dropdown{position:absolute;top:calc(100% + 8px);left:0;background:var(--bg3);border:1px solid var(--gold-border);border-radius:var(--r2);overflow:hidden;min-width:150px;box-shadow:0 8px 30px rgba(0,0,0,0.5);display:none;z-index:300;}
+.lang-wrap.open .lang-dropdown{display:block;}
+.lang-option{display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;font-size:13px;transition:background 0.1s;}
+.lang-option:hover{background:var(--bg4);}
+.lang-option.active{color:var(--gold2);}
+.lang-option-flag{font-size:18px;}
+.lang-option-name{font-weight:500;}
 
-/* SEARCH & FILTER */
-.search-section{max-width:700px;margin:0 auto;padding:20px 16px 0;}
-.search-bar{background:var(--dark2);border:1px solid var(--dark3);border-radius:12px;padding:10px 16px;display:flex;align-items:center;gap:10px;margin-bottom:14px;}
-.search-bar input{background:none;border:none;color:var(--text);font-family:'Heebo',sans-serif;font-size:0.95rem;flex:1;outline:none;}
-.search-bar input::placeholder{color:var(--text-dim);}
-.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;}
-.filter-btn{background:var(--dark3);border:1px solid #333;color:var(--text-dim);padding:6px 14px;border-radius:20px;cursor:pointer;font-size:0.82rem;font-family:'Heebo',sans-serif;transition:all 0.2s;}
-.filter-btn.active{border-color:var(--gold);color:var(--gold);background:var(--dark2);}
+/* HERO */
+.hero{position:relative;z-index:1;text-align:center;padding:90px 24px 70px;overflow:hidden;}
+.hero::after{content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:700px;height:400px;background:radial-gradient(ellipse,rgba(201,151,58,0.08) 0%,transparent 70%);pointer-events:none;z-index:0;}
+.hero-content{position:relative;z-index:1;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--gold-dim);border:1px solid var(--gold-border);color:var(--gold2);border-radius:20px;padding:6px 18px;font-size:11px;margin-bottom:28px;letter-spacing:1px;font-weight:600;}
+.h1{font-family:'Syne',sans-serif;font-size:62px;font-weight:900;line-height:1.0;margin-bottom:10px;letter-spacing:-2px;}
+.h1 .grad{background:linear-gradient(135deg,var(--gold) 0%,var(--gold3) 50%,var(--gold) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.h1-sub{font-size:17px;color:var(--text2);margin-bottom:44px;line-height:1.7;max-width:520px;margin-left:auto;margin-right:auto;}
+.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#080808;border:none;border-radius:var(--r);padding:14px 34px;font-size:14px;font-weight:800;cursor:pointer;text-decoration:none;display:inline-block;transition:opacity 0.15s,transform 0.1s;font-family:'Heebo',sans-serif;box-shadow:0 4px 20px rgba(201,151,58,0.3);}
+.btn-gold:hover{opacity:0.88;transform:translateY(-1px);}
+.btn-outline{background:transparent;color:var(--gold2);border:1.5px solid var(--gold-border);border-radius:var(--r);padding:14px 28px;font-size:14px;cursor:pointer;text-decoration:none;display:inline-block;transition:background 0.15s;font-family:'Heebo',sans-serif;font-weight:600;}
+.btn-outline:hover{background:var(--gold-dim);}
 
 /* SPOTLIGHT */
-.spotlight{max-width:700px;margin:16px auto 0;padding:0 16px;}
-.spotlight-card{background:linear-gradient(135deg,#1A1500,#2A2000);border:1px solid var(--gold-dim);border-radius:16px;padding:20px;display:flex;align-items:center;gap:16px;margin-bottom:20px;position:relative;overflow:hidden;}
-.spotlight-card::before{content:'⭐ App of the Week';position:absolute;top:10px;left:10px;font-size:0.7rem;color:var(--gold-dim);letter-spacing:2px;font-weight:700;}
-body.ltr .spotlight-card::before{left:auto;right:10px;}
-.spotlight-icon{font-size:3rem;flex-shrink:0;}
-.spotlight-info{flex:1;}
-.spotlight-name{font-family:'Cinzel',serif;font-size:1.2rem;color:var(--gold);margin-bottom:4px;margin-top:8px;}
-.spotlight-desc{font-size:0.82rem;color:var(--text-dim);line-height:1.5;}
-
-/* SECTION */
-.section{max-width:700px;margin:0 auto;padding:0 16px 24px;}
-.section-title{font-family:'Cinzel',serif;font-size:1rem;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
-.section-title::after{content:'';flex:1;height:1px;background:var(--gold-dim);opacity:0.4;}
-
-/* APP GRID */
-.app-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
-@media(min-width:500px){.app-grid{grid-template-columns:repeat(3,1fr);}}
-
-/* APP CARD */
-.app-card{background:var(--dark2);border:1px solid var(--dark3);border-radius:16px;padding:16px 14px;cursor:pointer;transition:all 0.25s;position:relative;overflow:hidden;}
-.app-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0;transition:opacity 0.3s;}
-.app-card:hover{border-color:var(--gold-dim);transform:translateY(-3px);box-shadow:0 8px 24px rgba(201,168,76,0.15);}
-.app-card:hover::before{opacity:1;}
-.app-icon{font-size:2.4rem;margin-bottom:10px;display:block;}
-.app-name{font-size:0.95rem;font-weight:700;color:var(--gold);margin-bottom:4px;}
-.app-desc{font-size:0.72rem;color:var(--text-dim);line-height:1.4;margin-bottom:8px;}
-.app-footer{display:flex;align-items:center;justify-content:space-between;}
-.app-tag{font-size:0.68rem;background:var(--dark3);color:var(--text-dim);padding:2px 8px;border-radius:10px;}
-.app-tag.free{background:#1A3A1A;color:var(--green);}
-.app-tag.soon{background:#1A1A3A;color:var(--blue);}
-.app-tag.new{background:#2A1A00;color:var(--gold);}
-.app-stars{font-size:0.72rem;color:var(--gold-dim);}
-
-/* MODAL */
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:300;display:none;align-items:center;justify-content:center;padding:16px;}
-.modal-bg.open{display:flex;}
-.modal{background:var(--dark2);border:1px solid var(--gold-dim);border-radius:20px;padding:24px 20px;max-width:420px;width:100%;max-height:90vh;overflow-y:auto;}
-.modal-header{display:flex;align-items:center;gap:14px;margin-bottom:16px;}
-.modal-icon{font-size:3rem;}
-.modal-title{font-family:'Cinzel',serif;font-size:1.3rem;color:var(--gold);}
-.modal-subtitle{font-size:0.78rem;color:var(--text-dim);margin-top:2px;}
-.modal-desc{color:var(--text-dim);font-size:0.88rem;line-height:1.7;margin-bottom:16px;}
-.features-list{margin-bottom:16px;}
-.features-title{font-size:0.75rem;color:var(--gold);font-weight:700;letter-spacing:1px;margin-bottom:8px;}
-.feature-item{font-size:0.82rem;color:var(--text-dim);padding:4px 0;display:flex;align-items:center;gap:8px;}
-.feature-item::before{content:'✦';color:var(--gold-dim);font-size:0.6rem;}
-.modal-actions{display:flex;gap:10px;flex-wrap:wrap;}
-.btn-primary{background:linear-gradient(135deg,var(--gold-dim),var(--gold));color:#0A0A0A;border:none;padding:12px 24px;border-radius:22px;font-family:'Heebo',sans-serif;font-size:0.9rem;font-weight:700;cursor:pointer;transition:all 0.2s;text-decoration:none;display:inline-block;text-align:center;}
-.btn-primary:hover{transform:scale(1.04);box-shadow:0 4px 15px rgba(201,168,76,0.4);}
-.btn-secondary{background:transparent;color:var(--gold);border:1px solid var(--gold-dim);padding:11px 22px;border-radius:22px;font-family:'Heebo',sans-serif;font-size:0.88rem;cursor:pointer;text-decoration:none;display:inline-block;text-align:center;}
-.btn-secondary:hover{background:var(--dark3);}
-.soon-badge{background:linear-gradient(135deg,#1A1A3A,#2A2A5A);color:var(--blue);border:1px solid var(--blue);padding:12px 24px;border-radius:22px;font-size:0.88rem;font-weight:700;text-align:center;}
-
-/* BETA BANNER */
-.beta-banner{max-width:700px;margin:0 auto 16px;padding:0 16px;}
-.beta-card{background:linear-gradient(135deg,#0A1A0A,#1A2A1A);border:1px solid var(--green);border-radius:14px;padding:16px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:all 0.2s;}
-.beta-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(76,175,122,0.2);}
-.beta-icon{font-size:2rem;flex-shrink:0;}
-.beta-title{font-size:0.95rem;font-weight:700;color:var(--green);margin-bottom:3px;}
-.beta-desc{font-size:0.75rem;color:var(--text-dim);}
+.spotlight{position:relative;z-index:1;padding:0 40px 40px;}
+.spotlight-inner{background:linear-gradient(135deg,rgba(201,151,58,0.08),rgba(201,151,58,0.03));border:1px solid var(--gold-border);border-radius:var(--r3);padding:32px;display:flex;gap:28px;align-items:center;position:relative;overflow:hidden;}
+.spotlight-inner::before{content:'⭐ APP OF THE WEEK';position:absolute;top:14px;right:20px;font-size:10px;letter-spacing:2px;color:var(--gold);font-weight:700;opacity:0.7;}
+.spotlight-emoji{font-size:72px;flex-shrink:0;}
+.spotlight-content{flex:1;}
+.spotlight-label{font-size:10px;color:var(--gold);letter-spacing:3px;text-transform:uppercase;font-weight:700;margin-bottom:8px;}
+.spotlight-name{font-family:'Syne',sans-serif;font-size:26px;font-weight:900;margin-bottom:8px;}
+.spotlight-desc{font-size:14px;color:var(--text2);line-height:1.7;margin-bottom:16px;}
+.spotlight-btn{display:inline-block;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#080808;border:none;border-radius:var(--r);padding:11px 28px;font-size:13px;font-weight:800;cursor:pointer;text-decoration:none;font-family:'Heebo',sans-serif;}
 
 /* STATS */
-.stats-bar{max-width:700px;margin:0 auto;padding:0 16px 20px;}
-.stats-row{display:flex;gap:10px;justify-content:center;}
-.stat-item{background:var(--dark2);border:1px solid var(--dark3);border-radius:12px;padding:12px 20px;text-align:center;flex:1;}
-.stat-num{font-family:'Cinzel',serif;font-size:1.4rem;color:var(--gold);font-weight:700;}
-.stat-lbl{font-size:0.68rem;color:var(--text-dim);margin-top:2px;}
+.stats-row{position:relative;z-index:1;display:flex;justify-content:center;border-top:1px solid rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.015);}
+.stat{flex:1;max-width:150px;text-align:center;padding:22px 12px;border-left:1px solid rgba(255,255,255,0.04);}
+.stat:last-child{border-left:none;}
+.stat-n{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--gold2);}
+.stat-l{font-size:10px;color:var(--text3);margin-top:4px;letter-spacing:0.5px;text-transform:uppercase;}
 
-/* RATING */
-.rating-modal{text-align:center;}
-.stars-input{display:flex;gap:8px;justify-content:center;margin:16px 0;}
-.star-btn{font-size:2rem;cursor:pointer;opacity:0.4;transition:opacity 0.2s;background:none;border:none;}
-.star-btn.active{opacity:1;}
-.email-notify{margin-top:12px;}
-.email-notify input{background:var(--dark3);border:1px solid var(--gold-dim);color:var(--text);padding:10px 14px;border-radius:10px;font-family:'Heebo',sans-serif;font-size:0.88rem;width:100%;outline:none;margin-bottom:8px;}
+/* SECTIONS */
+.sec{position:relative;z-index:1;padding:52px 40px;}
+.sec-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:20px;}
+.sec-label{font-size:10px;color:var(--gold);letter-spacing:3px;text-transform:uppercase;font-weight:700;margin-bottom:6px;}
+.sec-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;}
+
+/* SEARCH + FILTER */
+.search-filter-row{display:flex;gap:12px;align-items:center;margin-bottom:24px;flex-wrap:wrap;}
+.search-wrap{position:relative;flex:1;min-width:200px;}
+.search-input{width:100%;background:var(--bg3);border:1px solid rgba(255,255,255,0.08);border-radius:var(--r2);padding:11px 42px 11px 16px;font-size:13px;color:var(--text);font-family:'Heebo',sans-serif;transition:border-color 0.15s;outline:none;}
+.search-input:focus{border-color:var(--gold-border);}
+.search-input::placeholder{color:var(--text3);}
+.search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:15px;pointer-events:none;}
+body[dir="rtl"] .search-icon{left:auto;right:14px;}
+body[dir="rtl"] .search-input{padding:11px 42px 11px 16px;}
+body:not([dir="rtl"]) .search-input{padding:11px 16px 11px 42px;}
+.filter-btns{display:flex;gap:6px;flex-wrap:wrap;}
+.filter-btn{background:var(--bg3);border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:8px 16px;font-size:12px;color:var(--text2);cursor:pointer;font-family:'Heebo',sans-serif;font-weight:600;transition:all 0.15s;white-space:nowrap;}
+.filter-btn:hover{border-color:var(--gold-border);color:var(--gold2);}
+.filter-btn.active{background:var(--gold-dim);border-color:var(--gold-border);color:var(--gold2);}
+
+/* CATEGORIES */
+.cats{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;}
+@media(max-width:700px){.cats{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:420px){.cats{grid-template-columns:repeat(2,1fr);}}
+.cat{background:var(--bg3);border:1px solid rgba(255,255,255,0.05);border-radius:var(--r2);padding:20px 12px 16px;text-align:center;cursor:pointer;transition:border-color 0.15s,background 0.15s;text-decoration:none;display:block;}
+.cat:hover{border-color:var(--gold-border);background:var(--bg4);}
+.cat-i{font-size:32px;margin-bottom:10px;display:block;}
+.cat-n{font-size:13px;font-weight:700;}
+.cat-c{font-size:10px;color:var(--text3);margin-top:4px;}
+
+/* APP CARDS */
+.apps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+@media(max-width:900px){.apps-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:580px){.apps-grid{grid-template-columns:1fr;}}
+.no-results{grid-column:1/-1;text-align:center;padding:40px;color:var(--text3);font-size:14px;}
+
+.app-card{background:var(--bg3);border:1px solid rgba(255,255,255,0.06);border-radius:var(--r2);overflow:hidden;transition:border-color 0.2s,transform 0.2s,box-shadow 0.2s;cursor:pointer;display:flex;flex-direction:column;position:relative;}
+.app-card:hover{border-color:var(--gold-border);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,0.4);}
+.app-card-hero{height:130px;display:flex;align-items:center;justify-content:center;font-size:52px;position:relative;overflow:hidden;}
+.app-card-body{padding:14px;flex:1;display:flex;flex-direction:column;}
+.app-card-badges{position:absolute;top:10px;right:10px;display:flex;flex-direction:column;gap:5px;align-items:flex-end;}
+body[dir="ltr"] .app-card-badges{right:auto;left:10px;align-items:flex-start;}
+.badge-pill{font-size:9px;padding:3px 8px;border-radius:20px;font-weight:700;letter-spacing:0.5px;}
+.badge-new{background:rgba(60,207,108,0.2);color:var(--green);border:1px solid rgba(60,207,108,0.3);}
+.badge-coming{background:rgba(201,151,58,0.2);color:var(--gold2);border:1px solid var(--gold-border);}
+.badge-updated{background:rgba(34,208,216,0.15);color:var(--teal);border:1px solid rgba(34,208,216,0.25);}
+.app-card-tags{display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap;}
+.app-tag{font-size:10px;padding:3px 9px;border-radius:20px;font-weight:600;}
+.app-card-name{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;margin-bottom:5px;line-height:1.2;}
+.app-card-desc{font-size:11px;color:var(--text2);line-height:1.6;flex:1;margin-bottom:12px;}
+.app-card-footer{display:flex;justify-content:space-between;align-items:center;margin-top:auto;}
+.app-card-meta{display:flex;align-items:center;gap:8px;}
+.app-card-rating{font-size:11px;color:var(--yellow);}
+.app-card-views{font-size:10px;color:var(--text3);}
+.app-card-btn{font-size:11px;font-weight:700;padding:7px 14px;border-radius:8px;border:none;cursor:pointer;text-decoration:none;display:inline-block;transition:opacity 0.15s;font-family:'Heebo',sans-serif;}
+
+/* NOTIFY BANNER */
+.notify-bar{background:rgba(60,207,108,0.06);border:1px solid rgba(60,207,108,0.15);border-radius:var(--r);padding:10px 14px;margin-top:10px;display:flex;align-items:center;gap:10px;}
+.notify-bar input{flex:1;background:transparent;border:none;outline:none;font-size:12px;color:var(--text);font-family:'Heebo',sans-serif;}
+.notify-bar input::placeholder{color:var(--text3);}
+.notify-bar-btn{background:var(--green);color:#000;border:none;border-radius:6px;padding:6px 14px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Heebo',sans-serif;white-space:nowrap;}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.on{display:flex;}
+.modal-box{background:var(--bg3);border:1px solid var(--gold-border);border-radius:var(--r3);max-width:700px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 30px 80px rgba(0,0,0,0.7);}
+.modal-hero{height:200px;display:flex;align-items:center;justify-content:center;font-size:80px;border-radius:var(--r3) var(--r3) 0 0;position:relative;}
+.modal-close{position:absolute;top:16px;right:16px;background:rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.1);color:var(--text2);border-radius:50%;width:34px;height:34px;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.15s;}
+.modal-close:hover{background:rgba(255,255,255,0.1);}
+.modal-body{padding:28px;}
+.modal-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+.modal-name{font-family:'Syne',sans-serif;font-size:26px;font-weight:900;margin-bottom:8px;}
+.modal-meta{display:flex;gap:16px;margin-bottom:16px;flex-wrap:wrap;}
+.modal-meta-item{font-size:12px;color:var(--text2);display:flex;align-items:center;gap:5px;}
+.modal-desc{font-size:14px;color:var(--text2);line-height:1.8;margin-bottom:24px;}
+.modal-section-title{font-size:11px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:12px;}
+.feature-list{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:24px;}
+@media(max-width:480px){.feature-list{grid-template-columns:1fr;}}
+.feature-item{display:flex;align-items:flex-start;gap:8px;background:var(--bg4);border-radius:var(--r);padding:10px 12px;font-size:12px;color:var(--text2);line-height:1.5;}
+.feature-item span:first-child{font-size:14px;flex-shrink:0;margin-top:1px;}
+.screenshots-row{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;scrollbar-width:none;margin-bottom:6px;}
+.screenshots-row::-webkit-scrollbar{display:none;}
+.screenshot-ph{flex-shrink:0;width:110px;height:190px;border-radius:12px;background:var(--bg4);border:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;font-size:32px;}
+
+/* RATINGS */
+.ratings-section{margin-bottom:24px;}
+.rating-summary{display:flex;align-items:center;gap:20px;margin-bottom:16px;}
+.rating-big{font-family:'Syne',sans-serif;font-size:48px;font-weight:900;color:var(--gold2);line-height:1;}
+.rating-stars-col{}
+.rating-stars{font-size:18px;color:var(--yellow);letter-spacing:2px;}
+.rating-count{font-size:11px;color:var(--text3);margin-top:3px;}
+.rate-prompt{margin-bottom:12px;}
+.rate-prompt p{font-size:12px;color:var(--text2);margin-bottom:8px;}
+.star-btns{display:flex;gap:6px;}
+.star-btn{font-size:24px;cursor:pointer;opacity:0.4;transition:opacity 0.1s,transform 0.1s;background:none;border:none;padding:2px;}
+.star-btn:hover,.star-btn.lit{opacity:1;transform:scale(1.15);}
+.review-input-wrap{display:flex;gap:8px;margin-top:10px;}
+.review-input{flex:1;background:var(--bg4);border:1px solid rgba(255,255,255,0.08);border-radius:var(--r);padding:9px 12px;font-size:12px;color:var(--text);font-family:'Heebo',sans-serif;outline:none;resize:none;}
+.review-input:focus{border-color:var(--gold-border);}
+.review-submit{background:var(--gold);color:#000;border:none;border-radius:var(--r);padding:9px 18px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Heebo',sans-serif;white-space:nowrap;}
+.reviews-list{display:flex;flex-direction:column;gap:10px;margin-top:14px;max-height:180px;overflow-y:auto;}
+.review-item{background:var(--bg4);border-radius:var(--r);padding:10px 14px;}
+.review-stars{font-size:12px;color:var(--yellow);margin-bottom:4px;}
+.review-text{font-size:12px;color:var(--text2);line-height:1.6;}
+.review-date{font-size:10px;color:var(--text3);margin-top:4px;}
+
+/* MODAL ACTIONS */
+.modal-actions{display:flex;gap:10px;flex-wrap:wrap;padding-top:4px;}
+.modal-btn-main{flex:1;min-width:160px;padding:14px 24px;border-radius:var(--r);border:none;font-size:14px;font-weight:800;cursor:pointer;text-align:center;text-decoration:none;display:inline-block;font-family:'Heebo',sans-serif;transition:opacity 0.15s,transform 0.1s;}
+.modal-btn-main:hover{opacity:0.88;transform:translateY(-1px);}
+.modal-btn-sec{padding:14px 20px;border-radius:var(--r);background:transparent;border:1.5px solid var(--gold-border);color:var(--gold2);font-size:13px;font-weight:700;cursor:pointer;font-family:'Heebo',sans-serif;transition:background 0.15s;text-decoration:none;display:inline-block;}
+.modal-btn-sec:hover{background:var(--gold-dim);}
+
+/* BETA BANNER */
+.beta-banner-sec{position:relative;z-index:1;padding:0 40px 40px;}
+@media(max-width:600px){.beta-banner-sec{padding:0 16px 28px;}}
+.beta-banner{display:flex;align-items:center;justify-content:space-between;gap:14px;background:linear-gradient(135deg,rgba(201,151,58,0.08),rgba(201,151,58,0.03));border:1px solid var(--gold-border);border-radius:var(--r2);padding:18px 22px;text-decoration:none;transition:background 0.15s;cursor:pointer;}
+.beta-banner:hover{background:rgba(201,151,58,0.13);}
+.beta-banner-left{display:flex;align-items:center;gap:14px;}
+.beta-banner-icon{font-size:30px;flex-shrink:0;}
+.beta-banner-title{font-size:14px;font-weight:700;color:var(--gold2);margin-bottom:3px;}
+.beta-banner-desc{font-size:12px;color:var(--text3);}
+.beta-banner-btn{background:var(--gold-dim);border:1px solid var(--gold-border);color:var(--gold2);font-size:12px;font-weight:700;padding:9px 18px;border-radius:20px;white-space:nowrap;flex-shrink:0;}
+@media(max-width:500px){.beta-banner{flex-direction:column;text-align:center;}.beta-banner-left{flex-direction:column;}.beta-banner-btn{width:100%;text-align:center;}}
+
+/* SUBMIT */
+.submit-sec{position:relative;z-index:1;background:linear-gradient(135deg,rgba(201,151,58,0.06),rgba(201,151,58,0.02));border-top:1px solid var(--gold-border);border-bottom:1px solid var(--gold-border);padding:52px 40px;text-align:center;}
+.submit-sec h2{font-family:'Syne',sans-serif;font-size:28px;font-weight:900;color:var(--gold2);margin-bottom:10px;}
+.submit-sec p{font-size:14px;color:var(--text2);margin-bottom:28px;line-height:1.8;max-width:500px;margin-left:auto;margin-right:auto;}
+.submit-steps{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:28px;}
+.submit-step{background:var(--bg3);border:1px solid rgba(255,255,255,0.06);border-radius:var(--r2);padding:16px 20px;min-width:120px;text-align:center;}
+.submit-step-n{font-family:'Syne',sans-serif;font-size:24px;color:var(--gold2);font-weight:900;margin-bottom:5px;}
+.submit-step div{font-size:12px;color:var(--text2);}
+
+/* ABOUT */
+.about-sec{position:relative;z-index:1;padding:52px 40px;text-align:center;}
 
 /* FOOTER */
-.footer{text-align:center;padding:30px 16px;color:var(--text-dim);font-size:0.78rem;border-top:1px solid var(--dark3);}
-.footer a{color:var(--gold-dim);text-decoration:none;}
+footer{position:relative;z-index:1;padding:28px 40px;border-top:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;}
+.footer-text{font-size:11px;color:var(--text3);margin-top:3px;}
+.footer-links{display:flex;gap:18px;flex-wrap:wrap;}
+.footer-link{font-size:12px;color:var(--text3);text-decoration:none;transition:color 0.15s;}
+.footer-link:hover{color:var(--gold2);}
+
+/* TOAST */
+.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--bg4);border:1px solid var(--gold-border);color:var(--gold2);padding:12px 24px;border-radius:20px;font-size:13px;font-weight:600;opacity:0;transition:all 0.3s;z-index:999;pointer-events:none;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+@media(max-width:600px){
+  .nav{padding:0 16px;}
+  .h1{font-size:36px;}
+  .sec,.submit-sec,.about-sec{padding:32px 16px;}
+  footer{padding:20px 16px;}
+  .nav-center{display:none;}
+  .spotlight-inner{flex-direction:column;text-align:center;}
+  .spotlight-inner::before{display:none;}
+}
 </style>
 </head>
-<body>
+<body dir="rtl">
 
-<!-- MODAL -->
-<div class="modal-bg" id="appModal">
-  <div class="modal" id="modalContent"></div>
-</div>
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
 
-<!-- HEADER -->
-<div class="header">
-  <div class="logo">
-    <svg width="38" height="38" viewBox="0 0 38 38"><polygon points="19,2 35,10.5 35,27.5 19,36 3,27.5 3,10.5" fill="#111" stroke="#C9A84C" stroke-width="1.5"/><text x="19" y="24" text-anchor="middle" font-family="Cinzel,serif" font-size="14" fill="#C9A84C">N</text></svg>
-    <div><span class="logo-text">AppNest</span><span class="logo-sub" id="logoSub">STORE</span></div>
+<!-- NAV -->
+<nav class="nav">
+  <a class="logo-row" href="#">
+    <svg class="logo-hex" viewBox="0 0 58 58" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="29,2 54,16 54,42 29,56 4,42 4,16" fill="#c9973a"/>
+      <polygon points="29,5 51,17.5 51,40.5 29,53 7,40.5 7,17.5" fill="#080808"/>
+      <ellipse cx="29" cy="19" rx="6.5" ry="6.5" fill="#e8e8e0"/>
+      <path d="M22 26 Q12 20 8 24 Q10 30 18 29Z" fill="#1a1a1a"/>
+      <path d="M36 26 Q46 20 50 24 Q48 30 40 29Z" fill="#1a1a1a"/>
+      <path d="M20 32 Q29 38 38 32 Q33 44 29 46 Q25 44 20 32Z" fill="#c9973a" opacity="0.6"/>
+      <ellipse cx="22" cy="29" rx="2" ry="2.5" fill="#111"/>
+      <ellipse cx="36" cy="29" rx="2" ry="2.5" fill="#111"/>
+    </svg>
+    <div>
+      <div class="logo-name">AppNest</div>
+      <div class="logo-sub" id="logoSub">קן האפליקציות</div>
+    </div>
+  </a>
+  <div class="nav-center">
+    <a class="nav-link" href="#apps" id="nl-apps">אפליקציות</a>
+    <a class="nav-link" href="#cats" id="nl-cats">קטגוריות</a>
+    <a class="nav-link" href="#submit" id="nl-submit">הגש אפליקציה</a>
+    <a class="nav-link" href="#about" id="nl-about">אודות</a>
   </div>
-  <div class="header-right">
-    <div style="position:relative;">
-      <button class="lang-btn" onclick="toggleLangMenu()">🌐 <span id="langLabel">עב</span> ▾</button>
+  <div class="nav-right">
+    <div class="lang-wrap" id="langWrap">
+      <button class="lang-btn" onclick="toggleLangMenu()">
+        <span class="lang-flag" id="currentFlag">🇮🇱</span>
+        <span id="currentLangName">עברית</span>
+        <span>▾</span>
+      </button>
       <div class="lang-dropdown" id="langDropdown">
-        <div class="lang-option" onclick="setLang('he')">🇮🇱 עברית</div>
-        <div class="lang-option" onclick="setLang('en')">🇬🇧 English</div>
-        <div class="lang-option" onclick="setLang('ru')">🇷🇺 Русский</div>
-        <div class="lang-option" onclick="setLang('es')">🇪🇸 Español</div>
-        <div class="lang-option" onclick="setLang('ar')">🇸🇦 العربية</div>
+        <div class="lang-option active" onclick="setLang('he')"><span class="lang-option-flag">🇮🇱</span><span class="lang-option-name">עברית</span></div>
+        <div class="lang-option" onclick="setLang('en')"><span class="lang-option-flag">🇬🇧</span><span class="lang-option-name">English</span></div>
+        <div class="lang-option" onclick="setLang('ru')"><span class="lang-option-flag">🇷🇺</span><span class="lang-option-name">Русский</span></div>
+        <div class="lang-option" onclick="setLang('es')"><span class="lang-option-flag">🇪🇸</span><span class="lang-option-name">Español</span></div>
+        <div class="lang-option" onclick="setLang('ar')"><span class="lang-option-flag">🇸🇦</span><span class="lang-option-name">العربية</span></div>
       </div>
     </div>
   </div>
-</div>
+</nav>
 
-<!-- SEARCH -->
-<div class="search-section">
-  <div class="search-bar">
-    <span>🔍</span>
-    <input type="text" id="searchInput" data-ph="search" placeholder="חפש אפליקציה..." oninput="filterApps()">
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">🪺 <span id="heroBadge">קן האפליקציות הישראלי</span></div>
+    <h1 class="h1" id="heroTitle">אפליקציות<br><span class="grad">חינמיות</span> לכולם</h1>
+    <p class="h1-sub" id="heroSub">כלים, אפליקציות ומשחקים שנבנו עם אהבה — בלי פרסומות, בלי תשלום, בכל שפה.</p>
+    <div class="hero-btns">
+      <a class="btn-gold" href="#apps" id="heroBtnMain">🚀 גלה אפליקציות</a>
+      <a class="btn-outline" href="#submit" id="heroBtnSec">הגש אפליקציה</a>
+    </div>
   </div>
-  <div class="filters">
-    <button class="filter-btn active" onclick="setFilter('all')" id="f-all" data-i="all">הכל</button>
-    <button class="filter-btn" onclick="setFilter('free')" id="f-free" data-i="free">חינמי</button>
-    <button class="filter-btn" onclick="setFilter('soon')" id="f-soon" data-i="soon">בקרוב</button>
-    <button class="filter-btn" onclick="setFilter('games')" id="f-games" data-i="games">משחקים</button>
-    <button class="filter-btn" onclick="setFilter('tools')" id="f-tools" data-i="tools">כלים</button>
-  </div>
-</div>
+</section>
 
 <!-- SPOTLIGHT -->
-<div class="spotlight">
-  <div class="spotlight-card" onclick="openApp('gamenest')">
-    <span class="spotlight-icon">🎮</span>
-    <div class="spotlight-info">
-      <div class="spotlight-name">GameNest Hub</div>
-      <div class="spotlight-desc" data-i="spotlightDesc">5 משחקים קלאסיים במקום אחד — טריוויה, זיכרון, תלייה, 21 וניחוש מספר</div>
+<section class="sec" style="padding-top:0;padding-bottom:20px;" id="spotlightSec">
+  <div class="spotlight-inner" id="spotlightInner">
+    <div class="spotlight-emoji" id="spotEmoji">🔔</div>
+    <div class="spotlight-content">
+      <div class="spotlight-label" id="spotLabel">האפליקציה של השבוע</div>
+      <div class="spotlight-name" id="spotName">לא שכחתי</div>
+      <div class="spotlight-desc" id="spotDesc">האפליקציה שתזכיר לך כל אירוע חשוב — ימי הולדת, אזכרות, חתונות ועוד.</div>
+      <button class="spotlight-btn" id="spotBtn" onclick="openAppById('gamenest')">גלה עוד ›</button>
     </div>
   </div>
-</div>
+</section>
 
 <!-- STATS -->
-<div class="stats-bar">
-  <div class="stats-row">
-    <div class="stat-item"><div class="stat-num">11</div><div class="stat-lbl" data-i="statApps">אפליקציות</div></div>
-    <div class="stat-item"><div class="stat-num">5</div><div class="stat-lbl" data-i="statLangs">שפות</div></div>
-    <div class="stat-item"><div class="stat-num">30+</div><div class="stat-lbl" data-i="statGames">משחקים</div></div>
+<div class="stats-row">
+  <div class="stat"><div class="stat-n">13</div><div class="stat-l" id="statApps">אפליקציות</div></div>
+  <div class="stat"><div class="stat-n">100%</div><div class="stat-l" id="statFree">חינמי</div></div>
+  <div class="stat"><div class="stat-n">0</div><div class="stat-l" id="statAds">פרסומות</div></div>
+  <div class="stat"><div class="stat-n">5</div><div class="stat-l" id="statLangs">שפות</div></div>
+</div>
+
+<!-- CATEGORIES -->
+<section class="sec" id="cats">
+  <div class="sec-header">
+    <div><div class="sec-label" id="catsLabel">גלה לפי קטגוריה</div><div class="sec-title" id="catsTitle">קטגוריות</div></div>
+  </div>
+  <div class="cats">
+    <div class="cat" onclick="filterCat('app')" style="background:rgba(201,151,58,0.05);">
+      <span class="cat-i">📱</span>
+      <div class="cat-n" style="color:var(--gold2);" id="catApps">אפליקציות</div>
+      <div class="cat-c" id="catAppsC">3 זמינות</div>
+    </div>
+    <div class="cat" onclick="filterCat('business')" style="background:rgba(60,207,108,0.04);">
+      <span class="cat-i">💼</span>
+      <div class="cat-n" style="color:var(--green);" id="catBiz">עסקים</div>
+      <div class="cat-c" id="catBizC">1 זמינה</div>
+    </div>
+    <div class="cat" onclick="filterCat('tool')">
+      <span class="cat-i">🔧</span>
+      <div class="cat-n" style="color:var(--teal);" id="catTools">כלים</div>
+      <div class="cat-c" id="catToolsC">3 זמינות</div>
+    </div>
+    <div class="cat" onclick="filterCat('game')">
+      <span class="cat-i">🎮</span>
+      <div class="cat-n" style="color:var(--purple);" id="catGames">משחקים</div>
+      <div class="cat-c" id="catGamesC">בקרוב</div>
+    </div>
+    <div class="cat" onclick="filterCat('edu')">
+      <span class="cat-i">🎓</span>
+      <div class="cat-n" style="color:var(--red);" id="catEdu">חינוך</div>
+      <div class="cat-c" id="catEduC">בקרוב</div>
+    </div>
+  </div>
+</section>
+
+<!-- APPS -->
+<section class="sec" id="apps" style="padding-top:0;">
+  <div class="sec-header">
+    <div><div class="sec-label" id="appsLabel">כל האפליקציות</div><div class="sec-title" id="appsTitle">האפליקציות שלנו</div></div>
+  </div>
+  <div class="search-filter-row">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input class="search-input" id="searchInput" placeholder="חפש אפליקציה..." oninput="filterApps()">
+    </div>
+    <div class="filter-btns">
+      <button class="filter-btn active" onclick="setFilter('all',this)" id="filterAll">הכל</button>
+      <button class="filter-btn" onclick="setFilter('free',this)" id="filterFree">חינמי</button>
+      <button class="filter-btn" onclick="setFilter('coming',this)" id="filterComing">בקרוב</button>
+    </div>
+  </div>
+  <div class="apps-grid" id="appsGrid"></div>
+</section>
+
+<!-- BETA BANNER -->
+<div class="beta-banner-sec">
+  <div class="beta-banner" onclick="window.open('beta_testers.html','_blank')">
+    <div class="beta-banner-left">
+      <div class="beta-banner-icon">🧪</div>
+      <div>
+        <div class="beta-banner-title" id="betaBannerTitle">🧪 הצטרף לצוות הבודקים של AppNest</div>
+        <div class="beta-banner-desc" id="betaBannerDesc">קבל גישה מוקדמת לאפליקציות חדשות לפני כולם</div>
+      </div>
+    </div>
+    <div class="beta-banner-btn" id="betaBannerBtn">לחץ כאן ›</div>
   </div>
 </div>
 
-<!-- GAMES SECTION -->
-<div class="section" id="gamesSection">
-  <div class="section-title" data-i="gamesTitle">🎮 משחקים</div>
-  <div class="app-grid" id="gamesGrid">
-
-    <div class="app-card" data-cat="games" data-tags="gamenest hub trivia memory hangman" onclick="openApp('gamenest')">
-      <span class="app-icon">🎮</span>
-      <div class="app-name">GameNest Hub</div>
-      <div class="app-desc" data-i="gamenestDesc">5 משחקים קלאסיים</div>
-      <div class="app-footer"><span class="app-tag free" data-i="tagFree">חינמי</span><span class="app-stars">★★★★★</span></div>
-    </div>
-
-    <div class="app-card" data-cat="games" data-tags="arcadenest arcade tetris chess pong minesweeper breakout" onclick="openApp('arcade1')">
-      <span class="app-icon">🕹️</span>
-      <div class="app-name">ArcadeNest 1</div>
-      <div class="app-desc" data-i="arcade1Desc">טטריס, שחמט, פינגפונג ועוד</div>
-      <div class="app-footer"><span class="app-tag free" data-i="tagFree">חינמי</span><span class="app-stars">★★★★☆</span></div>
-    </div>
-
-    <div class="app-card" data-cat="games" data-tags="arcadenest arcade tetris runner catch breakout" onclick="openApp('arcade2')">
-      <span class="app-icon">🏃</span>
-      <div class="app-name">ArcadeNest 2</div>
-      <div class="app-desc" data-i="arcade2Desc">ריצה אינסופית, תפוח נופל ועוד</div>
-      <div class="app-footer"><span class="app-tag free" data-i="tagFree">חינמי</span><span class="app-stars">★★★★☆</span></div>
-    </div>
-
-    <div class="app-card" data-cat="games" data-tags="arcadenest simon war penalty pipes bubble" onclick="openApp('arcade3')">
-      <span class="app-icon">🎵</span>
-      <div class="app-name">ArcadeNest 3</div>
-      <div class="app-desc" data-i="arcade3Desc">Simon Says, מלחמה, בעיטות עונשין</div>
-      <div class="app-footer"><span class="app-tag new" data-i="tagNew">חדש!</span><span class="app-stars">★★★★★</span></div>
-    </div>
-
-    <div class="app-card" data-cat="games" data-tags="snake nechash" onclick="openApp('snake')">
-      <span class="app-icon">🐍</span>
-      <div class="app-name" data-i="snakeName">נחש</div>
-      <div class="app-desc" data-i="snakeDesc">אכול, גדל, אל תפגע</div>
-      <div class="app-footer"><span class="app-tag free" data-i="tagFree">חינמי</span><span class="app-stars">★★★★☆</span></div>
-    </div>
-
-    <div class="app-card" data-cat="games" data-tags="2048 tiles" onclick="openApp('2048')">
-      <span class="app-icon">🧩</span>
-      <div class="app-name">2048</div>
-      <div class="app-desc" data-i="desc2048">חבר אריחים להגיע ל-2048</div>
-      <div class="app-footer"><span class="app-tag free" data-i="tagFree">חינמי</span><span class="app-stars">★★★★★</span></div>
-    </div>
-
-    <div class="app-card" data-cat="games" data-tags="sudoku sodoku" onclick="openApp('sudoku')">
-      <span class="app-icon">🔢</span>
-      <div class="app-name" data-i="sudokuName">סודוקו</div>
-      <div class="app-desc" data-i="sudokuDesc">3 רמות קושי, רמזים, טיימר</div>
-      <div class="app-footer"><span class="app-tag free" data-i="tagFree">חינמי</span><span class="app-stars">★★★★☆</span></div>
-    </div>
-
-    <div class="app-card" data-cat="games" data-tags="loto lottery statistics" onclick="openApp('loto')">
-      <span class="app-icon">🎰</span>
-      <div class="app-name" data-i="lotoName">לוטו ישראל</div>
-      <div class="app-desc" data-i="lotoDesc">סטטיסטיקות והגרלות</div>
-      <div class="app-footer"><span class="app-tag free" data-i="tagFree">חינמי</span><span class="app-stars">★★★★☆</span></div>
-    </div>
-
-    <div class="app-card" data-cat="games" data-tags="toto football soccer" onclick="openApp('toto')">
-      <span class="app-icon">⚽</span>
-      <div class="app-name" data-i="totoName">טוטו אנליזר AI</div>
-      <div class="app-desc" data-i="totoDesc">ניתוח AI לתחזיות</div>
-      <div class="app-footer"><span class="app-tag free" data-i="tagFree">חינמי</span><span class="app-stars">★★★★☆</span></div>
-    </div>
-
+<!-- SUBMIT -->
+<section class="submit-sec" id="submit">
+  <h2 id="submitTitle">🪺 יש לך אפליקציה?</h2>
+  <p id="submitDesc">AppNest פתוח לכולם! בנית אפליקציה, משחק או כלי שימושי?<br>שלח לנו ואנחנו נבדוק ונעלה אותו לאתר — בחינם.</p>
+  <div class="submit-steps">
+    <div class="submit-step"><div class="submit-step-n">1</div><div id="step1">שלח לנו</div></div>
+    <div class="submit-step"><div class="submit-step-n">2</div><div id="step2">בדיקת איכות</div></div>
+    <div class="submit-step"><div class="submit-step-n">3</div><div id="step3">עולה לאוויר!</div></div>
   </div>
-</div>
+  <a class="btn-gold" href="mailto:appnest55@gmail.com?subject=Submit App to AppNest" id="submitBtn">📧 שלח אפליקציה</a>
+</section>
 
-<!-- TOOLS SECTION -->
-<div class="section" id="toolsSection">
-  <div class="section-title" data-i="toolsTitle">🔧 כלים ואפליקציות</div>
-  <div class="app-grid" id="toolsGrid">
+<!-- ABOUT -->
+<section class="about-sec" id="about">
+  <div class="sec-label" style="margin-bottom:14px;" id="aboutLabel">אודות AppNest</div>
+  <p style="font-size:15px;color:var(--text2);line-height:1.9;max-width:560px;margin:0 auto 16px;" id="aboutText">
+    AppNest נוצר מתוך אהבה לפיתוח ורצון לתת לכולם גישה לאפליקציות איכותיות — בחינם, בכל שפה, ללא פרסומות ובלי שטויות. כל אפליקציה עוברת בדיקת איכות ואבטחה לפני שעולה.
+  </p>
+  <p style="font-size:13px;color:var(--text3);">
+    <span id="builtBy">נבנה על ידי </span><span style="color:var(--gold2);font-weight:600;">Barak Aflalo</span> · 2026
+  </p>
+</section>
 
-    <div class="app-card" data-cat="tools" data-tags="stock stocks ai analysis" onclick="openApp('stock')">
-      <span class="app-icon">📈</span>
-      <div class="app-name">StockAI</div>
-      <div class="app-desc" data-i="stockDesc">ניתוח מניות מבוסס AI</div>
-      <div class="app-footer"><span class="app-tag free" data-i="tagFree">חינמי</span><span class="app-stars">★★★★☆</span></div>
-    </div>
-
-    <div class="app-card" data-cat="tools" data-tags="law legal calendar dates" onclick="openApp('lex')">
-      <span class="app-icon">⚖️</span>
-      <div class="app-name">LexCalendar</div>
-      <div class="app-desc" data-i="lexDesc">יומן מועדים לעורכי דין</div>
-      <div class="app-footer"><span class="app-tag soon" data-i="tagSoon">בקרוב בחנות</span></div>
-    </div>
-
-    <div class="app-card" data-cat="tools" data-tags="reminder todo" onclick="openApp('reminder')">
-      <span class="app-icon">📝</span>
-      <div class="app-name" data-i="reminderName">לא שכחתי</div>
-      <div class="app-desc" data-i="reminderDesc">תזכורות חכמות</div>
-      <div class="app-footer"><span class="app-tag soon" data-i="tagSoon">בקרוב בחנות</span></div>
-    </div>
-
-    <div class="app-card" data-cat="tools" data-tags="money finance budget" onclick="openApp('money')">
-      <span class="app-icon">💰</span>
-      <div class="app-name">MoneyNest</div>
-      <div class="app-desc" data-i="moneyDesc">ניהול פיננסי חכם</div>
-      <div class="app-footer"><span class="app-tag soon" data-i="tagSoon">בקרוב בחנות</span></div>
-    </div>
-
-  </div>
-</div>
-
-<!-- BETA TESTER BANNER -->
-<div class="beta-banner">
-  <div class="beta-card" onclick="window.open('beta_testers.html','_blank')">
-    <span class="beta-icon">🧪</span>
+<!-- FOOTER -->
+<footer>
+  <div style="display:flex;align-items:center;gap:10px;">
+    <svg width="30" height="30" viewBox="0 0 58 58" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="29,2 54,16 54,42 29,56 4,42 4,16" fill="#c9973a"/>
+      <polygon points="29,5 51,17.5 51,40.5 29,53 7,40.5 7,17.5" fill="#080808"/>
+      <ellipse cx="29" cy="19" rx="6.5" ry="6.5" fill="#e8e8e0"/>
+      <path d="M22 26 Q12 20 8 24 Q10 30 18 29Z" fill="#1a1a1a"/>
+      <path d="M36 26 Q46 20 50 24 Q48 30 40 29Z" fill="#1a1a1a"/>
+    </svg>
     <div>
-      <div class="beta-title" data-i="betaTitle">הצטרף לצוות הבודקים שלנו!</div>
-      <div class="beta-desc" data-i="betaDesc">קבל גישה מוקדמת לאפליקציות חדשות לפני כולם</div>
+      <div style="font-size:14px;font-weight:700;color:var(--gold2);font-family:'Syne',sans-serif;">AppNest</div>
+      <div class="footer-text" id="footerRights">© 2026 · כל הזכויות שמורות לברק אפללו</div>
     </div>
-    <span style="color:var(--green);font-size:1.2rem;margin-right:auto;">←</span>
   </div>
-</div>
+  <div class="footer-links">
+    <a class="footer-link" href="mailto:appnest55@gmail.com">appnest55@gmail.com</a>
+    <a class="footer-link" href="#about" id="footAbout">אודות</a>
+    <a class="footer-link" href="#submit" id="footPrivacy">פרטיות</a>
+  </div>
+</footer>
 
-<div class="footer">
-  <p>© 2025 AppNest — <span data-i="footerRights">כל הזכויות שמורות</span></p>
-  <p style="margin-top:6px;"><a href="https://barakaflalo.github.io/appnest">barakaflalo.github.io/appnest</a></p>
+<!-- MODAL -->
+<div class="modal-overlay" id="appModal" onclick="closeModalIfOverlay(event)">
+  <div class="modal-box" id="modalBox"></div>
 </div>
 
 <script>
-// ============ I18N ============
-const T={
+/* ════════════════════════════════
+   TRANSLATIONS
+════════════════════════════════ */
+var LANGS = {
   he:{
-    logoSub:'STORE', spotlightDesc:'5 משחקים קלאסיים במקום אחד — טריוויה, זיכרון, תלייה, 21 וניחוש מספר',
-    all:'הכל', free:'חינמי', soon:'בקרוב', games:'משחקים', tools:'כלים',
-    statApps:'אפליקציות', statLangs:'שפות', statGames:'משחקים',
-    gamesTitle:'🎮 משחקים', toolsTitle:'🔧 כלים ואפליקציות',
-    gamenestDesc:'5 משחקים קלאסיים', arcade1Desc:'טטריס, שחמט, פינגפונג ועוד',
-    arcade2Desc:'ריצה אינסופית, תפוח נופל ועוד', arcade3Desc:'Simon Says, מלחמה, בעיטות עונשין',
-    snakeName:'🐍 נחש', snakeDesc:'אכול, גדל, אל תפגע',
-    desc2048:'חבר אריחים להגיע ל-2048', sudokuName:'🔢 סודוקו', sudokuDesc:'3 רמות קושי, רמזים, טיימר',
-    lotoName:'🎰 לוטו ישראל', lotoDesc:'סטטיסטיקות והגרלות',
-    totoName:'⚽ טוטו אנליזר AI', totoDesc:'ניתוח AI לתחזיות',
-    stockDesc:'ניתוח מניות מבוסס AI', lexDesc:'יומן מועדים לעורכי דין',
-    reminderName:'📝 לא שכחתי', reminderDesc:'תזכורות חכמות',
-    moneyDesc:'ניהול פיננסי חכם',
-    tagFree:'חינמי', tagSoon:'בקרוב', tagNew:'חדש!',
-    betaTitle:'הצטרף לצוות הבודקים!', betaDesc:'קבל גישה מוקדמת לאפליקציות חדשות',
-    footerRights:'כל הזכויות שמורות', search:'חפש אפליקציה...',
-    open:'פתח', notify:'עדכן אותי', close:'סגור', sendEmail:'שלח בקשה',
-    features:'תכונות עיקריות', comingSoon:'בקרוב בחנות הרשמית',
-    rateApp:'דרג אפליקציה', shareApp:'שתף',
+    dir:'rtl',flag:'🇮🇱',name:'עברית',
+    logoSub:'קן האפליקציות',
+    heroBadge:'קן האפליקציות הישראלי',
+    heroTitle:'אפליקציות<br><span class="grad">חינמיות</span> לכולם',
+    heroSub:'כלים, אפליקציות ומשחקים שנבנו עם אהבה — בלי פרסומות, בלי תשלום, בכל שפה.',
+    heroBtnMain:'🚀 גלה אפליקציות',heroBtnSec:'הגש אפליקציה',
+    spotLabel:'האפליקציה של השבוע',spotBtn:'גלה עוד ›',
+    statApps:'אפליקציות',statFree:'חינמי',statAds:'פרסומות',statLangs:'שפות',
+    catsLabel:'גלה לפי קטגוריה',catsTitle:'קטגוריות',
+    catApps:'אפליקציות',catAppsC:'3 זמינות',catBiz:'עסקים',catBizC:'1 זמינה',
+    catTools:'כלים',catToolsC:'4 זמינות',catGames:'משחקים',catGamesC:'7 זמינות',catEdu:'חינוך',catEduC:'בקרוב',
+    appsLabel:'כל האפליקציות',appsTitle:'האפליקציות שלנו',
+    searchPh:'חפש אפליקציה...',filterAll:'הכל',filterFree:'חינמי',filterComing:'בקרוב',
+    submitTitle:'🪺 יש לך אפליקציה?',
+    submitDesc:'AppNest פתוח לכולם! בנית אפליקציה, משחק או כלי שימושי?<br>שלח לנו ואנחנו נבדוק ונעלה אותו לאתר — בחינם.',
+    step1:'שלח לנו',step2:'בדיקת איכות',step3:'עולה לאוויר!',submitBtn:'📧 שלח אפליקציה',
+    aboutLabel:'אודות AppNest',
+    aboutText:'AppNest נוצר מתוך אהבה לפיתוח ורצון לתת לכולם גישה לאפליקציות איכותיות — בחינם, בכל שפה, ללא פרסומות. כל אפליקציה עוברת בדיקת איכות ואבטחה.',
+    builtBy:'נבנה על ידי ',footAbout:'אודות',footPrivacy:'פרטיות',
+    footerRights:'© 2026 · כל הזכויות שמורות לברק אפללו',
+    nl_apps:'אפליקציות',nl_cats:'קטגוריות',nl_submit:'הגש אפליקציה',nl_about:'אודות',
+    free:'חינמי',comingSoon:'בקרוב',openApp:'פתח אפליקציה',comingStore:'בקרוב בחנות',
+    features:'תכונות עיקריות',screenshots:'צילומי מסך',screenshotsSoon:'צילומי מסך בקרוב — פתח את האפליקציה לראות!',
+    ratings:'דירוגים וביקורות',rateThis:'דרג אפליקציה זו:',writeReview:'כתוב ביקורת (אופציונלי)...',
+    submitReview:'שלח',comingStoreBtn:'🏪 בקרוב בחנות Google Play',
+    shareApp:'שתף',notifyMe:'עדכן אותי בהשקה',
+    notifyPh:'הכנס מייל לקבלת עדכון...',notifyBtn:'עדכן אותי',notifyDone:'✅ נרשמת בהצלחה!',
+    noResults:'לא נמצאו אפליקציות',
+    betaBannerTitle:'🧪 הצטרף לצוות הבודקים של AppNest',
+    betaBannerDesc:'קבל גישה מוקדמת לאפליקציות חדשות לפני כולם',
+    betaBannerBtn:'לחץ כאן ›',
   },
   en:{
-    logoSub:'STORE', spotlightDesc:'5 classic games in one — Trivia, Memory, Hangman, 21 and Number Guess',
-    all:'All', free:'Free', soon:'Coming Soon', games:'Games', tools:'Tools',
-    statApps:'Apps', statLangs:'Languages', statGames:'Games',
-    gamesTitle:'🎮 Games', toolsTitle:'🔧 Tools & Apps',
-    gamenestDesc:'5 classic games', arcade1Desc:'Tetris, Chess, Ping Pong & more',
-    arcade2Desc:'Endless Runner, Falling Apples & more', arcade3Desc:'Simon Says, War, Penalty Kick',
-    snakeName:'🐍 Snake', snakeDesc:'Eat, grow, don\'t crash',
-    desc2048:'Combine tiles to reach 2048', sudokuName:'🔢 Sudoku', sudokuDesc:'3 difficulty levels, hints, timer',
-    lotoName:'🎰 Israel Lotto', lotoDesc:'Statistics and draws',
-    totoName:'⚽ Toto Analyzer AI', totoDesc:'AI predictions',
-    stockDesc:'AI-powered stock analysis', lexDesc:'Legal deadlines calendar',
-    reminderName:'📝 Don\'t Forget', reminderDesc:'Smart reminders',
-    moneyDesc:'Smart financial management',
-    tagFree:'Free', tagSoon:'Coming Soon', tagNew:'New!',
-    betaTitle:'Join our Beta Testers!', betaDesc:'Get early access to new apps',
-    footerRights:'All rights reserved', search:'Search apps...',
-    open:'Open', notify:'Notify Me', close:'Close', sendEmail:'Send Request',
-    features:'Key Features', comingSoon:'Coming soon to official store',
-    rateApp:'Rate App', shareApp:'Share',
+    dir:'ltr',flag:'🇬🇧',name:'English',
+    logoSub:'The App Nest',
+    heroBadge:"Israel's App Nest",
+    heroTitle:'Free Apps<br>for <span class="grad">Everyone</span>',
+    heroSub:'Tools, apps and games built with love — no ads, no cost, in any language.',
+    heroBtnMain:'🚀 Explore Apps',heroBtnSec:'Submit Your App',
+    spotLabel:'App of the Week',spotBtn:'Discover ›',
+    statApps:'Apps',statFree:'Free',statAds:'Ads',statLangs:'Languages',
+    catsLabel:'Browse by Category',catsTitle:'Categories',
+    catApps:'Apps',catAppsC:'3 available',catBiz:'Business',catBizC:'1 available',
+    catTools:'Tools',catToolsC:'4 available',catGames:'Games',catGamesC:'7 available',catEdu:'Education',catEduC:'Coming soon',
+    appsLabel:'All Apps',appsTitle:'Our Apps',
+    searchPh:'Search apps...',filterAll:'All',filterFree:'Free',filterComing:'Coming Soon',
+    submitTitle:'🪺 Got an App?',
+    submitDesc:'AppNest is open to everyone! Built an app, game, or useful tool?<br>Send it to us and we\'ll review and list it — for free.',
+    step1:'Send It',step2:'Review',step3:'Goes Live!',submitBtn:'📧 Submit Your App',
+    aboutLabel:'About AppNest',
+    aboutText:'AppNest was created out of passion for development and a desire to give everyone access to quality apps — free, in any language, no ads. Every app is reviewed before listing.',
+    builtBy:'Built by ',footAbout:'About',footPrivacy:'Privacy',
+    footerRights:'© 2026 · All rights reserved — Barak Aflalo',
+    nl_apps:'Apps',nl_cats:'Categories',nl_submit:'Submit App',nl_about:'About',
+    free:'Free',comingSoon:'Coming Soon',openApp:'Open App',comingStore:'Coming to Store',
+    features:'Key Features',screenshots:'Screenshots',screenshotsSoon:'Screenshots coming soon — open the app to see it in action!',
+    ratings:'Ratings & Reviews',rateThis:'Rate this app:',writeReview:'Write a review (optional)...',
+    submitReview:'Submit',comingStoreBtn:'🏪 Coming to Google Play Soon',
+    shareApp:'Share',notifyMe:'Notify me at launch',
+    notifyPh:'Enter email for updates...',notifyBtn:'Notify Me',notifyDone:'✅ You\'re on the list!',
+    noResults:'No apps found',
+    betaBannerTitle:'🧪 Join the AppNest Beta Testers',
+    betaBannerDesc:'Get early access to new apps before anyone else',
+    betaBannerBtn:'Join Now ›',
   },
   ru:{
-    logoSub:'STORE', spotlightDesc:'5 классических игр в одном — Викторина, Память, Виселица, 21 и Угадай число',
-    all:'Все', free:'Бесплатно', soon:'Скоро', games:'Игры', tools:'Инструменты',
-    statApps:'Приложения', statLangs:'Языки', statGames:'Игры',
-    gamesTitle:'🎮 Игры', toolsTitle:'🔧 Инструменты',
-    gamenestDesc:'5 классических игр', arcade1Desc:'Тетрис, Шахматы, Пинг-понг и др.',
-    arcade2Desc:'Бесконечный бег, Яблоки и др.', arcade3Desc:'Саймон, Война, Пенальти',
-    snakeName:'🐍 Змейка', snakeDesc:'Ешь, расти, не врезайся',
-    desc2048:'Объединяй плитки до 2048', sudokuName:'🔢 Судоку', sudokuDesc:'3 уровня, подсказки, таймер',
-    lotoName:'🎰 Лото Израиля', lotoDesc:'Статистика и розыгрыши',
-    totoName:'⚽ Тото Анализатор AI', totoDesc:'AI прогнозы',
-    stockDesc:'AI анализ акций', lexDesc:'Юридический календарь',
-    reminderName:'📝 Не забыл', reminderDesc:'Умные напоминания',
-    moneyDesc:'Финансовый менеджмент',
-    tagFree:'Бесплатно', tagSoon:'Скоро', tagNew:'Новинка!',
-    betaTitle:'Стань бета-тестером!', betaDesc:'Ранний доступ к новым приложениям',
-    footerRights:'Все права защищены', search:'Поиск приложений...',
-    open:'Открыть', notify:'Уведомить', close:'Закрыть', sendEmail:'Отправить',
-    features:'Ключевые функции', comingSoon:'Скоро в официальном магазине',
-    rateApp:'Оценить', shareApp:'Поделиться',
+    dir:'ltr',flag:'🇷🇺',name:'Русский',
+    logoSub:'Гнездо приложений',
+    heroBadge:'Гнездо израильских приложений',
+    heroTitle:'Бесплатные<br><span class="grad">приложения</span> для всех',
+    heroSub:'Инструменты, приложения и игры, созданные с любовью — без рекламы, без оплаты, на любом языке.',
+    heroBtnMain:'🚀 Смотреть приложения',heroBtnSec:'Отправить приложение',
+    spotLabel:'Приложение недели',spotBtn:'Подробнее ›',
+    statApps:'Приложений',statFree:'Бесплатно',statAds:'Рекламы',statLangs:'Языков',
+    catsLabel:'Обзор по категориям',catsTitle:'Категории',
+    catApps:'Приложения',catAppsC:'3 доступно',catBiz:'Бизнес',catBizC:'1 доступно',
+    catTools:'Инструменты',catToolsC:'4 доступно',catGames:'Игры',catGamesC:'7 доступно',catEdu:'Образование',catEduC:'Скоро',
+    appsLabel:'Все приложения',appsTitle:'Наши приложения',
+    searchPh:'Поиск приложений...',filterAll:'Все',filterFree:'Бесплатно',filterComing:'Скоро',
+    submitTitle:'🪺 Есть приложение?',
+    submitDesc:'AppNest открыт для всех! Создали приложение, игру или инструмент?<br>Отправьте нам — мы проверим и опубликуем бесплатно.',
+    step1:'Отправьте',step2:'Проверка',step3:'Публикация!',submitBtn:'📧 Отправить приложение',
+    aboutLabel:'О AppNest',
+    aboutText:'AppNest создан из любви к разработке и желания дать всем доступ к качественным приложениям — бесплатно, на любом языке, без рекламы.',
+    builtBy:'Создано ',footAbout:'О нас',footPrivacy:'Конфиденциальность',
+    footerRights:'© 2026 · Все права защищены — Barak Aflalo',
+    nl_apps:'Приложения',nl_cats:'Категории',nl_submit:'Отправить',nl_about:'О нас',
+    free:'Бесплатно',comingSoon:'Скоро',openApp:'Открыть',comingStore:'Скоро в магазине',
+    features:'Основные функции',screenshots:'Скриншоты',screenshotsSoon:'Скриншоты скоро — откройте приложение чтобы увидеть!',
+    ratings:'Оценки и отзывы',rateThis:'Оцените приложение:',writeReview:'Написать отзыв (необязательно)...',
+    submitReview:'Отправить',comingStoreBtn:'🏪 Скоро в Google Play',
+    shareApp:'Поделиться',notifyMe:'Уведомить при запуске',
+    notifyPh:'Email для уведомления...',notifyBtn:'Уведомить',notifyDone:'✅ Вы в списке!',
+    noResults:'Приложения не найдены',
+    betaBannerTitle:'🧪 Присоединись к бета-тестерам AppNest',
+    betaBannerDesc:'Получи ранний доступ к новым приложениям раньше всех',
+    betaBannerBtn:'Присоединиться ›',
   },
   es:{
-    logoSub:'STORE', spotlightDesc:'5 juegos clásicos en uno — Trivia, Memoria, Ahorcado, 21 y Adivina el número',
-    all:'Todo', free:'Gratis', soon:'Próximamente', games:'Juegos', tools:'Herramientas',
-    statApps:'Apps', statLangs:'Idiomas', statGames:'Juegos',
-    gamesTitle:'🎮 Juegos', toolsTitle:'🔧 Herramientas y Apps',
-    gamenestDesc:'5 juegos clásicos', arcade1Desc:'Tetris, Ajedrez, Ping Pong y más',
-    arcade2Desc:'Corredor infinito, Manzanas y más', arcade3Desc:'Simon, Guerra, Penalti',
-    snakeName:'🐍 Serpiente', snakeDesc:'Come, crece, no choques',
-    desc2048:'Combina fichas hasta 2048', sudokuName:'🔢 Sudoku', sudokuDesc:'3 niveles, pistas, cronómetro',
-    lotoName:'🎰 Lotería Israel', lotoDesc:'Estadísticas y sorteos',
-    totoName:'⚽ Toto AI', totoDesc:'Predicciones IA',
-    stockDesc:'Análisis de acciones con IA', lexDesc:'Calendario de plazos legales',
-    reminderName:'📝 No Olvidé', reminderDesc:'Recordatorios inteligentes',
-    moneyDesc:'Gestión financiera',
-    tagFree:'Gratis', tagSoon:'Próximamente', tagNew:'¡Nuevo!',
-    betaTitle:'¡Únete a los beta testers!', betaDesc:'Acceso anticipado a nuevas apps',
-    footerRights:'Todos los derechos reservados', search:'Buscar apps...',
-    open:'Abrir', notify:'Notificarme', close:'Cerrar', sendEmail:'Enviar',
-    features:'Características', comingSoon:'Próximamente en la tienda oficial',
-    rateApp:'Valorar', shareApp:'Compartir',
+    dir:'ltr',flag:'🇪🇸',name:'Español',
+    logoSub:'El Nido de Apps',
+    heroBadge:'El Nido de Apps de Israel',
+    heroTitle:'Apps <span class="grad">gratis</span><br>para todos',
+    heroSub:'Herramientas, apps y juegos hechos con amor — sin anuncios, sin costo, en cualquier idioma.',
+    heroBtnMain:'🚀 Explorar Apps',heroBtnSec:'Enviar tu App',
+    spotLabel:'App de la Semana',spotBtn:'Descubrir ›',
+    statApps:'Apps',statFree:'Gratis',statAds:'Anuncios',statLangs:'Idiomas',
+    catsLabel:'Explorar por categoría',catsTitle:'Categorías',
+    catApps:'Apps',catAppsC:'3 disponibles',catBiz:'Negocios',catBizC:'1 disponible',
+    catTools:'Herramientas',catToolsC:'4 disponibles',catGames:'Juegos',catGamesC:'7 disponibles',catEdu:'Educación',catEduC:'Próximamente',
+    appsLabel:'Todas las apps',appsTitle:'Nuestras Apps',
+    searchPh:'Buscar app...',filterAll:'Todo',filterFree:'Gratis',filterComing:'Próximamente',
+    submitTitle:'🪺 ¿Tienes una App?',
+    submitDesc:'¡AppNest está abierto a todos! ¿Creaste una app, juego o herramienta?<br>Envíanosla y la revisaremos — gratis.',
+    step1:'Envíala',step2:'Revisión',step3:'¡En vivo!',submitBtn:'📧 Enviar App',
+    aboutLabel:'Acerca de AppNest',
+    aboutText:'AppNest fue creado por amor al desarrollo y el deseo de dar acceso a apps de calidad — gratis, en cualquier idioma, sin anuncios.',
+    builtBy:'Creado por ',footAbout:'Acerca',footPrivacy:'Privacidad',
+    footerRights:'© 2026 · Todos los derechos reservados — Barak Aflalo',
+    nl_apps:'Apps',nl_cats:'Categorías',nl_submit:'Enviar',nl_about:'Acerca',
+    free:'Gratis',comingSoon:'Próximamente',openApp:'Abrir App',comingStore:'Próximamente',
+    features:'Características',screenshots:'Capturas',screenshotsSoon:'Capturas próximamente — ¡abre la app para verla en acción!',
+    ratings:'Valoraciones y reseñas',rateThis:'Valora esta app:',writeReview:'Escribe una reseña (opcional)...',
+    submitReview:'Enviar',comingStoreBtn:'🏪 Próximamente en Google Play',
+    shareApp:'Compartir',notifyMe:'Notificarme al lanzar',
+    notifyPh:'Email para notificación...',notifyBtn:'Notificarme',notifyDone:'✅ ¡Estás en la lista!',
+    noResults:'No se encontraron apps',
+    betaBannerTitle:'🧪 Únete a los beta testers de AppNest',
+    betaBannerDesc:'Obtén acceso anticipado a nuevas apps antes que nadie',
+    betaBannerBtn:'Únete ›',
   },
   ar:{
-    logoSub:'STORE', spotlightDesc:'5 ألعاب كلاسيكية في مكان واحد — ترويا، ذاكرة، مشنقة، 21 وخمّن الرقم',
-    all:'الكل', free:'مجاني', soon:'قريباً', games:'ألعاب', tools:'أدوات',
-    statApps:'تطبيقات', statLangs:'لغات', statGames:'ألعاب',
-    gamesTitle:'🎮 الألعاب', toolsTitle:'🔧 الأدوات والتطبيقات',
-    gamenestDesc:'5 ألعاب كلاسيكية', arcade1Desc:'تيتريس، شطرنج، بينغ بونغ والمزيد',
-    arcade2Desc:'ركض لا نهاية، التفاح الساقط والمزيد', arcade3Desc:'سايمون، حرب، ضربة جزاء',
-    snakeName:'🐍 الثعبان', snakeDesc:'كل، انمُ، لا تصطدم',
-    desc2048:'ادمج البلاط للوصول إلى 2048', sudokuName:'🔢 سودوكو', sudokuDesc:'3 مستويات، تلميحات، مؤقت',
-    lotoName:'🎰 لوتو إسرائيل', lotoDesc:'إحصاءات وسحوبات',
-    totoName:'⚽ توتو AI', totoDesc:'تنبؤات الذكاء الاصطناعي',
-    stockDesc:'تحليل الأسهم بالذكاء الاصطناعي', lexDesc:'تقويم المواعيد القانونية',
-    reminderName:'📝 لم أنسَ', reminderDesc:'تذكيرات ذكية',
-    moneyDesc:'إدارة مالية ذكية',
-    tagFree:'مجاني', tagSoon:'قريباً', tagNew:'جديد!',
-    betaTitle:'انضم لفريق المختبرين!', betaDesc:'احصل على وصول مبكر للتطبيقات',
-    footerRights:'جميع الحقوق محفوظة', search:'ابحث عن تطبيق...',
-    open:'افتح', notify:'أعلمني', close:'إغلاق', sendEmail:'إرسال',
-    features:'الميزات الرئيسية', comingSoon:'قريباً في المتجر الرسمي',
-    rateApp:'قيّم', shareApp:'شارك',
+    dir:'rtl',flag:'🇸🇦',name:'العربية',
+    logoSub:'عش التطبيقات',
+    heroBadge:'عش التطبيقات الإسرائيلي',
+    heroTitle:'تطبيقات<br><span class="grad">مجانية</span> للجميع',
+    heroSub:'أدوات وتطبيقات وألعاب مبنية بحب — بلا إعلانات، بلا تكلفة، بأي لغة.',
+    heroBtnMain:'🚀 استكشف التطبيقات',heroBtnSec:'أرسل تطبيقك',
+    spotLabel:'تطبيق الأسبوع',spotBtn:'اكتشف ›',
+    statApps:'تطبيقات',statFree:'مجاني',statAds:'إعلانات',statLangs:'لغات',
+    catsLabel:'تصفح حسب الفئة',catsTitle:'الفئات',
+    catApps:'تطبيقات',catAppsC:'3 متاحة',catBiz:'أعمال',catBizC:'1 متاح',
+    catTools:'أدوات',catToolsC:'4 متاحة',catGames:'ألعاب',catGamesC:'7 متاحة',catEdu:'تعليم',catEduC:'قريباً',
+    appsLabel:'كل التطبيقات',appsTitle:'تطبيقاتنا',
+    searchPh:'ابحث عن تطبيق...',filterAll:'الكل',filterFree:'مجاني',filterComing:'قريباً',
+    submitTitle:'🪺 هل لديك تطبيق؟',
+    submitDesc:'AppNest مفتوح للجميع! هل بنيت تطبيقاً أو لعبة أو أداة مفيدة؟<br>أرسل لنا وسنراجعه وننشره مجاناً.',
+    step1:'أرسل لنا',step2:'مراجعة الجودة',step3:'ينطلق!',submitBtn:'📧 إرسال التطبيق',
+    aboutLabel:'عن AppNest',
+    aboutText:'تم إنشاء AppNest من حب التطوير والرغبة في إتاحة الوصول للجميع — مجاناً، بأي لغة، بلا إعلانات. كل تطبيق يخضع لمراجعة الجودة.',
+    builtBy:'بُني بواسطة ',footAbout:'عن',footPrivacy:'الخصوصية',
+    footerRights:'© 2026 · جميع الحقوق محفوظة — Barak Aflalo',
+    nl_apps:'التطبيقات',nl_cats:'الفئات',nl_submit:'إرسال',nl_about:'عن',
+    free:'مجاني',comingSoon:'قريباً',openApp:'فتح التطبيق',comingStore:'قريباً في المتجر',
+    features:'الميزات الرئيسية',screenshots:'لقطات الشاشة',screenshotsSoon:'لقطات الشاشة قريباً!',
+    ratings:'التقييمات والمراجعات',rateThis:'قيّم هذا التطبيق:',writeReview:'اكتب مراجعة (اختياري)...',
+    submitReview:'إرسال',comingStoreBtn:'🏪 قريباً في Google Play',
+    shareApp:'مشاركة',notifyMe:'أشعرني عند الإطلاق',
+    notifyPh:'البريد الإلكتروني...',notifyBtn:'أشعرني',notifyDone:'✅ تم التسجيل!',
+    noResults:'لم يتم العثور على تطبيقات',
+    betaBannerTitle:'🧪 انضم إلى بيتا تيسترز AppNest',
+    betaBannerDesc:'احصل على وصول مبكر للتطبيقات الجديدة قبل الجميع',
+    betaBannerBtn:'انضم الآن ›',
+  }
+};
+
+/* ════════════════════════════════
+   APP DATA
+════════════════════════════════ */
+var APPS = [
+  {
+    id:'lo-shachachti',
+    emoji:'🔔',
+    heroColor:'linear-gradient(135deg,#1a1040 0%,#2a1a60 100%)',
+    name:{he:'לא שכחתי',en:'Lo Shachachti',ru:'Не забыл',es:'No Olvidé',ar:'لم أنسَ'},
+    cat:{he:'📱 אפליקציה · עברית',en:'📱 App · Productivity',ru:'📱 Приложение',es:'📱 App · Productividad',ar:'📱 تطبيق'},
+    tag:{he:'זיכרון',en:'Memory',ru:'Память',es:'Memoria',ar:'ذاكرة'},
+    tagColor:'rgba(99,102,241,0.15)',tagTextColor:'#a5b4fc',
+    desc:{
+      he:'האפליקציה שתזכיר לך כל אירוע חשוב — ימי הולדת, אזכרות, חתונות ועוד. עם ברכות אוטומטיות, ניהול תקציב מתנות ותזכורות חכמות.',
+      en:'Never forget an important event — birthdays, anniversaries, and more. Smart reminders, auto-greetings, and gift budget tracking.',
+      ru:'Никогда не забывайте важные события — дни рождения, юбилеи и многое другое. Умные напоминания и поздравления.',
+      es:'Nunca olvides un evento importante — cumpleaños, aniversarios y más. Recordatorios inteligentes y saludos automáticos.',
+      ar:'لا تنسَ أي حدث مهم — أعياد الميلاد والذكرى السنوية والمزيد. تذكيرات ذكية وتهانٍ تلقائية.'
+    },
+    features:[
+      {icon:'🔔',he:'תזכורות חכמות לכל אירוע',en:'Smart reminders for every event',ru:'Умные напоминания',es:'Recordatorios inteligentes',ar:'تذكيرات ذكية'},
+      {icon:'🎂',he:'ימי הולדת ואזכרות',en:'Birthdays & anniversaries',ru:'Дни рождения и юбилеи',es:'Cumpleaños y aniversarios',ar:'أعياد الميلاد والذكرى'},
+      {icon:'💝',he:'ניהול תקציב מתנות',en:'Gift budget management',ru:'Управление бюджетом подарков',es:'Gestión de presupuesto de regalos',ar:'إدارة ميزانية الهدايا'},
+      {icon:'✉️',he:'ברכות אוטומטיות',en:'Auto-generated greetings',ru:'Автоматические поздравления',es:'Saludos automáticos',ar:'تهانٍ تلقائية'},
+      {icon:'📅',he:'יומן אירועים',en:'Events calendar',ru:'Календарь событий',es:'Calendario de eventos',ar:'تقويم الأحداث'},
+      {icon:'🆓',he:'חינמי לצמיתות',en:'Free forever',ru:'Бесплатно навсегда',es:'Gratis para siempre',ar:'مجاني للأبد'},
+    ],
+    screenshots:['🔔','📅','💌','🎁'],
+    type:'coming',
+    url:null,
+    badge:'new',
+    category:'app',
+    rating:4.8, ratingCount:24,
+    btnColor:'#6366f1',btnTextColor:'#fff',
   },
-};
+  {
+    id:'moneynest',
+    emoji:'💰',
+    heroColor:'linear-gradient(135deg,#0a200a 0%,#0f3318 100%)',
+    name:{he:'MoneyNest',en:'MoneyNest',ru:'MoneyNest',es:'MoneyNest',ar:'MoneyNest'},
+    cat:{he:'📊 ניהול כספים',en:'📊 Finance',ru:'📊 Финансы',es:'📊 Finanzas',ar:'📊 ماليات'},
+    tag:{he:'פיננסי',en:'Finance',ru:'Финансы',es:'Finanzas',ar:'مالية'},
+    tagColor:'rgba(60,207,108,0.12)',tagTextColor:'var(--green)',
+    desc:{
+      he:'אפליקציית ניהול הוצאות חכמה — מעקב תקציב, ניתוח הוצאות, יעדי חיסכון וסיכומים חודשיים. כל הנתונים שמורים על המכשיר שלך.',
+      en:'Smart expense manager — track budgets, analyze spending, set savings goals and get monthly summaries. Data stays on your device.',
+      ru:'Умный менеджер расходов — отслеживайте бюджет, анализируйте траты, ставьте цели сбережений.',
+      es:'Gestor de gastos inteligente — rastrea presupuestos, analiza gastos y establece metas de ahorro.',
+      ar:'مدير نفقات ذكي — تتبع الميزانية وتحليل الإنفاق وتحديد أهداف الادخار.'
+    },
+    features:[
+      {icon:'📊',he:'מעקב הוצאות בזמן אמת',en:'Real-time expense tracking',ru:'Отслеживание расходов',es:'Seguimiento en tiempo real',ar:'تتبع النفقات'},
+      {icon:'🎯',he:'יעדי חיסכון',en:'Savings goals',ru:'Цели сбережений',es:'Metas de ahorro',ar:'أهداف الادخار'},
+      {icon:'📈',he:'גרפים וניתוחים',en:'Charts & analytics',ru:'Графики и аналитика',es:'Gráficos y análisis',ar:'رسوم بيانية'},
+      {icon:'🗂️',he:'קטגוריות מותאמות',en:'Custom categories',ru:'Пользовательские категории',es:'Categorías personalizadas',ar:'فئات مخصصة'},
+      {icon:'🔒',he:'פרטיות מלאה',en:'Full privacy — local only',ru:'Полная конфиденциальность',es:'Privacidad total',ar:'خصوصية كاملة'},
+      {icon:'📱',he:'ממשק נוח ומהיר',en:'Fast, intuitive UI',ru:'Быстрый интерфейс',es:'Interfaz rápida',ar:'واجهة سريعة'},
+    ],
+    screenshots:['💰','📊','📈','🎯'],
+    type:'coming',
+    url:null,
+    badge:'new',
+    category:'app',
+    rating:0, ratingCount:0,
+    btnColor:'var(--green)',btnTextColor:'#000',
+  },
+  {
+    id:'lexcalendar',
+    emoji:'⚖️',
+    heroColor:'linear-gradient(135deg,#0d1f3c 0%,#162d52 100%)',
+    name:{he:'LexCalendar',en:'LexCalendar',ru:'LexCalendar',es:'LexCalendar',ar:'LexCalendar'},
+    cat:{he:'💼 לעורכי דין',en:'💼 For Lawyers',ru:'💼 Для юристов',es:'💼 Para abogados',ar:'💼 للمحامين'},
+    tag:{he:'משפטי',en:'Legal',ru:'Юридический',es:'Legal',ar:'قانوني'},
+    tagColor:'rgba(34,208,216,0.1)',tagTextColor:'var(--teal)',
+    desc:{
+      he:'מערכת ניהול משפטית מקיפה לעורכי דין ונוטריונים — לקוחות, תיקים, מועדים, שעות עבודה ושכר טרחה, הכל במקום אחד.',
+      en:'Comprehensive legal management for lawyers and notaries — clients, cases, deadlines, work hours and fees, all in one place.',
+      ru:'Комплексное юридическое управление для адвокатов — клиенты, дела, сроки, рабочие часы и гонорары.',
+      es:'Gestión legal integral para abogados y notarios — clientes, casos, plazos, horas y honorarios, todo en un lugar.',
+      ar:'إدارة قانونية شاملة للمحامين — العملاء والقضايا والمواعيد وساعات العمل والأتعاب، كل ذلك في مكان واحد.'
+    },
+    features:[
+      {icon:'📁',he:'ניהול תיקים ולקוחות',en:'Case & client management',ru:'Управление делами',es:'Gestión de casos',ar:'إدارة القضايا'},
+      {icon:'📅',he:'מועדים אוטומטיים לפי חוק',en:'Auto deadlines per law',ru:'Автоматические сроки',es:'Plazos automáticos',ar:'مواعيد تلقائية'},
+      {icon:'🧮',he:'מחשבון שכר טרחה',en:'Fee calculator',ru:'Калькулятор гонораров',es:'Calculadora de honorarios',ar:'حاسبة الأتعاب'},
+      {icon:'⏱️',he:'מעקב שעות עבודה',en:'Work hours tracking',ru:'Учёт рабочего времени',es:'Control de horas',ar:'تتبع ساعات العمل'},
+      {icon:'📆',he:'סנכרון Google Calendar',en:'Google Calendar sync',ru:'Синхронизация с Google',es:'Sincronización con Google',ar:'مزامنة Google Calendar'},
+      {icon:'🔒',he:'פרטיות מלאה',en:'Full privacy — local only',ru:'Полная конфиденциальность',es:'Privacidad total',ar:'خصوصية كاملة'},
+    ],
+    screenshots:['⚖️','📁','📅','🧮'],
+    type:'coming',
+    url:null,
+    badge:'new',
+    category:'business',
+    rating:0, ratingCount:0,
+    btnColor:'#1a56db',btnTextColor:'#fff',
+  },
+  {
+    id:'lotto',
+    emoji:'🎱',
+    heroColor:'linear-gradient(135deg,#1a1400 0%,#2a2000 100%)',
+    name:{he:'לוטו ישראל — סטטיסטיקה',en:'Lotto Israel — Stats',ru:'Лото Израиль',es:'Loto Israel',ar:'لوتو إسرائيل'},
+    cat:{he:'📊 כלי סטטיסטיקה',en:'📊 Stats Tool',ru:'📊 Статистика',es:'📊 Estadísticas',ar:'📊 إحصائيات'},
+    tag:{he:'כלי',en:'Tool',ru:'Инструмент',es:'Herramienta',ar:'أداة'},
+    tagColor:'rgba(245,200,66,0.1)',tagTextColor:'var(--yellow)',
+    desc:{
+      he:'מנתח סטטיסטי של לוטו ישראל — מספרים חמים וקרים, מפת חום, ומחולל שורות חכם לפי אסטרטגיה.',
+      en:'Statistical analyzer for Israeli Lotto — hot & cold numbers, heat map, and smart line generator by strategy.',
+      ru:'Статистический анализатор израильской лотереи — горячие и холодные числа, тепловая карта.',
+      es:'Analizador estadístico de Loto Israel — números calientes y fríos, mapa de calor y generador de líneas.',
+      ar:'محلل إحصائي لليانصيب الإسرائيلي — الأرقام الساخنة والباردة وخريطة الحرارة.'
+    },
+    features:[
+      {icon:'🔥',he:'מספרים חמים וקרים',en:'Hot & cold numbers',ru:'Горячие и холодные числа',es:'Números calientes y fríos',ar:'أرقام ساخنة وباردة'},
+      {icon:'🗺️',he:'מפת חום ויזואלית',en:'Visual heat map',ru:'Визуальная тепловая карта',es:'Mapa de calor visual',ar:'خريطة حرارية'},
+      {icon:'🤖',he:'מחולל שורות חכם',en:'Smart line generator',ru:'Умный генератор',es:'Generador inteligente',ar:'مولد ذكي'},
+      {icon:'📉',he:'היסטוריית הגרלות',en:'Draw history',ru:'История розыгрышей',es:'Historial de sorteos',ar:'تاريخ السحوبات'},
+      {icon:'⚡',he:'עדכון בזמן אמת',en:'Real-time updates',ru:'Обновления в реальном времени',es:'Actualizaciones en tiempo real',ar:'تحديثات فورية'},
+      {icon:'🆓',he:'חינמי לחלוטין',en:'Completely free',ru:'Полностью бесплатно',es:'Completamente gratis',ar:'مجاني تماماً'},
+    ],
+    screenshots:['🎱','📊','🔥','🗺️'],
+    type:'free',
+    url:'https://barakaflalo.github.io/lotto',
+    badge:'',
+    category:'tool',
+    rating:4.5, ratingCount:12,
+    btnColor:'#f5c842',btnTextColor:'#000',
+  },
+  {
+    id:'toto',
+    emoji:'⚽',
+    heroColor:'linear-gradient(135deg,#080e1a 0%,#0f1e3a 100%)',
+    name:{he:'טוטו אנליזר AI',en:'Toto Analyzer AI',ru:'Тото Анализатор',es:'Toto Analyzer AI',ar:'محلل توتو AI'},
+    cat:{he:'🤖 ניתוח AI',en:'🤖 AI Tool',ru:'🤖 ИИ Инструмент',es:'🤖 Herramienta IA',ar:'🤖 أداة ذكاء اصطناعي'},
+    tag:{he:'AI',en:'AI',ru:'ИИ',es:'IA',ar:'ذكاء اصطناعي'},
+    tagColor:'rgba(160,108,245,0.12)',tagTextColor:'var(--purple)',
+    desc:{
+      he:'מנוע חיזוי AI לטוטו ישראל — ניתוח 16 משחקים, 3 אסטרטגיות, נתונים חיים.',
+      en:'AI prediction engine for Israeli Toto — 16 matches, 3 strategies, live data.',
+      ru:'ИИ-движок прогнозирования для израильского Тото — 16 матчей, 3 стратегии.',
+      es:'Motor de predicción IA para Toto Israel — 16 partidos, 3 estrategias, datos en vivo.',
+      ar:'محرك تنبؤ بالذكاء الاصطناعي لتوتو الإسرائيلي — 16 مباراة و3 استراتيجيات.'
+    },
+    features:[
+      {icon:'🤖',he:'חיזוי מבוסס AI',en:'AI-based predictions',ru:'Прогнозы на основе ИИ',es:'Predicciones con IA',ar:'تنبؤات بالذكاء الاصطناعي'},
+      {icon:'📡',he:'נתונים חיים',en:'Live data feed',ru:'Данные в реальном времени',es:'Datos en vivo',ar:'بيانات مباشرة'},
+      {icon:'🎯',he:'3 אסטרטגיות בחירה',en:'3 selection strategies',ru:'3 стратегии выбора',es:'3 estrategias',ar:'3 استراتيجيات'},
+      {icon:'📋',he:'ניתוח 16 משחקים',en:'16-match analysis',ru:'Анализ 16 матчей',es:'Análisis de 16 partidos',ar:'تحليل 16 مباراة'},
+      {icon:'📊',he:'סטטיסטיקות מפורטות',en:'Detailed statistics',ru:'Подробная статистика',es:'Estadísticas detalladas',ar:'إحصائيات مفصلة'},
+      {icon:'🆓',he:'חינמי לחלוטין',en:'Completely free',ru:'Полностью бесплатно',es:'Completamente gratis',ar:'مجاني تماماً'},
+    ],
+    screenshots:['⚽','🤖','📊','🎯'],
+    type:'free',
+    url:'https://barakaflalo.github.io/toto',
+    badge:'updated',
+    category:'tool',
+    rating:4.2, ratingCount:8,
+    btnColor:'#534AB7',btnTextColor:'#fff',
+  },
+  {
+    id:'stockai',
+    emoji:'📈',
+    heroColor:'linear-gradient(135deg,#050505 0%,#1a1200 50%,#0a0e00 100%)',
+    name:{he:'StockAI — ניתוח מניות',en:'StockAI — Stock Analyzer',ru:'StockAI — Анализ акций',es:'StockAI — Análisis de Acciones',ar:'StockAI — تحليل الأسهم'},
+    cat:{he:'🤖 AI · מניות',en:'🤖 AI · Stocks',ru:'🤖 ИИ · Акции',es:'🤖 IA · Acciones',ar:'🤖 ذكاء اصطناعي · أسهم'},
+    tag:{he:'AI פיננסי',en:'Finance AI',ru:'Финансы ИИ',es:'IA Financiera',ar:'ذكاء مالي'},
+    tagColor:'rgba(201,168,76,0.12)',tagTextColor:'#c9a84c',
+    desc:{
+      he:'מנתח מניות חכם מבוסס AI — קבל המלצת קנה/מכור/החזק תוך שניות לכל מניה בשוק האמריקאי והישראלי. עם ציוני ביטחון, גורמי סיכון ורשימת מעקב אישית.',
+      en:'AI-powered stock analyzer — get Buy/Sell/Hold recommendations in seconds for any US or Israeli market stock. Includes confidence scores, risk factors, and personal watchlist.',
+      ru:'ИИ-анализатор акций — получайте рекомендации Купить/Продать/Держать за секунды для акций США и Израиля. Оценки уверенности и личный список наблюдения.',
+      es:'Analizador de acciones con IA — obtén recomendaciones Comprar/Vender/Mantener en segundos para cualquier acción de EE.UU. o Israel. Puntuaciones de confianza y lista de seguimiento.',
+      ar:'محلل أسهم بالذكاء الاصطناعي — احصل على توصيات شراء/بيع/احتفاظ في ثوانٍ لأي سهم في السوقين الأمريكي والإسرائيلي. درجات الثقة وقائمة المراقبة الشخصية.'
+    },
+    features:[
+      {icon:'🤖',he:'ניתוח AI מיידי',en:'Instant AI analysis',ru:'Мгновенный ИИ-анализ',es:'Análisis IA instantáneo',ar:'تحليل فوري بالذكاء الاصطناعي'},
+      {icon:'📊',he:'המלצת קנה/מכור/החזק',en:'Buy/Sell/Hold recommendation',ru:'Рекомендация Купить/Продать',es:'Recomendación Comprar/Vender',ar:'توصية شراء/بيع/احتفاظ'},
+      {icon:'🇺🇸',he:'שוק אמריקאי וישראלי',en:'US & Israeli markets',ru:'Рынки США и Израиля',es:'Mercados EE.UU. e Israel',ar:'السوقان الأمريكي والإسرائيلي'},
+      {icon:'⚠️',he:'גורמי סיכון ומדדים',en:'Risk factors & metrics',ru:'Факторы риска и метрики',es:'Factores de riesgo y métricas',ar:'عوامل المخاطر والمقاييس'},
+      {icon:'👁️',he:'רשימת מעקב אישית',en:'Personal watchlist',ru:'Личный список наблюдения',es:'Lista de seguimiento personal',ar:'قائمة المراقبة الشخصية'},
+      {icon:'🌐',he:'4 שפות — עברית/אנגלית/ערבית/רוסית',en:'4 languages supported',ru:'4 языка — иврит/английский/арабский/русский',es:'4 idiomas disponibles',ar:'4 لغات — عبري/إنجليزي/عربي/روسي'},
+    ],
+    screenshots:['📈','🤖','📊','👁️'],
+    type:'free',
+    url:'https://barakaflalo.github.io/stock-analyzer',
+    badge:'new',
+    category:'tool',
+    rating:0, ratingCount:0,
+    btnColor:'#c9a84c',btnTextColor:'#000',
+  }
+,
+  {
+    id:'gamenest',
+    emoji:'🎮',
+    heroColor:'linear-gradient(135deg,#0A0A0A 0%,#1A1500 100%)',
+    name:{he:'GameNest Hub',en:'GameNest Hub',ru:'GameNest Hub',es:'GameNest Hub',ar:'GameNest Hub'},
+    cat:{he:'🎮 משחקים · Hub',en:'🎮 Games · Hub',ru:'🎮 Игры · Hub',es:'🎮 Juegos · Hub',ar:'🎮 ألعاب · Hub'},
+    tag:{he:'משחקים',en:'Games',ru:'Игры',es:'Juegos',ar:'ألعاب'},
+    tagColor:'rgba(201,168,76,0.12)',tagTextColor:'#c9a84c',
+    desc:{
+      he:'5 משחקים קלאסיים במקום אחד — טריוויה עם 100 שאלות, זיכרון, תלייה, בלאקג׳ק וניחוש מספר. ב-5 שפות, מצב יום/לילה ומדריך.',
+      en:'5 classic games in one — Trivia with 100 questions, Memory, Hangman, Blackjack and Number Guess. 5 languages, day/night mode and guide.',
+      ru:'5 классических игр в одном — Викторина, Память, Виселица, Блэкджек и Угадай число. 5 языков.',
+      es:'5 juegos clásicos en uno — Trivia, Memoria, Ahorcado, Blackjack y Adivinar número. 5 idiomas.',
+      ar:'5 ألعاب كلاسيكية في مكان واحد — ترويا وذاكرة ومشنقة وبلاك جاك وخمّن الرقم. 5 لغات.'
+    },
+    features:[
+      {icon:'🧠',he:'טריוויה — 100 שאלות אקראיות',en:'Trivia — 100 random questions',ru:'Викторина — 100 вопросов',es:'Trivia — 100 preguntas',ar:'ترويا — 100 سؤال'},
+      {icon:'🃏',he:'זיכרון — 8 זוגות',en:'Memory — 8 pairs',ru:'Память — 8 пар',es:'Memoria — 8 pares',ar:'ذاكرة — 8 أزواج'},
+      {icon:'🪝',he:'תלייה עם רמזים',en:'Hangman with hints',ru:'Виселица с подсказками',es:'Ahorcado con pistas',ar:'مشنقة مع تلميحات'},
+      {icon:'🎰',he:'21 / בלאקג׳ק',en:'Blackjack / 21',ru:'Блэкджек / 21',es:'Blackjack / 21',ar:'بلاك جاك / 21'},
+      {icon:'🔢',he:'נחש מספר',en:'Number Guess',ru:'Угадай число',es:'Adivinar número',ar:'خمّن الرقم'},
+      {icon:'🌐',he:'5 שפות + יום/לילה',en:'5 languages + day/night',ru:'5 языков + день/ночь',es:'5 idiomas + día/noche',ar:'5 لغات + نهار/ليل'},
+    ],
+    screenshots:['🧠','🃏','🪝','🎰'],
+    type:'free',
+    url:'https://barakaflalo.github.io/games/gamenest-hub.html',
+    badge:'new',
+    category:'game',
+    rating:5.0, ratingCount:12,
+    btnColor:'#c9a84c',btnTextColor:'#000',
+  },
+  {
+    id:'arcade1',
+    emoji:'🕹️',
+    heroColor:'linear-gradient(135deg,#0A0A1A 0%,#1A1A2A 100%)',
+    name:{he:'ArcadeNest Hub 1',en:'ArcadeNest Hub 1',ru:'ArcadeNest Hub 1',es:'ArcadeNest Hub 1',ar:'ArcadeNest Hub 1'},
+    cat:{he:'🕹️ ארקייד · Hub',en:'🕹️ Arcade · Hub',ru:'🕹️ Аркада · Hub',es:'🕹️ Arcade · Hub',ar:'🕹️ أركيد · Hub'},
+    tag:{he:'ארקייד',en:'Arcade',ru:'Аркада',es:'Arcade',ar:'أركيد'},
+    tagColor:'rgba(74,143,212,0.12)',tagTextColor:'#4a8fd4',
+    desc:{
+      he:'5 משחקי ארקייד קלאסיים — טטריס, שחמט מלא מול מחשב, פינגפונג, חפור פצצות ושבירת לבנים.',
+      en:'5 classic arcade games — Tetris, full Chess vs computer, Ping Pong, Minesweeper and Breakout.',
+      ru:'5 классических аркадных игр — Тетрис, Шахматы, Пинг-понг, Сапёр и Арканоид.',
+      es:'5 juegos arcade clásicos — Tetris, Ajedrez, Ping Pong, Buscaminas y Breakout.',
+      ar:'5 ألعاب أركيد كلاسيكية — تيتريس وشطرنج وبينغ بونغ وكاسح الألغام وكسر الطوب.'
+    },
+    features:[
+      {icon:'🧩',he:'טטריס עם שלבים',en:'Tetris with levels',ru:'Тетрис с уровнями',es:'Tetris con niveles',ar:'تيتريس بمستويات'},
+      {icon:'♟️',he:'שחמט מלא מול AI',en:'Full Chess vs AI',ru:'Шахматы против ИИ',es:'Ajedrez contra IA',ar:'شطرنج ضد AI'},
+      {icon:'🏓',he:'פינגפונג מול מחשב',en:'Ping Pong vs computer',ru:'Пинг-понг против ПК',es:'Ping Pong vs ordenador',ar:'بينغ بونغ ضد الكمبيوتر'},
+      {icon:'💣',he:'חפור פצצות 3 רמות',en:'Minesweeper 3 levels',ru:'Сапёр 3 уровня',es:'Buscaminas 3 niveles',ar:'كاسح الألغام 3 مستويات'},
+      {icon:'🧱',he:'שבירת לבנים',en:'Breakout',ru:'Арканоид',es:'Breakout',ar:'كسر الطوب'},
+      {icon:'🌐',he:'5 שפות + יום/לילה',en:'5 languages + day/night',ru:'5 языков',es:'5 idiomas',ar:'5 لغات'},
+    ],
+    screenshots:['🧩','♟️','🏓','💣'],
+    type:'free',
+    url:'https://barakaflalo.github.io/games/arcadenest-hub1.html',
+    badge:'new',
+    category:'game',
+    rating:4.5, ratingCount:8,
+    btnColor:'#4a8fd4',btnTextColor:'#fff',
+  },
+  {
+    id:'arcade2',
+    emoji:'🏃',
+    heroColor:'linear-gradient(135deg,#0A1A0A 0%,#1A2A1A 100%)',
+    name:{he:'ArcadeNest Hub 2',en:'ArcadeNest Hub 2',ru:'ArcadeNest Hub 2',es:'ArcadeNest Hub 2',ar:'ArcadeNest Hub 2'},
+    cat:{he:'🏃 ריצה · Hub',en:'🏃 Runner · Hub',ru:'🏃 Бег · Hub',es:'🏃 Corredor · Hub',ar:'🏃 ركض · Hub'},
+    tag:{he:'ריצה',en:'Runner',ru:'Бег',es:'Corredor',ar:'ركض'},
+    tagColor:'rgba(76,175,122,0.12)',tagTextColor:'#4caf7a',
+    desc:{
+      he:'5 משחקים מהנים — ריצה אינסופית עם קפיצות ומטבעות, תפוס תפוחים נופלים, טטריס, חפור פצצות ושבירת לבנים.',
+      en:'5 fun games — endless runner with jumps and coins, catch falling apples, Tetris, Minesweeper and Breakout.',
+      ru:'5 веселых игр — бесконечный бег, ловля яблок, Тетрис, Сапёр и Арканоид.',
+      es:'5 juegos divertidos — corredor infinito, atrapar manzanas, Tetris, Buscaminas y Breakout.',
+      ar:'5 ألعاب ممتعة — ركض لا نهاية وإمساك التفاح وتيتريس وألغام وكسر الطوب.'
+    },
+    features:[
+      {icon:'🏃',he:'ריצה אינסופית + מטבעות',en:'Endless runner + coins',ru:'Бесконечный бег + монеты',es:'Corredor infinito + monedas',ar:'ركض لا نهاية + عملات'},
+      {icon:'🍎',he:'תפוח נופל — תפוס!',en:'Falling apples — catch!',ru:'Падающие яблоки',es:'Manzanas cayendo',ar:'تفاح ساقط'},
+      {icon:'🧩',he:'טטריס',en:'Tetris',ru:'Тетрис',es:'Tetris',ar:'تيتريس'},
+      {icon:'💣',he:'חפור פצצות',en:'Minesweeper',ru:'Сапёр',es:'Buscaminas',ar:'كاسح الألغام'},
+      {icon:'🧱',he:'שבירת לבנים',en:'Breakout',ru:'Арканоид',es:'Breakout',ar:'كسر الطوب'},
+      {icon:'🌐',he:'5 שפות + יום/לילה',en:'5 languages + day/night',ru:'5 языков',es:'5 idiomas',ar:'5 لغات'},
+    ],
+    screenshots:['🏃','🍎','🧩','💣'],
+    type:'free',
+    url:'https://barakaflalo.github.io/games/arcadenest-hub2.html',
+    badge:'new',
+    category:'game',
+    rating:4.5, ratingCount:6,
+    btnColor:'#4caf7a',btnTextColor:'#000',
+  },
+  {
+    id:'arcade3',
+    emoji:'🎵',
+    heroColor:'linear-gradient(135deg,#1A0A1A 0%,#2A1A2A 100%)',
+    name:{he:'ArcadeNest Hub 3',en:'ArcadeNest Hub 3',ru:'ArcadeNest Hub 3',es:'ArcadeNest Hub 3',ar:'ArcadeNest Hub 3'},
+    cat:{he:'🎵 קצב · Hub',en:'🎵 Rhythm · Hub',ru:'🎵 Ритм · Hub',es:'🎵 Ritmo · Hub',ar:'🎵 إيقاع · Hub'},
+    tag:{he:'קצב',en:'Rhythm',ru:'Ритм',es:'Ritmo',ar:'إيقاع'},
+    tagColor:'rgba(155,89,182,0.12)',tagTextColor:'#9b59b6',
+    desc:{
+      he:'5 משחקים חדשים לגמרי — Simon Says, מלחמת קלפים, בעיטות עונשין, פאזל צינורות וירי בועות צבעוניות.',
+      en:'5 brand new games — Simon Says, card War, Penalty kicks, Pipe puzzle and colorful Bubble Shooter.',
+      ru:'5 новых игр — Саймон, Война, Пенальти, Трубы и Стрелок пузырями.',
+      es:'5 juegos nuevos — Simon, Guerra, Penalti, Tuberías y Disparador de burbujas.',
+      ar:'5 ألعاب جديدة — سايمون وحرب وجزاء وأنابيب ورامي فقاعات.'
+    },
+    features:[
+      {icon:'🎵',he:'Simon Says — זכור רצף',en:'Simon Says — remember sequence',ru:'Саймон — запомни',es:'Simon — recuerda',ar:'سايمون — تذكر'},
+      {icon:'🃏',he:'מלחמת קלפים',en:'Card War',ru:'Война карт',es:'Guerra de cartas',ar:'حرب الأوراق'},
+      {icon:'⚽',he:'בעיטות עונשין',en:'Penalty kicks',ru:'Пенальти',es:'Penaltis',ar:'ضربات الجزاء'},
+      {icon:'🔷',he:'פאזל צינורות',en:'Pipe puzzle',ru:'Трубы-пазл',es:'Puzle de tuberías',ar:'لغز الأنابيب'},
+      {icon:'🔴',he:'ירי בועות',en:'Bubble Shooter',ru:'Стрелок пузырями',es:'Disparador de burbujas',ar:'رامي الفقاعات'},
+      {icon:'🌐',he:'5 שפות + יום/לילה',en:'5 languages + day/night',ru:'5 языков',es:'5 idiomas',ar:'5 لغات'},
+    ],
+    screenshots:['🎵','🃏','⚽','🔴'],
+    type:'free',
+    url:'https://barakaflalo.github.io/games/arcadenest-hub3.html',
+    badge:'new',
+    category:'game',
+    rating:5.0, ratingCount:4,
+    btnColor:'#9b59b6',btnTextColor:'#fff',
+  },
+  {
+    id:'snake',
+    emoji:'🐍',
+    heroColor:'linear-gradient(135deg,#0A1A0A 0%,#0A2A0A 100%)',
+    name:{he:'נחש',en:'Snake',ru:'Змейка',es:'Serpiente',ar:'الثعبان'},
+    cat:{he:'🐍 משחק קלאסי',en:'🐍 Classic Game',ru:'🐍 Классическая игра',es:'🐍 Juego clásico',ar:'🐍 لعبة كلاسيكية'},
+    tag:{he:'קלאסי',en:'Classic',ru:'Классика',es:'Clásico',ar:'كلاسيكي'},
+    tagColor:'rgba(76,175,122,0.12)',tagTextColor:'#4caf7a',
+    desc:{
+      he:'נחש קלאסי עם 3 מהירויות, שיא אישי, עליית שלבים ותמיכה במקלדת ובמסך מגע.',
+      en:'Classic Snake with 3 speeds, personal best, level progression and keyboard/touch support.',
+      ru:'Классическая змейка с 3 скоростями, рекордом, уровнями и поддержкой клавиатуры/тача.',
+      es:'Serpiente clásica con 3 velocidades, récord personal y soporte táctil.',
+      ar:'ثعبان كلاسيكي بـ 3 سرعات وأفضل نتيجة شخصية ودعم اللمس.'
+    },
+    features:[
+      {icon:'⚡',he:'3 מהירויות',en:'3 speed levels',ru:'3 скорости',es:'3 velocidades',ar:'3 سرعات'},
+      {icon:'🏆',he:'שיא אישי',en:'Personal best',ru:'Личный рекорд',es:'Récord personal',ar:'أفضل نتيجة'},
+      {icon:'📈',he:'עליית שלבים',en:'Level progression',ru:'Прогрессия уровней',es:'Progresión de niveles',ar:'ترقي المستويات'},
+      {icon:'📱',he:'כפתורי מסך + מגע',en:'On-screen + touch',ru:'Экранные кнопки',es:'Botones en pantalla',ar:'أزرار الشاشة'},
+      {icon:'🌙',he:'מצב יום/לילה',en:'Day/night mode',ru:'День/ночь',es:'Modo día/noche',ar:'نهار/ليل'},
+      {icon:'🌐',he:'5 שפות',en:'5 languages',ru:'5 языков',es:'5 idiomas',ar:'5 لغات'},
+    ],
+    screenshots:['🐍','⚡','🏆','📱'],
+    type:'free',
+    url:'https://barakaflalo.github.io/games/snake.html',
+    badge:'new',
+    category:'game',
+    rating:4.5, ratingCount:10,
+    btnColor:'#4caf7a',btnTextColor:'#000',
+  },
+  {
+    id:'g2048',
+    emoji:'🧩',
+    heroColor:'linear-gradient(135deg,#1A1500 0%,#2A2200 100%)',
+    name:{he:'2048',en:'2048',ru:'2048',es:'2048',ar:'2048'},
+    cat:{he:'🧩 פאזל',en:'🧩 Puzzle',ru:'🧩 Пазл',es:'🧩 Puzzle',ar:'🧩 بازل'},
+    tag:{he:'פאזל',en:'Puzzle',ru:'Пазл',es:'Puzzle',ar:'بازل'},
+    tagColor:'rgba(201,168,76,0.12)',tagTextColor:'#c9a84c',
+    desc:{
+      he:'2048 הקלאסי עם כפתור ביטול, מצב יום/לילה, תמיכה בחצים ובהחלקת מסך.',
+      en:'Classic 2048 with undo button, day/night mode, arrow keys and swipe support.',
+      ru:'Классический 2048 с отменой хода, режимом день/ночь и свайпом.',
+      es:'2048 clásico con deshacer, modo día/noche y deslizamiento.',
+      ar:'2048 الكلاسيكي مع تراجع ونهار/ليل وسحب.'
+    },
+    features:[
+      {icon:'↩️',he:'כפתור ביטול',en:'Undo button',ru:'Кнопка отмены',es:'Botón deshacer',ar:'زر التراجع'},
+      {icon:'🌙',he:'מצב יום/לילה',en:'Day/night mode',ru:'День/ночь',es:'Día/noche',ar:'نهار/ليل'},
+      {icon:'👆',he:'החלקת מסך',en:'Swipe support',ru:'Поддержка свайпа',es:'Deslizar',ar:'سحب'},
+      {icon:'⌨️',he:'מקשי חצים',en:'Arrow keys',ru:'Клавиши стрелок',es:'Teclas de flecha',ar:'مفاتيح الأسهم'},
+      {icon:'🏆',he:'זיהוי ניצחון',en:'Win detection',ru:'Определение победы',es:'Detección de victoria',ar:'اكتشاف الفوز'},
+      {icon:'🌐',he:'5 שפות',en:'5 languages',ru:'5 языков',es:'5 idiomas',ar:'5 لغات'},
+    ],
+    screenshots:['🧩','↩️','🌙','🏆'],
+    type:'free',
+    url:'https://barakaflalo.github.io/games/2048.html',
+    badge:'new',
+    category:'game',
+    rating:4.8, ratingCount:15,
+    btnColor:'#c9a84c',btnTextColor:'#000',
+  },
+  {
+    id:'sudoku',
+    emoji:'🔢',
+    heroColor:'linear-gradient(135deg,#0A0A1A 0%,#1A1A2A 100%)',
+    name:{he:'סודוקו',en:'Sudoku',ru:'Судоку',es:'Sudoku',ar:'سودوكو'},
+    cat:{he:'🔢 לוגיקה',en:'🔢 Logic',ru:'🔢 Логика',es:'🔢 Lógica',ar:'🔢 منطق'},
+    tag:{he:'לוגיקה',en:'Logic',ru:'Логика',es:'Lógica',ar:'منطق'},
+    tagColor:'rgba(74,143,212,0.12)',tagTextColor:'#4a8fd4',
+    desc:{
+      he:'סודוקו מלא עם 3 רמות קושי, 3 רמזים, טיימר ועד 3 שגיאות לפני סיום המשחק.',
+      en:'Full Sudoku with 3 difficulty levels, 3 hints, timer and up to 3 errors before game over.',
+      ru:'Полное Судоку с 3 уровнями, 3 подсказками, таймером и до 3 ошибок.',
+      es:'Sudoku completo con 3 niveles, 3 pistas, cronómetro y hasta 3 errores.',
+      ar:'سودوكو كامل بـ 3 مستويات و3 تلميحات ومؤقت وحتى 3 أخطاء.'
+    },
+    features:[
+      {icon:'🎯',he:'3 רמות קושי',en:'3 difficulty levels',ru:'3 уровня сложности',es:'3 niveles de dificultad',ar:'3 مستويات صعوبة'},
+      {icon:'💡',he:'3 רמזים',en:'3 hints',ru:'3 подсказки',es:'3 pistas',ar:'3 تلميحات'},
+      {icon:'⏱️',he:'טיימר',en:'Timer',ru:'Таймер',es:'Cronómetro',ar:'مؤقت'},
+      {icon:'✅',he:'בדיקת שגיאות',en:'Error check',ru:'Проверка ошибок',es:'Verificar errores',ar:'فحص الأخطاء'},
+      {icon:'🌙',he:'מצב יום/לילה',en:'Day/night mode',ru:'День/ночь',es:'Día/noche',ar:'نهار/ليل'},
+      {icon:'🌐',he:'5 שפות',en:'5 languages',ru:'5 языков',es:'5 idiomas',ar:'5 لغات'},
+    ],
+    screenshots:['🔢','💡','⏱️','✅'],
+    type:'free',
+    url:'https://barakaflalo.github.io/games/sudoku.html',
+    badge:'new',
+    category:'game',
+    rating:4.6, ratingCount:9,
+    btnColor:'#4a8fd4',btnTextColor:'#fff',
+  }
+];
 
-const APPS={
-  gamenest:{icon:'🎮',name:'GameNest Hub',cat:'games',free:true,url:'https://barakaflalo.github.io/games/gamenest-hub.html',
-    features:{he:['טריוויה — 100 שאלות ב-5 שפות','זיכרון — 8 זוגות','תלייה — מילים ורמזים','21 / בלאקג\'ק','נחש מספר'],en:['Trivia — 100 questions in 5 languages','Memory — 8 pairs','Hangman — words & hints','Blackjack / 21','Number Guess'],ru:['Викторина — 100 вопросов','Память','Виселица','Блэкджек','Угадай число'],es:['Trivia — 100 preguntas','Memoria','Ahorcado','Blackjack','Adivinar número'],ar:['ترويا — 100 سؤال','ذاكرة','مشنقة','بلاك جاك','خمّن الرقم']},
-    desc:{he:'5 משחקים קלאסיים במקום אחד עם 5 שפות, יום/לילה, מדריך, ו-100 שאלות טריוויה אקראיות.',en:'5 classic games in one app with 5 languages, day/night mode, guide, and 100 random trivia questions.',ru:'5 классических игр в одном приложении.',es:'5 juegos clásicos en una app.',ar:'5 ألعاب كلاسيكية في تطبيق واحد.'}},
-  arcade1:{icon:'🕹️',name:'ArcadeNest Hub 1',cat:'games',free:true,url:'https://barakaflalo.github.io/games/arcadenest-hub1.html',
-    features:{he:['טטריס','שחמט מול מחשב','פינגפונג','חפור פצצות','שבירת לבנים'],en:['Tetris','Chess vs Computer','Ping Pong','Minesweeper','Breakout'],ru:['Тетрис','Шахматы','Пинг-понг','Сапёр','Арканоид'],es:['Tetris','Ajedrez','Ping Pong','Buscaminas','Breakout'],ar:['تيتريس','شطرنج','بينغ بونغ','كاسح الألغام','كسر الطوب']},
-    desc:{he:'5 משחקי ארקייד קלאסיים — שחמט מלא, פינגפונג עם AI, טטריס, מוקשים ושבירת לבנים.',en:'5 classic arcade games — full chess, AI pong, Tetris, minesweeper and breakout.',ru:'5 аркадных игр.',es:'5 juegos arcade.',ar:'5 ألعاب أركيد.'}},
-  arcade2:{icon:'🏃',name:'ArcadeNest Hub 2',cat:'games',free:true,url:'https://barakaflalo.github.io/games/arcadenest-hub2.html',
-    features:{he:['טטריס','חפור פצצות','🍎 תפוח נופל','🏃 ריצה אינסופית','שבירת לבנים'],en:['Tetris','Minesweeper','🍎 Falling Apples','🏃 Endless Runner','Breakout'],ru:['Тетрис','Сапёр','🍎 Яблоки','🏃 Бег','Арканоид'],es:['Tetris','Buscaminas','🍎 Manzanas','🏃 Corredor','Breakout'],ar:['تيتريس','ألغام','🍎 تفاح','🏃 ركض','كسر الطوب']},
-    desc:{he:'5 משחקים מהנים — ריצה אינסופית עם קפיצות, תפוס תפוחים, טטריס, מוקשים ועוד.',en:'5 fun games — endless runner with jumps, catch apples, Tetris, minesweeper and more.',ru:'5 веселых игр.',es:'5 juegos divertidos.',ar:'5 ألعاب ممتعة.'}},
-  arcade3:{icon:'🎵',name:'ArcadeNest Hub 3',cat:'games',free:true,url:'https://barakaflalo.github.io/games/arcadenest-hub3.html',
-    features:{he:['Simon Says — זכור רצף','מלחמה — קלפים','⚽ בעיטת עונשין','🔷 צינורות','🔴 ירי בועות'],en:['Simon Says — sequence','War — cards','⚽ Penalty Kick','🔷 Pipes','🔴 Bubble Shooter'],ru:['Саймон','Война','⚽ Пенальти','🔷 Трубы','🔴 Пузыри'],es:['Simon','Guerra','⚽ Penalti','🔷 Tuberías','🔴 Burbujas'],ar:['سايمون','حرب','⚽ جزاء','🔷 أنابيب','🔴 فقاعات']},
-    desc:{he:'5 משחקים חדשים לגמרי — Simon Says, מלחמת קלפים, בעיטות עונשין, צינורות וירי בועות.',en:'5 brand new games — Simon Says, card war, penalty kicks, pipes puzzle and bubble shooter.',ru:'5 новых игр.',es:'5 juegos nuevos.',ar:'5 ألعاب جديدة.'}},
-  snake:{icon:'🐍',name:'Snake',cat:'games',free:true,url:'https://barakaflalo.github.io/games/snake.html',
-    features:{he:['3 מהירויות','שיא אישי','עליית שלבים','כפתורי מסך'],en:['3 speeds','Personal best','Level progression','On-screen controls'],ru:['3 скорости','Рекорд','Уровни','Экранные кнопки'],es:['3 velocidades','Mejor puntuación','Niveles','Controles en pantalla'],ar:['3 سرعات','أفضل نتيجة','مستويات','أزرار الشاشة']},
-    desc:{he:'נחש קלאסי עם 3 מהירויות, שיא אישי, עליית שלבים ותמיכה במקלדת ומגע.',en:'Classic snake with 3 speeds, personal best, level progression and touch/keyboard support.',ru:'Классическая змейка.',es:'Serpiente clásica.',ar:'الثعبان الكلاسيكي.'}},
-  '2048':{icon:'🧩',name:'2048',cat:'games',free:true,url:'https://barakaflalo.github.io/games/2048.html',
-    features:{he:['כפתור ביטול','זיהוי ניצחון','החלקת מסך','מצב יום/לילה'],en:['Undo button','Win detection','Swipe support','Day/Night mode'],ru:['Отмена','Победа','Свайп','День/Ночь'],es:['Deshacer','Detección victoria','Deslizar','Día/Noche'],ar:['تراجع','اكتشاف الفوز','سحب','نهار/ليل']},
-    desc:{he:'2048 הקלאסי עם כפתור ביטול, מצב יום/לילה, תמיכה בחצים והחלקת מסך.',en:'Classic 2048 with undo button, day/night mode, arrow keys and swipe support.',ru:'Классический 2048.',es:'2048 clásico.',ar:'2048 الكلاسيكي.'}},
-  sudoku:{icon:'🔢',name:'Sudoku',cat:'games',free:true,url:'https://barakaflalo.github.io/games/sudoku.html',
-    features:{he:['3 רמות קושי','3 רמזים','בדיקת שגיאות','טיימר'],en:['3 difficulty levels','3 hints','Error check','Timer'],ru:['3 уровня','3 подсказки','Проверка','Таймер'],es:['3 niveles','3 pistas','Verificar','Cronómetro'],ar:['3 مستويات','3 تلميحات','فحص الأخطاء','مؤقت']},
-    desc:{he:'סודוקו מלא עם 3 רמות קושי, 3 רמזים, טיימר, ועד 3 שגיאות לפני סיום המשחק.',en:'Full Sudoku with 3 difficulty levels, 3 hints, timer, and up to 3 errors before game over.',ru:'Полное Судоку.',es:'Sudoku completo.',ar:'سودوكو كامل.'}},
-  loto:{icon:'🎰',name:'לוטו ישראל',cat:'games',free:true,url:'https://barakaflalo.github.io/loto-israel',
-    features:{he:['סטטיסטיקות','מספרים חמים/קרים','היסטוריה'],en:['Statistics','Hot/Cold numbers','History'],ru:['Статистика','Горячие/холодные','История'],es:['Estadísticas','Números calientes/fríos','Historia'],ar:['إحصاءات','أرقام ساخنة/باردة','تاريخ']},
-    desc:{he:'סטטיסטיקות לוטו ישראל, מספרים חמים וקרים, היסטוריית הגרלות.',en:'Israel Lottery statistics, hot and cold numbers, draw history.',ru:'Статистика лотереи.',es:'Estadísticas de lotería.',ar:'إحصاءات اليانصيب.'}},
-  toto:{icon:'⚽',name:'טוטו אנליזר AI',cat:'games',free:true,url:'https://barakaflalo.github.io/toto-analyzer',
-    features:{he:['ניתוח AI','תחזיות','נתוני קבוצות'],en:['AI analysis','Predictions','Team data'],ru:['AI анализ','Прогнозы','Данные команд'],es:['Análisis AI','Predicciones','Datos de equipos'],ar:['تحليل AI','تنبؤات','بيانات الفرق']},
-    desc:{he:'ניתוח AI לתחזיות טוטו, ניתוח נתוני קבוצות ותוצאות.',en:'AI analysis for football predictions, team data and results.',ru:'AI анализ для прогнозов.',es:'Análisis IA para predicciones.',ar:'تحليل AI للتنبؤات.'}},
-  stock:{icon:'📈',name:'StockAI',cat:'tools',free:true,url:'https://barakaflalo.github.io/stock-analyzer',
-    features:{he:['ניתוח AI','המלצות','רשימת מעקב','היסטוריה'],en:['AI analysis','Recommendations','Watchlist','History'],ru:['AI анализ','Рекомендации','Список наблюдения','История'],es:['Análisis AI','Recomendaciones','Lista de seguimiento','Historia'],ar:['تحليل AI','توصيات','قائمة المتابعة','تاريخ']},
-    desc:{he:'ניתוח מניות מבוסס AI לשווקי ארה"ב וישראל, עם המלצות קנה/מכור/החזק.',en:'AI-powered stock analysis for US and Israel markets, with buy/sell/hold recommendations.',ru:'AI анализ акций.',es:'Análisis de acciones con IA.',ar:'تحليل الأسهم بالذكاء الاصطناعي.'}},
-  lex:{icon:'⚖️',name:'LexCalendar',cat:'tools',free:false,url:null,
-    features:{he:['ניהול תיקים','חישוב מועדים','Google Calendar','מחשבון שכ"ט'],en:['Case management','Deadline calculator','Google Calendar sync','Fee calculator'],ru:['Управление делами','Расчёт сроков','Google Calendar','Гонорары'],es:['Gestión de casos','Calculadora plazos','Google Calendar','Honorarios'],ar:['إدارة القضايا','حساب المواعيد','Google Calendar','أتعاب']},
-    desc:{he:'יומן מועדים משפטיים לעורכי דין — ניהול לקוחות, חישוב מועדים, סנכרון Google Calendar.',en:'Legal deadlines calendar for lawyers — client management, deadline calculation, Google Calendar sync.',ru:'Юридический календарь.',es:'Calendario legal.',ar:'تقويم قانوني.'}},
-  reminder:{icon:'📝',name:'לא שכחתי',cat:'tools',free:false,url:null,
-    features:{he:['תזכורות חכמות','קטגוריות','עדיפויות'],en:['Smart reminders','Categories','Priorities'],ru:['Умные напоминания','Категории','Приоритеты'],es:['Recordatorios inteligentes','Categorías','Prioridades'],ar:['تذكيرات ذكية','فئات','أولويات']},
-    desc:{he:'אפליקציית תזכורות חכמה עם קטגוריות ועדיפויות.',en:'Smart reminder app with categories and priorities.',ru:'Умное приложение напоминаний.',es:'App de recordatorios inteligente.',ar:'تطبيق تذكيرات ذكي.'}},
-  money:{icon:'💰',name:'MoneyNest',cat:'tools',free:false,url:null,
-    features:{he:['מעקב הוצאות','תקציב','גרפים','יעדים'],en:['Expense tracking','Budget','Charts','Goals'],ru:['Расходы','Бюджет','Графики','Цели'],es:['Gastos','Presupuesto','Gráficos','Objetivos'],ar:['تتبع النفقات','ميزانية','رسوم','أهداف']},
-    desc:{he:'ניהול פיננסי חכם — מעקב הוצאות, תקציב, גרפים ויעדים.',en:'Smart financial management — expense tracking, budget, charts and goals.',ru:'Умное финансовое управление.',es:'Gestión financiera inteligente.',ar:'إدارة مالية ذكية.'}},
-};
+/* ════════════════════════════════
+   STATE
+════════════════════════════════ */
+var curLang = 'he';
+var curFilter = 'all';
+var curCat = null;
+var reviews = {};
 
-let lang='he', currentFilter='all', searchTerm='';
-function t(k){return(T[lang]||T.en)[k]||k;}
-function setLang(l){
-  lang=l;
-  document.getElementById('langLabel').textContent={he:'עב',en:'EN',ru:'РУ',es:'ES',ar:'عر'}[l];
-  document.getElementById('langDropdown').classList.remove('open');
-  const rtl=['he','ar'].includes(l);
-  document.body.dir=rtl?'rtl':'ltr';
-  document.body.classList.toggle('ltr',!rtl);
-  applyT();
+/* ════════════════════════════════
+   LANG
+════════════════════════════════ */
+function T(key){ return LANGS[curLang][key] || LANGS['en'][key] || key; }
+function TApp(app, key){ return (app[key] && app[key][curLang]) || (app[key] && app[key]['en']) || ''; }
+
+function setLang(lang){
+  curLang = lang;
+  var L = LANGS[lang];
+  document.documentElement.lang = lang;
+  document.documentElement.dir = L.dir;
+  document.body.dir = L.dir;
+  // update flag
+  document.getElementById('currentFlag').textContent = L.flag;
+  document.getElementById('currentLangName').textContent = L.name;
+  // active option
+  document.querySelectorAll('.lang-option').forEach(function(el){ el.classList.remove('active'); });
+  document.querySelectorAll('.lang-option').forEach(function(el){
+    if(el.querySelector('.lang-option-name').textContent === L.name) el.classList.add('active');
+  });
+  // close dropdown
+  document.getElementById('langWrap').classList.remove('open');
+  // apply all text
+  applyLang();
+  renderApps();
 }
-function toggleLangMenu(){document.getElementById('langDropdown').classList.toggle('open');}
-document.addEventListener('click',e=>{if(!e.target.closest('.lang-btn')&&!e.target.closest('.lang-dropdown'))document.getElementById('langDropdown').classList.remove('open');});
-function applyT(){
-  document.querySelectorAll('[data-i]').forEach(el=>el.textContent=t(el.dataset.i));
-  document.getElementById('searchInput').placeholder=t('search');
+
+function applyLang(){
+  var L = LANGS[curLang];
+  var ids = ['logoSub','heroBadge','heroSub','heroBtnMain','heroBtnSec',
+    'statApps','statFree','statAds','statLangs',
+    'catsLabel','catsTitle','catApps','catAppsC','catBiz','catBizC',
+    'catTools','catToolsC','catGames','catGamesC','catEdu','catEduC',
+    'appsLabel','appsTitle','filterAll','filterFree','filterComing',
+    'submitTitle','submitDesc','step1','step2','step3','submitBtn',
+    'aboutLabel','aboutText','builtBy','footAbout','footPrivacy','footerRights',
+    'spotLabel','spotBtn',
+    'nl-apps','nl-cats','nl-submit','nl-about',
+    'betaBannerTitle','betaBannerDesc','betaBannerBtn'];
+  ids.forEach(function(id){
+    var el = document.getElementById(id);
+    if(!el) return;
+    var key = id.replace(/-/g,'_');
+    if(L[key] !== undefined){
+      if(id === 'heroTitle' || id === 'submitDesc') el.innerHTML = L[key];
+      else el.textContent = L[key];
+    }
+  });
+  document.getElementById('searchInput').placeholder = T('searchPh');
+  // spotlight
+  var spotApp = APPS.find(function(a){return a.id==='gamenest';}) || APPS[0];
+  document.getElementById('spotName').textContent = TApp(spotApp,'name');
+  document.getElementById('spotDesc').textContent = TApp(spotApp,'desc').substring(0,80)+'...';
 }
 
-function setFilter(f){
-  currentFilter=f;
-  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('f-'+f).classList.add('active');
-  filterApps();
+function toggleLangMenu(){
+  document.getElementById('langWrap').classList.toggle('open');
+}
+document.addEventListener('click', function(e){
+  if(!document.getElementById('langWrap').contains(e.target)){
+    document.getElementById('langWrap').classList.remove('open');
+  }
+});
+
+/* ════════════════════════════════
+   FILTER & SEARCH
+════════════════════════════════ */
+function setFilter(f, btn){
+  curFilter = f;
+  curCat = null;
+  document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  renderApps();
+}
+
+function filterCat(cat){
+  curCat = cat;
+  curFilter = 'all';
+  document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
+  document.getElementById('filterAll').classList.add('active');
+  document.getElementById('apps').scrollIntoView({behavior:'smooth'});
+  renderApps();
 }
 
 function filterApps(){
-  searchTerm=document.getElementById('searchInput').value.toLowerCase();
-  document.querySelectorAll('.app-card').forEach(card=>{
-    const cat=card.dataset.cat||'';
-    const tags=(card.dataset.tags||'').toLowerCase();
-    const name=card.querySelector('.app-name')?.textContent.toLowerCase()||'';
-    const desc=card.querySelector('.app-desc')?.textContent.toLowerCase()||'';
-    const tagEl=card.querySelector('.app-tag');
-    const isFree=tagEl?.classList.contains('free');
-    const isSoon=tagEl?.classList.contains('soon');
-    let show=true;
-    if(currentFilter==='free')show=isFree;
-    else if(currentFilter==='soon')show=isSoon;
-    else if(currentFilter==='games')show=cat==='games';
-    else if(currentFilter==='tools')show=cat==='tools';
-    if(searchTerm&&!(name.includes(searchTerm)||tags.includes(searchTerm)||desc.includes(searchTerm)))show=false;
-    card.style.display=show?'':'none';
+  renderApps();
+}
+
+/* ════════════════════════════════
+   RENDER CARDS
+════════════════════════════════ */
+function renderApps(){
+  var grid = document.getElementById('appsGrid');
+  var search = document.getElementById('searchInput').value.toLowerCase();
+  var filtered = APPS.filter(function(app){
+    var name = TApp(app,'name').toLowerCase();
+    var desc = TApp(app,'desc').toLowerCase();
+    var matchSearch = !search || name.includes(search) || desc.includes(search);
+    var matchFilter = curFilter==='all' || app.type===curFilter;
+    var matchCat = !curCat || app.category===curCat;
+    return matchSearch && matchFilter && matchCat;
+  });
+
+  grid.innerHTML = '';
+  if(!filtered.length){
+    grid.innerHTML = '<div class="no-results">'+T('noResults')+'</div>';
+    return;
+  }
+
+  filtered.forEach(function(app){
+    var card = document.createElement('div');
+    card.className = 'app-card';
+    card.onclick = function(){ openModal(app); };
+
+    var badges = '';
+    if(app.badge==='new') badges += '<span class="badge-pill badge-new">✨ NEW</span>';
+    if(app.badge==='updated') badges += '<span class="badge-pill badge-updated">Updated</span>';
+
+    var ratingHtml = app.ratingCount > 0
+      ? '<span class="app-card-rating">★ '+app.rating+'</span><span class="app-card-views">('+app.ratingCount+')</span>'
+      : '';
+
+    var btnLabel = app.type==='free' ? TApp(app,'name')+' ›' : T('comingSoon');
+
+    card.innerHTML =
+      '<div class="app-card-hero" style="background:'+app.heroColor+'">'+
+        '<span>'+app.emoji+'</span>'+
+        '<div class="app-card-badges">'+badges+'</div>'+
+      '</div>'+
+      '<div class="app-card-body">'+
+        '<div class="app-card-tags">'+
+          '<span class="app-tag" style="background:'+app.tagColor+';color:'+app.tagTextColor+';">'+TApp(app,'tag')+'</span>'+
+          '<span class="app-tag" style="background:rgba(60,207,108,0.08);color:var(--green);">'+T('free')+'</span>'+
+        '</div>'+
+        '<div class="app-card-name">'+TApp(app,'name')+'</div>'+
+        '<div class="app-card-desc">'+TApp(app,'desc')+'</div>'+
+        '<div class="app-card-footer">'+
+          '<div class="app-card-meta">'+ratingHtml+'</div>'+
+          '<span class="app-card-btn" style="background:'+app.btnColor+';color:'+app.btnTextColor+';">'+
+            (app.type==='free' ? T('openApp') : T('comingSoon'))+' ›'+
+          '</span>'+
+        '</div>'+
+      '</div>';
+    grid.appendChild(card);
   });
 }
 
-function openApp(id){
-  const app=APPS[id];if(!app)return;
-  const feats=(app.features[lang]||app.features.en||[]).map(f=>`<div class="feature-item">${f}</div>`).join('');
-  const desc=app.desc[lang]||app.desc.en||'';
-  const actionBtn=app.url
-    ? (app.url.startsWith('http')||app.url.endsWith('.html'))
-      ? `<a href="${app.url}" target="_blank" class="btn-primary">${t('open')} →</a>`
-      : `<a href="${app.url}" target="_blank" class="btn-primary">${t('open')} →</a>`
-    : `<div class="soon-badge">🕐 ${t('comingSoon')}</div>`;
-  const notifyBtn=!app.url?`<button class="btn-secondary" onclick="showNotify('${id}')">${t('notify')}</button>`:'';
-  document.getElementById('modalContent').innerHTML=`
-    <div class="modal-header">
-      <span class="modal-icon">${app.icon}</span>
-      <div><div class="modal-title">${app.name}</div><div class="modal-subtitle">${app.free?t('tagFree'):t('tagSoon')}</div></div>
-      <button onclick="closeApp()" style="margin-right:auto;background:none;border:1px solid var(--gold-dim);color:var(--gold);padding:4px 12px;border-radius:8px;cursor:pointer;font-family:Heebo,sans-serif;font-size:0.8rem;">${t('close')}</button>
-    </div>
-    <div class="modal-desc">${desc}</div>
-    <div class="features-list"><div class="features-title">${t('features')}</div>${feats}</div>
-    <div class="modal-actions">${actionBtn}${notifyBtn}
-      <button class="btn-secondary" onclick="shareApp('${app.name}')">${t('shareApp')}</button>
-    </div>
-  `;
-  document.getElementById('appModal').classList.add('open');
+/* ════════════════════════════════
+   MODAL
+════════════════════════════════ */
+function openModal(app){
+  var box = document.getElementById('modalBox');
+  var appReviews = reviews[app.id] || [];
+  var avgRating = app.rating;
+  var totalCount = app.ratingCount + appReviews.length;
+
+  var featsHtml = app.features.map(function(f){
+    return '<div class="feature-item"><span>'+f.icon+'</span><span>'+( f[curLang]||f.en )+'</span></div>';
+  }).join('');
+
+  var screensHtml = app.screenshots.map(function(s){
+    return '<div class="screenshot-ph">'+s+'</div>';
+  }).join('');
+
+  var starDisplay = avgRating > 0
+    ? '★'.repeat(Math.round(avgRating)) + '☆'.repeat(5-Math.round(avgRating))
+    : '☆☆☆☆☆';
+
+  var reviewsHtml = appReviews.map(function(r){
+    return '<div class="review-item">'+
+      '<div class="review-stars">'+'★'.repeat(r.stars)+'☆'.repeat(5-r.stars)+'</div>'+
+      (r.text ? '<div class="review-text">'+r.text+'</div>' : '')+
+      '<div class="review-date">'+r.date+'</div>'+
+    '</div>';
+  }).join('');
+
+  var actionBtn = app.type==='coming'
+    ? '<div class="modal-btn-main" style="background:rgba(60,207,108,0.07);color:var(--green);border:1.5px solid rgba(60,207,108,0.2);cursor:default;text-align:center;">'+T('comingStoreBtn')+'</div>'
+    : '<a class="modal-btn-main" href="'+app.url+'" target="_blank" style="background:'+app.btnColor+';color:'+app.btnTextColor+';text-align:center;">🚀 '+T('openApp')+'</a>';
+
+  var notifySection = app.type==='coming'
+    ? '<div class="notify-bar"><input id="notifyEmail_'+app.id+'" placeholder="'+T('notifyPh')+'"><button class="notify-bar-btn" onclick="submitNotify(\''+app.id+'\')">'+T('notifyBtn')+'</button></div>'
+    : '';
+
+  box.innerHTML =
+    '<div class="modal-hero" style="background:'+app.heroColor+'">'+
+      '<span style="font-size:80px;">'+app.emoji+'</span>'+
+      '<button class="modal-close" onclick="closeModal()">✕</button>'+
+    '</div>'+
+    '<div class="modal-body">'+
+      '<div class="modal-tags">'+
+        '<span class="app-tag" style="background:'+app.tagColor+';color:'+app.tagTextColor+';font-size:11px;padding:4px 12px;">'+TApp(app,'tag')+'</span>'+
+        '<span class="app-tag" style="background:rgba(60,207,108,0.08);color:var(--green);font-size:11px;padding:4px 12px;">'+T('free')+'</span>'+
+        (app.badge==='new'?'<span class="app-tag" style="background:rgba(201,151,58,0.15);color:var(--gold2);font-size:11px;padding:4px 12px;">✨ New</span>':'')+
+      '</div>'+
+      '<div class="modal-name">'+TApp(app,'name')+'</div>'+
+      '<div class="modal-meta">'+
+        (avgRating>0?'<div class="modal-meta-item">⭐ '+avgRating+' ('+totalCount+')</div>':'')+
+        '<div class="modal-meta-item">🆓 '+T('free')+'</div>'+
+      '</div>'+
+      '<div class="modal-desc">'+TApp(app,'desc')+'</div>'+
+
+      '<div class="modal-section-title">'+T('features')+'</div>'+
+      '<div class="feature-list">'+featsHtml+'</div>'+
+
+      '<div class="modal-section-title">'+T('screenshots')+'</div>'+
+      '<div class="screenshots-row">'+screensHtml+'</div>'+
+      '<p style="font-size:11px;color:var(--text3);margin-bottom:20px;">'+T('screenshotsSoon')+'</p>'+
+
+      '<div class="ratings-section">'+
+        '<div class="modal-section-title">'+T('ratings')+'</div>'+
+        '<div class="rating-summary">'+
+          (avgRating>0?'<div class="rating-big">'+avgRating+'</div>':'')+
+          '<div class="rating-stars-col">'+
+            '<div class="rating-stars">'+starDisplay+'</div>'+
+            '<div class="rating-count">'+totalCount+' '+( curLang==='he'?'דירוגים':curLang==='ru'?'оценок':curLang==='ar'?'تقييم':'ratings' )+'</div>'+
+          '</div>'+
+        '</div>'+
+        '<div class="rate-prompt">'+
+          '<p>'+T('rateThis')+'</p>'+
+          '<div class="star-btns" id="starBtns_'+app.id+'">'+
+            [1,2,3,4,5].map(function(n){ return '<button class="star-btn" onclick="selectStar(\''+app.id+'\','+n+')">★</button>'; }).join('')+
+          '</div>'+
+          '<div style="display:flex;gap:8px;margin-top:10px;">'+
+            '<textarea class="review-input" id="reviewText_'+app.id+'" placeholder="'+T('writeReview')+'" rows="2"></textarea>'+
+            '<button class="review-submit" onclick="submitReview(\''+app.id+'\')">'+T('submitReview')+'</button>'+
+          '</div>'+
+        '</div>'+
+        (reviewsHtml ? '<div class="reviews-list">'+reviewsHtml+'</div>' : '')+
+      '</div>'+
+
+      notifySection+
+
+      '<div class="modal-actions" style="margin-top:16px;">'+
+        actionBtn+
+        '<button class="modal-btn-sec" onclick="shareApp(\''+app.id+'\')">🔗 '+T('shareApp')+'</button>'+
+      '</div>'+
+    '</div>';
+
+  document.getElementById('appModal').classList.add('on');
+  document.body.style.overflow='hidden';
 }
 
-function closeApp(){document.getElementById('appModal').classList.remove('open');}
-document.getElementById('appModal').addEventListener('click',e=>{if(e.target===document.getElementById('appModal'))closeApp();});
-
-function showNotify(id){
-  const app=APPS[id];
-  document.getElementById('modalContent').innerHTML+=`
-    <div class="email-notify" style="margin-top:14px;border-top:1px solid var(--dark3);padding-top:14px;">
-      <div style="color:var(--gold);font-size:0.8rem;font-weight:700;margin-bottom:8px;">${t('notify')} — ${app.name}</div>
-      <input type="email" id="notifyEmail" placeholder="your@email.com">
-      <button class="btn-primary" style="width:100%" onclick="sendNotify('${id}')">${t('sendEmail')}</button>
-    </div>`;
+function openAppById(id){
+  var app = APPS.find(function(a){ return a.id===id; });
+  if(app) openModal(app);
 }
 
-function sendNotify(id){
-  const email=document.getElementById('notifyEmail')?.value;
-  if(!email)return;
-  const app=APPS[id];
-  window.location.href=`mailto:appnest55@gmail.com?subject=Notify Me — ${app.name}&body=Email: ${email}%0AApp: ${app.name}`;
+function closeModal(){
+  document.getElementById('appModal').classList.remove('on');
+  document.body.style.overflow='';
+}
+function closeModalIfOverlay(e){
+  if(e.target===document.getElementById('appModal')) closeModal();
 }
 
-function shareApp(name){
-  if(navigator.share){navigator.share({title:name,text:'Check out '+name+' on AppNest!',url:window.location.href});}
-  else{navigator.clipboard?.writeText(window.location.href);}
+/* ════════════════════════════════
+   RATINGS
+════════════════════════════════ */
+var selectedStars = {};
+function selectStar(appId, n){
+  selectedStars[appId] = n;
+  var btns = document.getElementById('starBtns_'+appId);
+  if(!btns) return;
+  btns.querySelectorAll('.star-btn').forEach(function(b,i){
+    b.classList.toggle('lit', i < n);
+  });
+}
+function submitReview(appId){
+  var stars = selectedStars[appId] || 0;
+  if(!stars){ showToast(curLang==='he'?'בחר דירוג קודם ⭐':curLang==='ru'?'Выберите оценку ⭐':'Please select a rating ⭐'); return; }
+  var textEl = document.getElementById('reviewText_'+appId);
+  var text = textEl ? textEl.value.trim() : '';
+  if(!reviews[appId]) reviews[appId] = [];
+  var now = new Date();
+  reviews[appId].unshift({stars:stars, text:text, date:now.toLocaleDateString()});
+  var app = APPS.find(function(a){ return a.id===appId; });
+  showToast(curLang==='he'?'תודה על הדירוג! ⭐':curLang==='ru'?'Спасибо за оценку! ⭐':curLang==='ar'?'شكراً على تقييمك! ⭐':'Thanks for your review! ⭐');
+  setTimeout(function(){ if(app) openModal(app); }, 800);
 }
 
-applyT();
+/* ════════════════════════════════
+   NOTIFY
+════════════════════════════════ */
+function submitNotify(appId){
+  var el = document.getElementById('notifyEmail_'+appId);
+  if(!el || !el.value.includes('@')){ showToast(curLang==='he'?'הכנס מייל תקין':'Enter a valid email'); return; }
+  el.value = '';
+  showToast(T('notifyDone'));
+}
+
+/* ════════════════════════════════
+   SHARE
+════════════════════════════════ */
+function shareApp(appId){
+  var app = APPS.find(function(a){ return a.id===appId; });
+  var url = 'https://barakaflalo.github.io/appnest';
+  var name = app ? TApp(app,'name') : 'AppNest';
+  if(navigator.share){ navigator.share({title:name, url:url}).catch(function(){}); return; }
+  if(navigator.clipboard) navigator.clipboard.writeText(url);
+  showToast(curLang==='he'?'קישור הועתק!':curLang==='ru'?'Ссылка скопирована!':curLang==='ar'?'تم نسخ الرابط!':'Link copied!');
+}
+
+/* ════════════════════════════════
+   TOAST
+════════════════════════════════ */
+function showToast(msg){
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 2500);
+}
+
+/* ════════════════════════════════
+   INIT
+════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', function(){
+  renderApps();
+  applyLang();
+});
 </script>
 </body>
 </html>
