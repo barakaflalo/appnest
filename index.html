@@ -295,33 +295,8 @@ footer{position:relative;z-index:1;padding:28px 40px;border-top:1px solid rgba(2
     <div class="hero-badge">🪺 <span id="heroBadge">קן האפליקציות הישראלי</span></div>
     <h1 class="h1" id="heroTitle">אפליקציות<br><span class="grad">חינמיות</span> לכולם</h1>
     <p class="h1-sub" id="heroSub">כלים, אפליקציות ומשחקים שנבנו עם אהבה — בלי פרסומות, בלי תשלום, ב-5 שפות.</p>
-    <div class="hero-btns">
-      <a class="btn-gold" href="#apps" id="heroBtnMain">🚀 גלה אפליקציות</a>
-      <a class="btn-outline" href="#submit" id="heroBtnSec">הגש אפליקציה</a>
-    </div>
   </div>
 </section>
-
-<!-- SPOTLIGHT -->
-<section class="sec" style="padding-top:0;padding-bottom:20px;" id="spotlightSec">
-  <div class="spotlight-inner" id="spotlightInner">
-    <div class="spotlight-emoji" id="spotEmoji">🔔</div>
-    <div class="spotlight-content">
-      <div class="spotlight-label" id="spotLabel">האפליקציה של השבוע</div>
-      <div class="spotlight-name" id="spotName">לא שכחתי</div>
-      <div class="spotlight-desc" id="spotDesc">האפליקציה שתזכיר לך כל אירוע חשוב — ימי הולדת, אזכרות, חתונות ועוד.</div>
-      <button class="spotlight-btn" id="spotBtn" onclick="openAppById('waiter3d')">גלה עוד ›</button>
-    </div>
-  </div>
-</section>
-
-<!-- STATS -->
-<div class="stats-row">
-  <div class="stat"><div class="stat-n">26</div><div class="stat-l" id="statApps">אפליקציות</div></div>
-  <div class="stat"><div class="stat-n">100%</div><div class="stat-l" id="statFree">חינמי</div></div>
-  <div class="stat"><div class="stat-n">0</div><div class="stat-l" id="statAds">פרסומות</div></div>
-  <div class="stat"><div class="stat-n">5</div><div class="stat-l" id="statLangs">שפות</div></div>
-</div>
 
 <!-- CATEGORIES -->
 <section class="sec" id="cats">
@@ -1467,10 +1442,6 @@ function applyLang(){
     }
   });
   document.getElementById('searchInput').placeholder = T('searchPh');
-  // spotlight
-  var spotApp = APPS.find(function(a){return a.id==='waiter3d';}) || APPS[0];
-  document.getElementById('spotName').textContent = TApp(spotApp,'name');
-  document.getElementById('spotDesc').textContent = TApp(spotApp,'desc').substring(0,80)+'...';
 }
 
 function toggleLangMenu(){
