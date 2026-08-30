@@ -648,7 +648,7 @@ var APPS = [
       {icon:'🔒',he:'פרטיות מלאה',en:'Full privacy — local only',ru:'Полная конфиденциальность',es:'Privacidad total',ar:'خصوصية كاملة'},
       {icon:'📱',he:'ממשק נוח ומהיר',en:'Fast, intuitive UI',ru:'Быстрый интерфейс',es:'Interfaz rápida',ar:'واجهة سريعة'},
     ],
-    screenshots:['💰','📊','📈','🎯'],
+    screenshots:['appnest-screenshots/moneynest-1.png'],
     type:'free',
     url:'https://barakaflalo.github.io/moneynest',
     badge:'new',
@@ -710,7 +710,7 @@ var APPS = [
       {icon:'⚡',he:'עדכון בזמן אמת',en:'Real-time updates',ru:'Обновления в реальном времени',es:'Actualizaciones en tiempo real',ar:'تحديثات فورية'},
       {icon:'🆓',he:'חינמי לחלוטין',en:'Completely free',ru:'Полностью бесплатно',es:'Completamente gratis',ar:'مجاني تماماً'},
     ],
-    screenshots:['🎱','📊','🔥','🗺️'],
+    screenshots:['appnest-screenshots/lotto-1.png'],
     type:'free',
     url:'https://barakaflalo.github.io/lotto',
     badge:'',
@@ -741,7 +741,7 @@ var APPS = [
       {icon:'📊',he:'סטטיסטיקות מפורטות',en:'Detailed statistics',ru:'Подробная статистика',es:'Estadísticas detalladas',ar:'إحصائيات مفصلة'},
       {icon:'🆓',he:'חינמי לחלוטין',en:'Completely free',ru:'Полностью бесплатно',es:'Completamente gratis',ar:'مجاني تماماً'},
     ],
-    screenshots:['⚽','🤖','📊','🎯'],
+    screenshots:['appnest-screenshots/toto-1.png'],
     type:'free',
     url:'https://barakaflalo.github.io/toto',
     badge:'updated',
@@ -1549,7 +1549,11 @@ function openModal(app){
     return '<div class="feature-item"><span>'+f.icon+'</span><span>'+( f[curLang]||f.en )+'</span></div>';
   }).join('');
 
+  var hasRealShots = app.screenshots.some(function(s){ return typeof s==='string' && (s.indexOf('/')>-1 || /\.(png|jpe?g|webp|gif)$/i.test(s)); });
   var screensHtml = app.screenshots.map(function(s){
+    if(typeof s==='string' && (s.indexOf('/')>-1 || /\.(png|jpe?g|webp|gif)$/i.test(s))){
+      return '<div class="screenshot-ph" style="padding:0;overflow:hidden;font-size:0;"><img src="'+s+'" alt="'+TApp(app,'name')+'" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;"></div>';
+    }
     return '<div class="screenshot-ph">'+s+'</div>';
   }).join('');
 
@@ -1596,7 +1600,7 @@ function openModal(app){
 
       '<div class="modal-section-title">'+T('screenshots')+'</div>'+
       '<div class="screenshots-row">'+screensHtml+'</div>'+
-      '<p style="font-size:11px;color:var(--text3);margin-bottom:20px;">'+T('screenshotsSoon')+'</p>'+
+      (hasRealShots ? '<div style="margin-bottom:20px;"></div>' : '<p style="font-size:11px;color:var(--text3);margin-bottom:20px;">'+T('screenshotsSoon')+'</p>')+
 
       '<div class="ratings-section">'+
         '<div class="modal-section-title">'+T('ratings')+'</div>'+
