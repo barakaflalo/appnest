@@ -2,6 +2,10 @@
 <html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8">
+<script>
+/* AppNest store moved to its own address. Redirect ONLY from the old GitHub Pages address (the same repo also feeds the new one, so no loop). */
+(function(){try{if(location.hostname==='barakaflalo.github.io'){var p=location.pathname.replace(/^\/appnest/i,'')||'/';location.replace('https://appnest-store.pages.dev'+p+location.search+location.hash);}}catch(e){}})();
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="AppNest — קן האפליקציות. אפליקציות, משחקים וכלים בחינם לכולם.">
 <title>AppNest — קן האפליקציות</title>
@@ -1055,6 +1059,36 @@ var APPS = [
     btnColor:'#4CAF7A',btnTextColor:'#000',
   },
   {
+    id:'mysticnest',
+    emoji:'🔮',
+    heroColor:'linear-gradient(135deg,#0D0D10 0%,#2A2010 100%)',
+    name:{he:'מיסטיק — MysticNest',en:'MysticNest — Mystic',ru:'MysticNest — Мистик',es:'MysticNest — Místico',ar:'MysticNest — ميستيك'},
+    cat:{he:'🔮 מיסטיקה · השראה',en:'🔮 Mystic · Inspiration',ru:'🔮 Мистика · Вдохновение',es:'🔮 Místico · Inspiración',ar:'🔮 روحانيات · إلهام'},
+    tag:{he:'מיסטיקה',en:'Mystic',ru:'Мистика',es:'Místico',ar:'روحانيات'},
+    tagColor:'rgba(212,175,55,0.12)',tagTextColor:'#D4AF37',
+    desc:{
+      he:'קלפי טארוט מאוירים, פירוש חלומות, קריאה בכף יד ובקפה, נומרולוגיה, הורוסקופ, תאימות ועוגיית מזל יומית. עובד אופליין, עם בינה מלאכותית אופציונלית. לבידור והשראה בלבד.',
+      en:'Illustrated tarot, dream interpretation, palm and coffee reading, numerology, horoscope, compatibility and a daily fortune cookie. Works offline, with optional AI. For entertainment only.',
+      ru:'Таро, толкование снов, хиромантия, гадание на кофе, нумерология, гороскоп и печенье с предсказанием. Работает офлайн.',
+      es:'Tarot ilustrado, sueños, quiromancia, lectura del café, numerología, horóscopo y galleta de la fortuna. Funciona sin conexión.',
+      ar:'تاروت مصوّر، تفسير الأحلام، قراءة الكف والقهوة، علم الأعداد، الأبراج وكعكة الحظ. يعمل دون اتصال.'
+    },
+    features:[
+      {icon:'🔮',he:'78 קלפי טארוט מאוירים',en:'78 illustrated tarot cards',ru:'78 карт Таро',es:'78 cartas de tarot',ar:'78 بطاقة تاروت'},
+      {icon:'🌙',he:'פירוש חלומות',en:'Dream interpretation',ru:'Толкование снов',es:'Interpretación de sueños',ar:'تفسير الأحلام'},
+      {icon:'🖐️',he:'כף יד וקפה מצילום',en:'Palm & coffee from a photo',ru:'Ладонь и кофе по фото',es:'Palma y café por foto',ar:'الكف والقهوة من صورة'},
+      {icon:'🔢',he:'נומרולוגיה, הורוסקופ ותאימות',en:'Numerology, horoscope & compatibility',ru:'Нумерология и гороскоп',es:'Numerología y horóscopo',ar:'الأعداد والأبراج'},
+      {icon:'📱',he:'עובד אופליין',en:'Works offline',ru:'Работает офлайн',es:'Sin conexión',ar:'يعمل دون اتصال'},
+    ],
+    screenshots:['🔮','🌙','🖐️','☕'],
+    type:'free',
+    url:'https://mysticnest.pages.dev',
+    badge:'new',
+    category:'app',
+    rating:0, ratingCount:0,
+    btnColor:'#D4AF37',btnTextColor:'#000',
+  },
+  {
     id:'exercisesapp',
     emoji:'💪',
     heroColor:'linear-gradient(135deg,#1A0A2A 0%,#2A1040 100%)',
@@ -1689,7 +1723,7 @@ function submitNotify(appId){
 ════════════════════════════════ */
 function shareApp(appId){
   var app = APPS.find(function(a){ return a.id===appId; });
-  var url = 'https://barakaflalo.github.io/appnest';
+  var url = 'https://appnest-store.pages.dev/';
   var name = app ? TApp(app,'name') : 'AppNest';
   if(navigator.share){ navigator.share({title:name, url:url}).catch(function(){}); return; }
   if(navigator.clipboard) navigator.clipboard.writeText(url);
