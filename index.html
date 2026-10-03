@@ -10,6 +10,9 @@
 <meta name="description" content="AppNest — קן האפליקציות. אפליקציות, משחקים וכלים בחינם לכולם.">
 <title>AppNest — קן האפליקציות</title>
 <link rel="icon" href="logo.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#080808">
+<link rel="apple-touch-icon" href="icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -1389,6 +1392,116 @@ var APPS = [
     btnColor:'#E075A8',btnTextColor:'#000',
   },
   {
+    id:'tavlanest',
+    emoji:'🎲',
+    heroColor:'linear-gradient(135deg,#140A04 0%,#3A2008 100%)',
+    name:{he:'TavlaNest — שש-בש ודמקה',en:'TavlaNest — Backgammon & Checkers',ru:'TavlaNest — Нарды и шашки',es:'TavlaNest — Backgammon y damas',ar:'TavlaNest — طاولة وداما'},
+    cat:{he:'🎮 משחק',en:'🎮 Game',ru:'🎮 Игра',es:'🎮 Juego',ar:'🎮 لعبة'},
+    tag:{he:'משחק',en:'Game',ru:'Игра',es:'Juego',ar:'لعبة'},
+    tagColor:'#D4AF371F',tagTextColor:'#D4AF37',
+    desc:{he:'שש-בש ודמקה — מול המחשב, שניים בטלפון אחד, ואונליין עם חבר כולל שיחה קולית.',en:'Backgammon and checkers — vs the computer, two players on one phone, or online with a friend including voice chat.',ru:'Нарды и шашки — против компьютера, вдвоём или онлайн с голосом.',es:'Backgammon y damas — contra la máquina, dos en un móvil u online con voz.',ar:'طاولة وداما — ضد الحاسوب أو اثنان على هاتف أو أونلاين مع صوت.'},
+    features:[
+      {icon:'🤖',he:'מול המחשב',en:'Vs computer',ru:'Против ИИ',es:'Contra la máquina',ar:'ضد الحاسوب'},
+      {icon:'📱',he:'שניים בטלפון אחד',en:'Two on one phone',ru:'Вдвоём',es:'Dos en un móvil',ar:'اثنان على هاتف'},
+      {icon:'🎙️',he:'אונליין עם קול',en:'Online with voice',ru:'Онлайн с голосом',es:'Online con voz',ar:'أونلاين مع صوت'},
+    ],
+    screenshots:['🎲','🤖','📱','🎙️'],
+    type:'free',
+    url:'https://tavlanest.pages.dev',
+    badge:'new',
+    category:'game',
+    rating:0, ratingCount:0,
+    btnColor:'#D4AF37',btnTextColor:'#000',
+  },
+  {
+    id:'yanivnest',
+    emoji:'🃏',
+    heroColor:'linear-gradient(135deg,#0A1410 0%,#14301E 100%)',
+    name:{he:'YanivNest — יניב',en:'YanivNest — Yaniv',ru:'YanivNest — Янив',es:'YanivNest — Yaniv',ar:'YanivNest — يانيف'},
+    cat:{he:'🎮 משחק',en:'🎮 Game',ru:'🎮 Игра',es:'🎮 Juego',ar:'🎮 لعبة'},
+    tag:{he:'משחק',en:'Game',ru:'Игра',es:'Juego',ar:'لعبة'},
+    tagColor:'#4CAF7A1F',tagTextColor:'#4CAF7A',
+    desc:{he:'משחק הקלפים יניב — מול המחשב, בטלפון אחד, ואונליין עם חברים וקול.',en:'The Yaniv card game — vs the computer, on one phone, or online with friends and voice.',ru:'Карточная игра Янив — против компьютера или онлайн с друзьями.',es:'El juego de cartas Yaniv — contra la máquina u online con amigos.',ar:'لعبة الورق يانيف — ضد الحاسوب أو أونلاين مع الأصدقاء.'},
+    features:[
+      {icon:'🤖',he:'מול המחשב',en:'Vs computer',ru:'Против ИИ',es:'Contra la máquina',ar:'ضد الحاسوب'},
+      {icon:'👥',he:'עם חברים',en:'With friends',ru:'С друзьями',es:'Con amigos',ar:'مع الأصدقاء'},
+      {icon:'🎙️',he:'שיחה קולית',en:'Voice chat',ru:'Голосовой чат',es:'Chat de voz',ar:'دردشة صوتية'},
+    ],
+    screenshots:['🃏','🤖','👥','🎙️'],
+    type:'free',
+    url:'https://yanivnest.pages.dev',
+    badge:'new',
+    category:'game',
+    rating:0, ratingCount:0,
+    btnColor:'#4CAF7A',btnTextColor:'#000',
+  },
+  {
+    id:'rummynest',
+    emoji:'🀄',
+    heroColor:'linear-gradient(135deg,#0A0F1A 0%,#14243A 100%)',
+    name:{he:'RummyNest — ג׳ין רמי',en:'RummyNest — Gin Rummy',ru:'RummyNest — Джин рамми',es:'RummyNest — Gin Rummy',ar:'RummyNest — جين رامي'},
+    cat:{he:'🎮 משחק',en:'🎮 Game',ru:'🎮 Игра',es:'🎮 Juego',ar:'🎮 لعبة'},
+    tag:{he:'משחק',en:'Game',ru:'Игра',es:'Juego',ar:'لعبة'},
+    tagColor:'#4A9EFF1F',tagTextColor:'#4A9EFF',
+    desc:{he:'ג׳ין רמי מול המחשב, בטלפון אחד או אונליין עם חבר — עם קלפים או עם אבנים.',en:'Gin rummy vs the computer, on one phone or online with a friend — with cards or tiles.',ru:'Джин рамми против компьютера или онлайн — картами или фишками.',es:'Gin rummy contra la máquina u online — con cartas o fichas.',ar:'جين رامي ضد الحاسوب أو أونلاين — بالورق أو الأحجار.'},
+    features:[
+      {icon:'🃏',he:'קלפים או אבנים',en:'Cards or tiles',ru:'Карты или фишки',es:'Cartas o fichas',ar:'ورق أو أحجار'},
+      {icon:'🤖',he:'מול המחשב',en:'Vs computer',ru:'Против ИИ',es:'Contra la máquina',ar:'ضد الحاسوب'},
+      {icon:'🌐',he:'אונליין עם חבר',en:'Online with a friend',ru:'Онлайн с другом',es:'Online con un amigo',ar:'أونلاين مع صديق'},
+    ],
+    screenshots:['🀄','🃏','🤖','🌐'],
+    type:'free',
+    url:'https://rummynest.pages.dev',
+    badge:'new',
+    category:'game',
+    rating:0, ratingCount:0,
+    btnColor:'#4A9EFF',btnTextColor:'#000',
+  },
+  {
+    id:'flagnest',
+    emoji:'🚩',
+    heroColor:'linear-gradient(135deg,#140A0A 0%,#3A1414 100%)',
+    name:{he:'FlagNest — כבוש את הדגל',en:'FlagNest — Capture the Flag',ru:'FlagNest — Захват флага',es:'FlagNest — Captura la bandera',ar:'FlagNest — التقط العلم'},
+    cat:{he:'🎮 משחק',en:'🎮 Game',ru:'🎮 Игра',es:'🎮 Juego',ar:'🎮 لعبة'},
+    tag:{he:'משחק',en:'Game',ru:'Игра',es:'Juego',ar:'لعبة'},
+    tagColor:'#E056561F',tagTextColor:'#E05656',
+    desc:{he:'משחק אסטרטגיה של דרגות נסתרות מול המחשב — תכנן, הסתר וכבוש את הדגל של היריב.',en:'A hidden-rank strategy game vs the computer — plan, hide and capture the enemy flag.',ru:'Стратегия со скрытыми рангами против компьютера.',es:'Estrategia de rangos ocultos contra la máquina.',ar:'لعبة استراتيجية برتب مخفية ضد الحاسوب.'},
+    features:[
+      {icon:'🧠',he:'אסטרטגיה',en:'Strategy',ru:'Стратегия',es:'Estrategia',ar:'استراتيجية'},
+      {icon:'🎭',he:'דרגות נסתרות',en:'Hidden ranks',ru:'Скрытые ранги',es:'Rangos ocultos',ar:'رتب مخفية'},
+      {icon:'🤖',he:'מול המחשב',en:'Vs computer',ru:'Против ИИ',es:'Contra la máquina',ar:'ضد الحاسوب'},
+    ],
+    screenshots:['🚩','🧠','🎭','🤖'],
+    type:'free',
+    url:'https://flagnest.pages.dev',
+    badge:'new',
+    category:'game',
+    rating:0, ratingCount:0,
+    btnColor:'#E05656',btnTextColor:'#fff',
+  },
+  {
+    id:'xray-camera',
+    emoji:'🩻',
+    heroColor:'linear-gradient(135deg,#06101A 0%,#0E2A3A 100%)',
+    name:{he:'X·RAY CAM — מצלמת רנטגן',en:'X·RAY CAM — X-Ray Camera',ru:'X·RAY CAM — Рентген-камера',es:'X·RAY CAM — Cámara de rayos X',ar:'X·RAY CAM — كاميرا الأشعة'},
+    cat:{he:'🩻 שעשוע · לימוד',en:'🩻 Fun · Learning',ru:'🩻 Развлечение',es:'🩻 Diversión',ar:'🩻 تسلية وتعلم'},
+    tag:{he:'שעשוע',en:'Fun',ru:'Забава',es:'Diversión',ar:'تسلية'},
+    tagColor:'#4AC0D01F',tagTextColor:'#4AC0D0',
+    desc:{he:'מצלמת רנטגן משעשעת וחינוכית — כוונו אל יד או גוף וראו שלד, שרירים, איברים וכלי דם. לשעשוע ולימוד בלבד.',en:'A fun, educational x-ray camera — point at a hand or body to see bones, muscles, organs and blood vessels. For fun and learning only.',ru:'Забавная обучающая рентген-камера — кости, мышцы и органы.',es:'Cámara de rayos X divertida y educativa — huesos, músculos y órganos.',ar:'كاميرا أشعة ممتعة وتعليمية — العظام والعضلات والأعضاء.'},
+    features:[
+      {icon:'🦴',he:'שלד',en:'Skeleton',ru:'Скелет',es:'Esqueleto',ar:'هيكل عظمي'},
+      {icon:'💪',he:'שרירים ואיברים',en:'Muscles & organs',ru:'Мышцы и органы',es:'Músculos y órganos',ar:'عضلات وأعضاء'},
+      {icon:'📷',he:'מצלמה חיה',en:'Live camera',ru:'Живая камера',es:'Cámara en vivo',ar:'كاميرا حية'},
+    ],
+    screenshots:['🩻','🦴','💪','📷'],
+    type:'free',
+    url:'https://xray-camera.pages.dev',
+    badge:'new',
+    category:'app',
+    rating:0, ratingCount:0,
+    btnColor:'#4AC0D0',btnTextColor:'#000',
+  },
+  {
     id:'mysticnest',
     emoji:'🔮',
     heroColor:'linear-gradient(135deg,#0D0D10 0%,#2A2010 100%)',
@@ -2077,6 +2190,17 @@ document.addEventListener('DOMContentLoaded', function(){
   renderApps();
   applyLang();
 });
+</script>
+<button id="installBtn" style="display:none;position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:9999;background:linear-gradient(135deg,#e8c068,#c9973a);color:#080808;border:0;border-radius:30px;padding:13px 24px;font:800 15px Heebo,system-ui,sans-serif;box-shadow:0 8px 28px rgba(0,0,0,.55)">📲 <span id="installTxt">התקן את AppNest</span></button>
+<script>
+(function(){var dp=null,b=document.getElementById('installBtn');
+ var T={he:'התקן את AppNest',en:'Install AppNest',ru:'Установить AppNest',es:'Instalar AppNest',ar:'ثبّت AppNest'};
+ function lang(){try{return (document.documentElement.lang||'he').slice(0,2);}catch(e){return 'he';}}
+ window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();dp=e;document.getElementById('installTxt').textContent=T[lang()]||T.en;b.style.display='block';});
+ b.addEventListener('click',function(){if(!dp)return;dp.prompt();dp.userChoice.finally(function(){dp=null;b.style.display='none';});});
+ window.addEventListener('appinstalled',function(){b.style.display='none';});
+ if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}
+})();
 </script>
 </body>
 </html>
